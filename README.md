@@ -31,6 +31,14 @@ Current status of C11 support
 The original djlsr205 supports C90 with a few C99 features. Here is the current
 support for C11:
 
+Headers provided by GCC
+-----------------------
+* iso646.h
+* stdalign.h
+* stdatomic.h
+* stdnoreturn.h
+* tgmath.h
+
 Headers completely supported
 ----------------------------
 * ctype.h
@@ -148,9 +156,4 @@ Missing headers
 ---------------
 * fenv.h
 * complex.h
-* iso646.h
-* stdalign.h
-* stdatomic.h
-* stdnoreturn.h
-* tgmath.h
 * uchar.h
