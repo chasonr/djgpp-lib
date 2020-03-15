@@ -1,6 +1,8 @@
 *.a
 *.o
 *.exe
+djdev206.zip
+djtzn206.zip
 bin
 etc
 hostbin

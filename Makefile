@@ -1,7 +1,18 @@
 # Top level makefile for djgpp-lib
 
+.PHONY : default zip
+
 default:
 	$(MAKE) -C src
+
+zip: default
+	@rm -f djdev206.zip
+	@rm -f djtzn206.zip
+	zip -9rD djdev206.zip bin include lib info djgpp.env tmp/remove.me \
+		copying copying.dj copying.lib readme.1st manifest/djdev* \
+		-x include/.gitignore info/.gitignore info/dir.txi lib/libtz.a
+	zip -9rD djtzn206.zip etc lib/libtz.a share zoneinfo manifest/djtzn* \
+		-x zoneinfo/src/* zoneinfo/.gitignore zoneinfo/src/.gitignore
 
 # Very complicated to figure out what builds what.
 # Easier just to do a complete clean here.
