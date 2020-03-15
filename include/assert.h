@@ -23,6 +23,13 @@ extern "C" {
 
 void	__dj_assert(const char *,const char *,int,const char *) __attribute__((__noreturn__));
 
+/* static_assert definition */
+/* C11 has __STDC_VERSION__ == 201112L */
+/* GCC 4.6 has -std=c1x, _Static_assert and __STDC_VERSION__ == 201000L */
+#if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201000L
+# define static_assert _Static_assert
+#endif
+
 #ifdef __cplusplus
 }
 #endif

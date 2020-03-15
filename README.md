@@ -41,6 +41,7 @@ Headers provided by GCC
 
 Headers completely supported
 ----------------------------
+* assert.h
 * ctype.h
 * errno.h
 * locale.h
@@ -52,9 +53,6 @@ Headers completely supported
 
 Headers partially or incorrectly supported
 ------------------------------------------
-assert.h
-* no `static_assert`
-
 float.h
 * `DECIMAL_DIG` missing
 * `FLT_EVAL_METHOD` missing
