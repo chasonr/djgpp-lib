@@ -130,7 +130,9 @@ stddef.h:
 * `max_align_t` missing
 
 stdio.h:
-* all items present, but check `printf`/`scanf`
+* all items present
+* `printf` supports C11 features except for wide strings
+* `scanf` needs to be checked
 
 stdlib.h
 * `aligned_alloc` missing
