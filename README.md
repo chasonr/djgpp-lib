@@ -33,9 +33,12 @@ support for C11:
 
 Headers provided by GCC
 -----------------------
+* float.h
 * iso646.h
 * stdalign.h
+* stdarg.h
 * stdatomic.h
+* stddef.h
 * stdnoreturn.h
 * tgmath.h
 
@@ -53,20 +56,13 @@ Headers completely supported
 
 Headers partially or incorrectly supported
 ------------------------------------------
-float.h
-* `DECIMAL_DIG` missing
-* `FLT_EVAL_METHOD` missing
-* `{FLT,DBL,LDBL}_HAS_SUBNORM` missing
-* `{FLT,DBL,LDBL}_DECIMAL_DIG` missing
-* `{FLT,DBL,LDBL}_TRUE_MIN` missing
-
 inttypes.h
 * `wcstoimax` missing
 * `wcstoumax` missing
 
 limits.h
+* GCC provides a limits.h, which then chains to the djdev version
 * Wrongly defines `WCHAR_MIN`, `WCHAR_MAX`, `WINT_MIN` and `WINT_MAX`
-* Defines `LLONG_MIN`, `LLONG_MAX` and `ULLONG_MAX` only if not `_POSIX_SOURCE`
 
 math.h
 * `float_t` and `double_t` missing
@@ -122,12 +118,6 @@ math.h
   * `remainderl`
   * `copysignl`
   * `nextafterl`
-
-stdarg.h:
-* `va_copy` missing
-
-stddef.h:
-* `max_align_t` missing
 
 stdio.h:
 * all items present
