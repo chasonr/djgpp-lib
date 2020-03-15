@@ -11,7 +11,7 @@ Goals of this project are:
 * to fix any bugs that might be found
 * to support all of C11
 * to support as much of Posix as is practical in a DOS environment
-* to support the GCC `\_FORTIFY\_SOURCE` facility
+* to support the GCC `_FORTIFY_SOURCE` facility
 
 How to build
 ============
@@ -44,27 +44,27 @@ Headers completely supported
 
 Headers partially or incorrectly supported
 ------------------------------------------
-assert.h:
-* no `static\_assert`
+assert.h
+* no `static_assert`
 
-float.h:
-* `DECIMAL\_DIG` missing
-* `FLT\_EVAL\_METHOD` missing
-* `{FLT,DBL,LDBL}\_HAS\_SUBNORM` missing
-* `{FLT,DBL,LDBL}\_DECIMAL\_DIG` missing
-* `{FLT,DBL,LDBL}\_TRUE\_MIN` missing
+float.h
+* `DECIMAL_DIG` missing
+* `FLT_EVAL_METHOD` missing
+* `{FLT,DBL,LDBL}_HAS_SUBNORM` missing
+* `{FLT,DBL,LDBL}_DECIMAL_DIG` missing
+* `{FLT,DBL,LDBL}_TRUE_MIN` missing
 
 inttypes.h
 * `wcstoimax` missing
 * `wcstoumax` missing
 
 limits.h
-* Wrongly defines `WCHAR\_MIN`, `WCHAR\_MAX`, `WINT\_MIN` and `WINT\_MAX`
-* Defines `LLONG\_MIN`, `LLONG\_MAX` and `ULLONG\_MAX` only if not `\_POSIX\_SOURCE`
+* Wrongly defines `WCHAR_MIN`, `WCHAR_MAX`, `WINT_MIN` and `WINT_MAX`
+* Defines `LLONG_MIN`, `LLONG_MAX` and `ULLONG_MAX` only if not `_POSIX_SOURCE`
 
 math.h
-* `float\_t` and `double\_t` missing
-* `FP\_ILOGB0` and `FP\_ILOGBNAN` missing
+* `float_t` and `double_t` missing
+* `FP_ILOGB0` and `FP_ILOGBNAN` missing
 * All forms missing for some functions:
   * `scalbln{,f,l}`
   * `tgamma{,f,l}`
@@ -118,23 +118,23 @@ math.h
   * `nextafterl`
 
 stdarg.h:
-* `va\_copy` missing
+* `va_copy` missing
 
 stddef.h:
-* `max\_align\_t` missing
+* `max_align_t` missing
 
 stdio.h:
 * all items present, but check `printf`/`scanf`
 
 stdlib.h
-* `aligned\_alloc` missing
-* `at\_quick\_exit` missing
-* `quick\_exit` missing
+* `aligned_alloc` missing
+* `at_quick_exit` missing
+* `quick_exit` missing
 
 time.h
-* `TIME\_UTC` missing
+* `TIME_UTC` missing
 * `struct timespec` missing
-* `timespec\_get` missing
+* `timespec_get` missing
 
 wchar.h
 * wrongly includes stddef.h
