@@ -6,6 +6,12 @@
 
 -Wcast-qual
 -Werror
+-Wno-error=stringop-truncation
+-Wno-error=nonnull-compare
+-Wno-error=format-overflow
+-Wno-error=stringop-overflow
+-Wno-error=misleading-indentation
+-Wno-error=unused-const-variable
 
 
 -Wpointer-arith
