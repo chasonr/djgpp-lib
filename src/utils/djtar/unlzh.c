@@ -235,8 +235,10 @@ local void read_pt_len(int nn, int nbit, int i_special)
       if (c == 7)
       {
         mask = (unsigned) 1 << (BITBUFSIZ - 1 - 3);
-        while (mask & bitbuf)
-          mask >>= 1;  c++;
+        while (mask & bitbuf) {
+          mask >>= 1;
+          c++;
+        }
       }
       fillbuf((c < 7) ? 3 : c - 3);
       pt_len[i++] = c;
