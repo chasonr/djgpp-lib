@@ -1,0 +1,9 @@
+*.a
+*.o
+*.exe
+bin
+etc
+hostbin
+share
+.*.sw[a-z]
+.sw[a-z]
