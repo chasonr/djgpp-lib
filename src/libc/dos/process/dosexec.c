@@ -406,7 +406,7 @@ direct_exec_tail_1 (const char *program, const char *args,
   if ((initial_tbuf_selector != tbuf_selector) && proxy_off)
   {
     char temp[65], *s, t2[5];
-    sprintf (t2, "%04lX", tbuf_beg>>4);
+    sprintf (t2, "%04lX", (tbuf_beg>>4) & 0xffff);
     dosmemget (tbuf_beg+proxy_off, 64, temp);
     temp[64] = 0;
     s = strchr(temp,'\r');
@@ -1108,8 +1108,8 @@ static int go32_exec(const char *program, char **argv, char **envp)
   
   sprintf(proxy_cmdline, "%s=%04x %04x %04x %04x %04x",
     __PROXY, argc,
-   (unsigned)(tbuf_beg >> 4), rm_off & 0xffff,
-   (unsigned)(tbuf_beg >> 4), si_off & 0xffff);
+   (unsigned)(tbuf_beg >> 4) & 0xffff, rm_off & 0xffff,
+   (unsigned)(tbuf_beg >> 4) & 0xffff, si_off & 0xffff);
   if (!found_si)
     proxy_cmdline[22] = 0; /* remove stubinfo information */
 
@@ -1417,7 +1417,7 @@ __dosexec_find_on_path(const char *program, char *envp[], char *buf)
     errno = ENAMETOOLONG;
     return 0;
   }
-  strncpy(buf, program, blen + 1);
+  memcpy(buf, program, blen + 1);
   rp = buf + blen;
 
   for (ptr=program; *ptr; ptr++)
