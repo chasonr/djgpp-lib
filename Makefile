@@ -9,7 +9,7 @@ clean:
 	$(MAKE) -C src clean
 	rm -rf bin etc hostbin share
 	rm -f include/stubinfo.h
-	rm -f lib/*.a
+	rm -f lib/*.a lib/*.o
 	rm -f info/*.info
 	rm -rf zoneinfo/Africa/
 	rm -rf zoneinfo/America/
