@@ -107,7 +107,7 @@ __extension__ typedef unsigned long long int uintmax_t;
 #define SIG_ATOMIC_MIN	(-2147483647-1)
 #define SIZE_MAX	4294967295U
 
-  /* These are defined by limits.h, so make them conditional.  */
+  /* These are defined by wchar.h, so make them conditional.  */
 #ifndef WCHAR_MAX
 #define WCHAR_MAX	65535
 #endif

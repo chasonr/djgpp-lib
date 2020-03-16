@@ -15,7 +15,26 @@ extern "C" {
 #ifndef __dj_ENFORCE_ANSI_FREESTANDING
 
 #include <sys/djtypes.h>
-#include <stddef.h>
+
+/* Some programs think they know better... */
+#undef NULL
+#if (__GNUC__ >= 4) && defined(__cplusplus)
+#  define NULL          __null
+#elif defined(__cplusplus)
+#  define NULL          0
+#else
+#  define NULL          ((void*)0)
+#endif
+
+#ifndef _SIZE_T
+__DJ_size_t
+#define _SIZE_T
+#endif
+
+#ifndef _WCHAR_T
+__DJ_wchar_t
+#define _WCHAR_T
+#endif
 
 #ifndef _WINT_T
 __DJ_wint_t
@@ -33,6 +52,17 @@ typedef struct
 
 #if (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L) \
   || !defined(__STRICT_ANSI__) || defined(__cplusplus)
+
+/* Declared as an incomplete type, for wcsftime */
+struct tm;
+
+  /* These are defined by stdint.h, so make them conditional.  */
+#ifndef WCHAR_MAX
+#define WCHAR_MAX	65535
+#endif
+#ifndef WCHAR_MIN
+#define WCHAR_MIN	0
+#endif
 
 #endif /* (__STDC_VERSION__ >= 199901L) || !__STRICT_ANSI__ */
 

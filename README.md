@@ -35,6 +35,7 @@ Headers provided by GCC
 -----------------------
 * float.h
 * iso646.h
+* limits.h
 * stdalign.h
 * stdarg.h
 * stdatomic.h
@@ -59,10 +60,6 @@ Headers partially or incorrectly supported
 inttypes.h
 * `wcstoimax` missing
 * `wcstoumax` missing
-
-limits.h
-* GCC provides a limits.h, which then chains to the djdev version
-* Wrongly defines `WCHAR_MIN`, `WCHAR_MAX`, `WINT_MIN` and `WINT_MAX`
 
 math.h
 * `float_t` and `double_t` missing
@@ -135,8 +132,6 @@ time.h
 * `timespec_get` missing
 
 wchar.h
-* wrongly includes stddef.h
-* `struct tm` missing
 * all functions missing
 
 wctype.h
