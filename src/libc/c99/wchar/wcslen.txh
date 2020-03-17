@@ -1,0 +1,29 @@
+@node wcslen, wchar
+@findex wcslen
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+size_t wcslen(const wchar_t *wstring);
+@end example
+
+@subheading Description
+
+This function returns the number of characters in @var{wstring}.
+
+@subheading Return Value
+
+The length of the string.
+
+@subheading Portability
+
+@portability ansi, posix
+
+@subheading Example
+
+@example
+if (wcslen(fname) > PATH_MAX)
+  invalid_file(fname);
+@end example
+

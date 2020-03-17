@@ -135,7 +135,68 @@ wchar.h
 * all functions missing
 
 wctype.h
-* all functions missing
+* in progress
+* implemented:
+  * `wcslen`
+  * `wmemcpy`
+  * `wmemmove`
+  * `wmemcmp`
+  * `wmemchr`
+  * `wmemset`
+* missing:
+  * `btowc`
+  * `fgetwc`
+  * `fgetws`
+  * `fputwc`
+  * `fputws`
+  * `fwide`
+  * `fwprintf`
+  * `fwscanf`
+  * `getwc`
+  * `getwchar`
+  * `mbrlen`
+  * `mbrtowc`
+  * `mbsinit`
+  * `mbsrtowcs`
+  * `putwc`
+  * `putwchar`
+  * `swprintf`
+  * `swscanf`
+  * `ungetwc`
+  * `vfwprintf`
+  * `vfwscanf`
+  * `vswprintf`
+  * `vswscanf`
+  * `vwprintf`
+  * `vwscanf`
+  * `wcrtomb`
+  * `wcscat`
+  * `wcschr`
+  * `wcscmp`
+  * `wcscoll`
+  * `wcscpy`
+  * `wcscspn`
+  * `wcsftime`
+  * `wcsncat`
+  * `wcsncmp`
+  * `wcsncpy`
+  * `wcspbrk`
+  * `wcsrchr`
+  * `wcsrtombs`
+  * `wcsspn`
+  * `wcsstr`
+  * `wcstod`
+  * `wcstof`
+  * `wcstok`
+  * `wcstol`
+  * `wcstold`
+  * `wcstoll`
+  * `wcstoul`
+  * `wcstoull`
+  * `wcsxfrm`
+  * `wctob`
+  * `wprintf`
+  * `wscanf`
 
 Missing headers
 ---------------

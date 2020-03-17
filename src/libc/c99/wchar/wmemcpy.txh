@@ -1,0 +1,31 @@
+@node wmemcpy, wchar
+@findex wmemcpy
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+wchar_t *wmemcpy(wchar_t *dest, const wchar_t *src, size_t num);
+@end example
+
+@subheading Description
+
+This function copies @var{num} wide characters from @var{source} to @var{dest}.
+It assumes that the source and destination regions don't overlap; if you
+need to copy overlapping regions, use @code{memmove} instead.
+@xref{memmove}.
+
+@subheading Return Value
+
+@var{dest}
+
+@subheading Portability
+
+@portability ansi, posix
+
+@subheading Example
+
+@example
+wmemcpy(buffer, temp_buffer, BUF_MAX);
+@end example
+

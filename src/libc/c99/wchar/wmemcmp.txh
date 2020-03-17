@@ -1,0 +1,38 @@
+@node wmemcmp, wchar
+@findex wmemcmp
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+int wmemcmp(const wchar_t *s1, const wchar_t *s2, size_t num);
+@end example
+
+@subheading Description
+
+This function compares two regions of memory, at @var{s1} and @var{s2},
+for @var{num} wide characters. 
+
+@subheading Return Value
+
+@table @asis
+
+@item zero
+
+s1 == s2
+
+@item positive
+
+s1 > s2
+
+@item negative
+
+s1 < s2
+
+@end table
+
+
+@subheading Portability
+
+@portability ansi, posix
+

@@ -1,0 +1,32 @@
+@node wmemmove, wchar
+@findex wmemmove
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+wchar_t *wmemmove(wchar_t *dest, const wchar_t *source, size_t num);
+@end example
+
+@subheading Description
+
+This function copies @var{num} bytes from @var{source} to @var{dest}. 
+The copy is done in such a way that if the two regions overlap, the
+source is always read before that byte is changed by writing to the
+destination. 
+
+@subheading Return Value
+
+@var{dest}
+
+@subheading Portability
+
+@portability ansi, posix
+
+@subheading Example
+
+@example
+wmemmove(buf+1, buf, 99);
+wmemmove(buf, buf+1, 99);
+@end example
+

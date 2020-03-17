@@ -1,0 +1,30 @@
+@node wmemchr, wchar
+@findex wmemchr
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+wchar_t *wmemchr(const wchar_t *wstring, wchar_t ch, size_t num);
+@end example
+
+@subheading Description
+
+This function searches @var{num} bytes starting at @var{wstring}, looking
+for the first occurrence of @var{ch}. 
+
+@subheading Return Value
+
+A pointer to the first match, or @code{NULL} if it wasn't found.
+
+@subheading Portability
+
+@portability ansi, posix
+
+@subheading Example
+
+@example
+if (wmemchr(path, L'/', wcslen(path))
+  do_slash();
+@end example
+

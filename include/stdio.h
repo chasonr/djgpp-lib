@@ -63,7 +63,7 @@ __DJ_ssize_t
    may change with any release without notice!  The fact that they
    are here at all is to comply with ANSI specifictions. */
    
-typedef struct {
+typedef struct __dj_FILE {
   ssize_t  _cnt;
   char    *_ptr;
   char    *_base;

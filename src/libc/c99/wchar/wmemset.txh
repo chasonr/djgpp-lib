@@ -1,0 +1,31 @@
+@node wmemset, wchar
+@findex wmemset
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+wchar_t *wmemset(wchar_t *buffer, wchar_t ch, size_t num);
+@end example
+
+@subheading Description
+
+This function stores @var{num} copies of @var{ch}, starting at
+@var{buffer}.  This is often used to initialize objects to a known
+value, like zero.
+
+@subheading Return Value
+
+@var{buffer}
+
+@subheading Portability
+
+@portability ansi, posix
+
+@subheading Example
+
+@example
+wchar t[50];
+wmemset(t, L' ', sizeof(t));
+@end example
+
