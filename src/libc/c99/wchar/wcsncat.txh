@@ -1,0 +1,29 @@
+@node wcsncat, wchar
+@findex wcsncat
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+wchar_t *wcsncat(wchar_t *s1, const wchar_t *s2, size_t max);
+@end example
+
+@subheading Description
+
+This function concatenates up to @var{max} characters of @var{s2} to the
+end of @var{s1}.
+
+@subheading Return Value
+
+@var{s1}
+
+@subheading Portability
+
+@portability ansi, posix
+
+@subheading Example
+
+@example
+wcsncat(fname, extension, 4);
+@end example
+

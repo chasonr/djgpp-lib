@@ -1,0 +1,29 @@
+@node wcsrchr, wchar
+@findex wcsrchr
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+wchar_t *wcsrchr(const wchar_t *s1, wchar_t c);
+@end example
+
+@subheading Description
+
+This function finds the last occurrence of @code{c} in @code{s1}.
+
+@subheading Return Value
+
+A pointer to the last match, or @code{NULL} if the character isn't in
+the string. 
+
+@subheading Portability
+
+@portability ansi, posix
+
+@subheading Example
+
+@example
+wchar_t *last_slash = wcsrchr(filename, L'/');
+@end example
+

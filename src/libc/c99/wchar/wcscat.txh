@@ -1,0 +1,29 @@
+@node wcscat, wchar
+@findex wcscat
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+wchar_t *wcscat(wchar_t *s1, const wchar_t *s2);
+@end example
+
+@subheading Description
+
+This function concatenates @var{s2} to the end of @var{s1}.
+
+@subheading Return Value
+
+@var{s1}
+
+@subheading Portability
+
+@portability ansi, posix
+
+@subheading Example
+
+@example
+wchar_t buf[100] = L"hello";
+wcscat(buf, L" there");
+@end example
+

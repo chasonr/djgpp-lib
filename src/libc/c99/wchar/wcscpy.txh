@@ -1,0 +1,29 @@
+@node wcscpy, wchar
+@findex wcscpy
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+wchar_t *wcscpy(wchar_t *s1, const wchar_t *s2);
+@end example
+
+@subheading Description
+
+This function copies @var{s2} into @var{s1}.
+
+@subheading Return Value
+
+@var{s1}
+
+@subheading Portability
+
+@portability ansi, posix
+
+@subheading Example
+
+@example
+wchar_t buf[100];
+wcscpy(buf, arg);
+@end example
+

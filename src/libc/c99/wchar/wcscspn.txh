@@ -1,0 +1,33 @@
+@node wcscspn, wchar
+@findex wcscspn
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+size_t wcscspn(const wchar_t *s1, const wchar_t *set);
+@end example
+
+@subheading Description
+
+This function finds the first character in @var{s1} that matches any
+character in @var{set}.  Note that the @code{NULL} bytes at the end of
+each string counts, so you'll at least get a pointer to the end of the
+string if nothing else. 
+
+@subheading Return Value
+
+The index of the found character.
+
+@subheading Portability
+
+@portability ansi, posix
+
+@subheading Example
+
+@example
+size_t i = wcscspn(command, "<>|");
+if (command[i])
+  do_redirection();
+@end example
+

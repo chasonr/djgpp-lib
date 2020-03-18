@@ -12,16 +12,16 @@ transform(wchar_t ch)
 }
 
 int
-wmemcmp(const wchar_t *s1, const wchar_t *s2, size_t n)
+wcsncmp(const wchar_t *s1, const wchar_t *s2, size_t n)
 {
-  if (n != 0)
-  {
-    const wchar_t *p1 = s1, *p2 = s2;
 
-    do {
-      if (*p1++ != *p2++)
-        return (transform(*--p1) - transform(*--p2));
-    } while (--n != 0);
-  }
+  if (n == 0)
+    return 0;
+  do {
+    if (*s1 != *s2++)
+      return transform(*s1) - transform(*--s2);
+    if (*s1++ == 0)
+      break;
+  } while (--n != 0);
   return 0;
 }

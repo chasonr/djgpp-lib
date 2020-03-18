@@ -1,0 +1,50 @@
+@node wcstok, wchar
+@findex wcstok
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+wchar_t *wcstok(wchar_t *s1, const wchar_t *s2, wchar_t **s3);
+@end example
+
+@subheading Description
+
+This function retrieves tokens from @var{s1} which are delimited by
+characters from @var{s2}.  It uses @var{s3} to track how far in
+@var{s1} the search has progressed.  
+
+To initiate the search, pass the string to be searched as @var{s1}.  For
+the remaining tokens, pass @code{NULL} instead.  
+
+@subheading Return Value
+
+A pointer to the token, or @code{NULL} if no more are found.
+
+@subheading Portability
+
+@portability ansi, posix
+
+@subheading Example
+
+@example
+#include <stdio.h>
+#include <wchar.h>
+
+int main(void)
+@{
+  wchar_t buf[] = L"Hello there, stranger";
+  wchar_t *tok, *where;
+  for (tok = wcstok(buf, L" ,", &where);
+       tok;
+       tok=wcstok(NULL, L" ,", &where))
+    wprintf(L"tok = `%Ls'\n", tok);
+
+  return 0;
+@}
+
+tok = `Hello'
+tok = `there'
+tok = `stranger'
+@end example
+

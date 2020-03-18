@@ -12,16 +12,15 @@ transform(wchar_t ch)
 }
 
 int
-wmemcmp(const wchar_t *s1, const wchar_t *s2, size_t n)
+wcscoll(const wchar_t *s1, const wchar_t *s2)
 {
-  if (n != 0)
+  while (*s1 == *s2)
   {
-    const wchar_t *p1 = s1, *p2 = s2;
-
-    do {
-      if (*p1++ != *p2++)
-        return (transform(*--p1) - transform(*--p2));
-    } while (--n != 0);
+    if (*s1 == 0)
+      return 0;
+    s1++;
+    s2++;
   }
-  return 0;
+  /* Unequal strings compare in Unicode code point order */
+  return transform(*s1) - transform(*s2);
 }

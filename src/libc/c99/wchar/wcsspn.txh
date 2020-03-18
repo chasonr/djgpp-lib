@@ -1,0 +1,33 @@
+@node wcsspn, wchar
+@findex wcsspn
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+size_t wcsspn(const wchar_t *s1, const wchar_t *set);
+@end example
+
+@subheading Description
+
+This function finds the first character in @var{s1} that does not match
+any character in @var{set}.  Note that the @code{NULL} bytes at the end
+of @var{s1} counts, so you'll at least get a pointer to the end of the
+wchar if nothing else. 
+
+@subheading Return Value
+
+The index of the found character.
+
+@subheading Portability
+
+@portability ansi, posix
+
+@subheading Example
+
+@example
+size_t i = wcsspn(entry, L" \t\b");
+if (entry[i])
+  do_something();
+@end example
+

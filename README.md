@@ -137,12 +137,27 @@ wchar.h
 wctype.h
 * in progress
 * implemented:
-  * `wcslen`
   * `wmemcpy`
   * `wmemmove`
   * `wmemcmp`
   * `wmemchr`
   * `wmemset`
+  * `wcscat`
+  * `wcschr`
+  * `wcscmp`
+  * `wcscpy`
+  * `wcscspn`
+  * `wcslen`
+  * `wcsncat`
+  * `wcsncmp`
+  * `wcsncpy`
+  * `wcspbrk`
+  * `wcsrchr`
+  * `wcsspn`
+  * `wcstok`
+* partially implemented:
+  * `wcscoll` -- same as `wcscmp`, no locale-dependent behavior
+  * `wcsxfrm` -- identity map, no locale-dependent behavior
 * missing:
   * `btowc`
   * `fgetwc`
@@ -170,30 +185,16 @@ wctype.h
   * `vwprintf`
   * `vwscanf`
   * `wcrtomb`
-  * `wcscat`
-  * `wcschr`
-  * `wcscmp`
-  * `wcscoll`
-  * `wcscpy`
-  * `wcscspn`
   * `wcsftime`
-  * `wcsncat`
-  * `wcsncmp`
-  * `wcsncpy`
-  * `wcspbrk`
-  * `wcsrchr`
   * `wcsrtombs`
-  * `wcsspn`
   * `wcsstr`
   * `wcstod`
   * `wcstof`
-  * `wcstok`
   * `wcstol`
   * `wcstold`
   * `wcstoll`
   * `wcstoul`
   * `wcstoull`
-  * `wcsxfrm`
   * `wctob`
   * `wprintf`
   * `wscanf`

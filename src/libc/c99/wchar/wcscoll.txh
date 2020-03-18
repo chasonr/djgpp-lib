@@ -1,0 +1,34 @@
+@node wcscoll, locale
+@findex wcscoll
+@subheading Syntax
+
+@example
+#include <string.h>
+
+int wcscoll(const wchar_t *s1, const wchar_t *s2);
+@end example
+
+@subheading Description
+
+This function compares @var{s1} and @var{s2}, using the collating
+sequences from the current locale. 
+
+TODO: locale-dependent collation is not implemented; wcscoll is the same
+as wcscmp.
+
+@subheading Return Value
+
+Zero if the strings are equal, a positive number if @var{s1} comes after
+@var{s2} in the collating sequence, else a negative number. 
+
+@subheading Portability
+
+@portability ansi, posix
+
+@subheading Example
+
+@example
+while (wcscoll(var, list[i]) < 0)
+  i++;
+@end example
+
