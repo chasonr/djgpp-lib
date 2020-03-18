@@ -132,9 +132,6 @@ time.h
 * `timespec_get` missing
 
 wchar.h
-* all functions missing
-
-wctype.h
 * in progress
 * implemented:
   * `wmemcpy`
@@ -198,6 +195,9 @@ wctype.h
   * `wctob`
   * `wprintf`
   * `wscanf`
+
+wctype.h
+* all functions missing
 
 Missing headers
 ---------------
