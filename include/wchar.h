@@ -6,8 +6,6 @@
 #ifndef __dj_include_wchar_h_
 #define __dj_include_wchar_h_
 
-/* Bare bones header to satisfy SGI STL's basic_string<> */
-
 #ifdef __cplusplus
 extern "C" {
 #endif
