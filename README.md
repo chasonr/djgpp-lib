@@ -48,6 +48,7 @@ Headers completely supported
 * assert.h
 * ctype.h
 * errno.h
+* inttypes.h
 * locale.h
 * setjmp.h
 * signal.h
@@ -58,10 +59,6 @@ Headers completely supported
 
 Headers partially or incorrectly supported
 ------------------------------------------
-inttypes.h
-* `wcstoimax` missing
-* `wcstoumax` missing
-
 math.h
 * `float_t` and `double_t` missing
 * `FP_ILOGB0` and `FP_ILOGBNAN` missing
@@ -154,6 +151,13 @@ wchar.h
   * `wcsspn`
   * `wcsstr`
   * `wcstok`
+  * `wcstod`
+  * `wcstof`
+  * `wcstol`
+  * `wcstold`
+  * `wcstoll`
+  * `wcstoul`
+  * `wcstoull`
 * partially implemented:
   * `wcscoll` -- same as `wcscmp`, no locale-dependent behavior
   * `wcsxfrm` -- identity map, no locale-dependent behavior
@@ -180,13 +184,6 @@ wchar.h
   * `vwscanf`
   * `wprintf`
   * `wscanf`
-  * `wcstod`
-  * `wcstof`
-  * `wcstol`
-  * `wcstold`
-  * `wcstoll`
-  * `wcstoul`
-  * `wcstoull`
   * `wcsftime`
   * `btowc`
   * `mbrlen`

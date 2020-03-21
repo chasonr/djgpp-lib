@@ -5,6 +5,8 @@
 #ifndef __dj_inttypes__h_
 #define __dj_inttypes__h_
 
+#include <sys/djtypes.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -194,10 +196,17 @@ typedef struct {
   intmax_t rem;
 } imaxdiv_t;
 
+#ifndef _WCHAR_T
+__DJ_wchar_t
+#define _WCHAR_T
+#endif
+
 intmax_t imaxabs (intmax_t _j);
 imaxdiv_t imaxdiv (intmax_t _numer, intmax_t _denom);
 intmax_t strtoimax (const char *_nptr, char **_endptr, int _base);
 uintmax_t strtoumax (const char *_nptr, char **_endptr, int _base);
+intmax_t wcstoimax (const wchar_t *_nptr, wchar_t **_endptr, int _base);
+uintmax_t wcstoumax (const wchar_t *_nptr, wchar_t **_endptr, int _base);
 
 #endif /* (__STDC_VERSION__ >= 199901L) || !__STRICT_ANSI__ */
 

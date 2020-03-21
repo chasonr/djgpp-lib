@@ -1,0 +1,31 @@
+@node wcstoull, wchar
+@findex wcstoull
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+unsigned long long int wcstoull(const wchar_t *s, wchar_t **endp, int base);
+@end example
+
+@subheading Description
+
+This is just like @code{wcstoll} (@pxref{wcstoll}) except that the result
+is unsigned. 
+
+@subheading Return Value
+
+The value.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001
+
+@subheading Example
+
+@example
+wprintf(L"Enter a number: "); fflush(stdout);
+fgetws(buf, sizeof(buf)/sizeof(buf[0]), stdin);
+wchar_t *bp;
+wprintf(L"The value is %llu\n", wcstoull(buf, &bp, 0));
+@end example

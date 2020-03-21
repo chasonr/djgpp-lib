@@ -5,5 +5,7 @@ SRC += imaxabs.c
 SRC += imaxdiv.c
 SRC += strimax.c
 SRC += strumax.c
+SRC += wcsimax.c
+SRC += wcsumax.c
 
 include $(TOP)/../makefile.inc

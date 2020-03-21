@@ -1,0 +1,31 @@
+@node wcstoumax, wchar
+@findex wcstoumax
+@subheading Syntax
+
+@example
+#include <inttypes.h>
+
+uintmax_t wcstoumax (const wchar_t *s, wchar_t **endp, int base);
+@end example
+
+@subheading Description
+
+This is just like @code{wcstoimax} (@pxref{wcstoimax}) except that
+the result is unsigned.
+
+@subheading Return Value
+
+The value.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001
+
+@subheading Example
+
+@example
+wprintf(L"Enter a number: "); fflush(stdout);
+fgetws(buf, sizeof(buf)/sizeof(buf[0]), stdin);
+wchar_t *bp;
+wprintf(L"The value is %" PRIuMAX "\n", wcstoumax(buf, &bp, 0));
+@end example

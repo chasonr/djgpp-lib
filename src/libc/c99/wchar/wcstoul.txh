@@ -1,0 +1,32 @@
+@node wcstoul, wchar
+@findex wcstoul
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+unsigned long wcstoul(const wchar_t *s, wchar_t **endp, int base);
+@end example
+
+@subheading Description
+
+This is just like @code{wcstol} (@pxref{wcstol}) except that the result
+is unsigned. 
+
+@subheading Return Value
+
+The value.
+
+@subheading Portability
+
+@portability ansi, posix
+
+@subheading Example
+
+@example
+wprintf(L"Enter a number: "); fflush(stdout);
+fgetws(buf, sizeof(buf)/sizeof(buf[0]), stdin);
+wchar_t *bp;
+wprintf(L"The value is %u\n", wcstoul(buf, &bp, 0));
+@end example
+
