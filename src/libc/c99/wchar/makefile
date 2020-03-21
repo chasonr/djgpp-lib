@@ -22,6 +22,6 @@ SRC += wcsrchr.c
 SRC += wcsspn.c
 SRC += wcsstr.c
 SRC += wcstok.c
-#SRC += wcsxfrm.c
+SRC += wcsxfrm.c
 
 include $(TOP)/../makefile.inc
