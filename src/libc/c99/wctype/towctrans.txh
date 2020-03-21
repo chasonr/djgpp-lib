@@ -1,0 +1,26 @@
+@c ----------------------------------------------------------------------
+@node towctrans, wctype
+@findex towctrans
+@subheading Syntax
+
+@example
+#include <wctype.h>
+
+wint_t towctrans(wint_t c, wctrans_t desc);
+@end example
+
+@subheading Description
+
+Transforms @var{c} according to the transformation identified by @var{desc}.
+
+@subheading Return Value
+
+The character @var{c} transformed according to the transformation identified
+by @var{desc}. The return value is @var{c} if @var{desc} is zero or invalid.
+
+
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, posix
+

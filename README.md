@@ -54,6 +54,7 @@ Headers completely supported
 * stdbool.h
 * stdint.h
 * string.h
+* wctype.h
 
 Headers partially or incorrectly supported
 ------------------------------------------
@@ -151,12 +152,12 @@ wchar.h
   * `wcspbrk`
   * `wcsrchr`
   * `wcsspn`
+  * `wcsstr`
   * `wcstok`
 * partially implemented:
   * `wcscoll` -- same as `wcscmp`, no locale-dependent behavior
   * `wcsxfrm` -- identity map, no locale-dependent behavior
 * missing:
-  * `btowc`
   * `fgetwc`
   * `fgetws`
   * `fputwc`
@@ -166,10 +167,6 @@ wchar.h
   * `fwscanf`
   * `getwc`
   * `getwchar`
-  * `mbrlen`
-  * `mbrtowc`
-  * `mbsinit`
-  * `mbsrtowcs`
   * `putwc`
   * `putwchar`
   * `swprintf`
@@ -181,10 +178,8 @@ wchar.h
   * `vswscanf`
   * `vwprintf`
   * `vwscanf`
-  * `wcrtomb`
-  * `wcsftime`
-  * `wcsrtombs`
-  * `wcsstr`
+  * `wprintf`
+  * `wscanf`
   * `wcstod`
   * `wcstof`
   * `wcstol`
@@ -192,12 +187,15 @@ wchar.h
   * `wcstoll`
   * `wcstoul`
   * `wcstoull`
+  * `wcsftime`
+  * `btowc`
+  * `mbrlen`
+  * `mbrtowc`
+  * `mbsinit`
+  * `mbsrtowcs`
+  * `wcrtomb`
+  * `wcsrtombs`
   * `wctob`
-  * `wprintf`
-  * `wscanf`
-
-wctype.h
-* all functions missing
 
 Missing headers
 ---------------

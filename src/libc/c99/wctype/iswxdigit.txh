@@ -1,0 +1,25 @@
+@c ----------------------------------------------------------------------
+@node iswxdigit, wctype
+@findex iswxdigit
+@subheading Syntax
+
+@example
+#include <wctype.h>
+
+int iswxdigit(wint_t c);
+@end example
+
+@subheading Description
+
+Tells if @var{c} is a valid hexadecimal digit or not.  This includes
+@code{[0-9a-fA-F]}. 
+
+@subheading Return Value
+
+Nonzero if @var{c} is a hex digit, else zero.
+
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, posix
+

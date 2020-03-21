@@ -1,0 +1,26 @@
+@c ----------------------------------------------------------------------
+@node iswctype, wctype
+@findex iswctype
+@subheading Syntax
+
+@example
+#include <wctype.h>
+
+int iswctype(wint_t c, wctype_t desc);
+@end example
+
+@subheading Description
+
+Tells if @var{c} has the property identified by @var{desc}. @var{desc}
+is a code returned by @var{wctype}, or zero.
+
+@subheading Return Value
+
+Nonzero if @var{c} has the identified property, else zero.
+
+
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, posix
+

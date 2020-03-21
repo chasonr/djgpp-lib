@@ -1,0 +1,31 @@
+@c ----------------------------------------------------------------------
+@node towlower, wctype
+@findex towlower
+@subheading Syntax
+
+@example
+#include <wctype.h>
+
+int towlower(wint_t c);
+@end example
+
+@subheading Description
+
+This function returns @var{c}, converting it to lower case if it is
+upper case.  @xref{towupper}.
+
+@subheading Return Value
+
+The lower case letter.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, posix
+
+@subheading Example
+
+@example
+for (i=0; buf[i]; i++)
+  buf[i] = towlower(buf[i]);
+@end example
+

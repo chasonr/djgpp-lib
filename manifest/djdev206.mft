@@ -67,6 +67,7 @@ include/inlines/ctype.ha
 include/inlines/ctype.hd
 include/inlines/ctype.hp
 include/inlines/pc.h
+include/inlines/wctype.ha
 include/inttypes.h
 include/io.h
 include/keys.h

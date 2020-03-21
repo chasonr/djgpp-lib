@@ -1,0 +1,25 @@
+@c ----------------------------------------------------------------------
+@node iswspace, wctype
+@findex iswspace
+@subheading Syntax
+
+@example
+#include <wctype.h>
+
+int iswspace(wint_t c);
+@end example
+
+@subheading Description
+
+Tells if @var{c} is whitespace, that is, carriage return, newline, form
+feed, tab, vertical tab, or space.
+
+@subheading Return Value
+
+Nonzero if @var{c} is whitespace, else zero.
+
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, posix
+

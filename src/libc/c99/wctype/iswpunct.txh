@@ -1,0 +1,25 @@
+@c ----------------------------------------------------------------------
+@node iswpunct, wctype
+@findex iswpunct
+@subheading Syntax
+
+@example
+#include <wctype.h>
+
+int iswpunct(wint_t c);
+@end example
+
+@subheading Description
+
+Tells if @var{c} is any printing character except space and those
+indicated by @code{iswalnum}. 
+
+@subheading Return Value
+
+Nonzero if @var{c} is punctuation, else zero.
+
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, posix
+

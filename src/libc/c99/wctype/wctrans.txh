@@ -1,0 +1,27 @@
+@c ----------------------------------------------------------------------
+@node wctrans, wctype
+@findex wctrans
+@subheading Syntax
+
+@example
+#include <wctype.h>
+
+wctrans_t wctrans(const char *name);
+@end example
+
+@subheading Description
+
+Returns a code identifying the character transformation named by @var{name}.
+The code is zero if @var{name} is not recognized.
+
+@subheading Return Value
+
+A code identifying the character transformation named by @var{name}, or zero
+if @var{name} is not recognized.
+
+
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, posix
+

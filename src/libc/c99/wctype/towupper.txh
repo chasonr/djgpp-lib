@@ -1,0 +1,31 @@
+@c ----------------------------------------------------------------------
+@node towupper, wctype
+@findex towupper
+@subheading Syntax
+
+@example
+#include <wctype.h>
+
+int towupper(wint_t c);
+@end example
+
+@subheading Description
+
+This function returns @var{c}, converting it to upper case if it is
+lower case. @xref{towlower}.
+
+@subheading Return Value
+
+The upper case letter.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, posix
+
+@subheading Example
+
+@example
+for (i=0; buf[i]; i++)
+  buf[i] = towupper(buf[i]);
+@end example
+
