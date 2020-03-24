@@ -158,6 +158,14 @@ wchar.h
   * `wcstoll`
   * `wcstoul`
   * `wcstoull`
+  * `btowc`
+  * `mbrlen`
+  * `mbrtowc`
+  * `mbsinit`
+  * `mbsrtowcs`
+  * `wcrtomb`
+  * `wcsrtombs`
+  * `wctob`
 * partially implemented:
   * `wcscoll` -- same as `wcscmp`, no locale-dependent behavior
   * `wcsxfrm` -- identity map, no locale-dependent behavior
@@ -185,14 +193,6 @@ wchar.h
   * `wprintf`
   * `wscanf`
   * `wcsftime`
-  * `btowc`
-  * `mbrlen`
-  * `mbrtowc`
-  * `mbsinit`
-  * `mbsrtowcs`
-  * `wcrtomb`
-  * `wcsrtombs`
-  * `wctob`
 
 Missing headers
 ---------------
