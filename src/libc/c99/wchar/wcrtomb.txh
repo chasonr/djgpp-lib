@@ -1,0 +1,35 @@
+@c ----------------------------------------------------------------------
+@node wcrtomb, locale
+@findex wcrtomb
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+int wcrtomb(char *s, wchar_t wchar, mbstate_t *ps);
+@end example
+
+@subheading Description
+
+Convert a wide character to a multibyte character.  The string @var{s}
+must be at least @code{MB_LEN_MAX} bytes long.
+
+The shift state in @var{ps} is used, or an internal shift state if
+@var{ps} is NULL.
+
+@subheading Return Value
+
+The number of characters stored.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001
+
+@subheading Example
+
+@example
+char s[MB_LEN_MAX];
+mbstate_t ps;
+int mlen = wcrtomb(s, wc, &ps);
+@end example
+

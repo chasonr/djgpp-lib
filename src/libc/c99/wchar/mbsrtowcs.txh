@@ -1,0 +1,33 @@
+@c ----------------------------------------------------------------------
+@node mbsrtowcs, locale
+@findex mbsrtowcs
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+size_t mbsrtowcs(wchar_t *wcs, const char *s, size_t n, mbstate_t *ps);
+@end example
+
+@subheading Description
+
+Converts a multibyte string to a wide character string.  The result
+will be no more than @var{n} wide characters.
+
+The shift state in @var{ps} is used.
+
+@subheading Return Value
+
+The number of wide characters stored.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001
+
+@subheading Example
+
+@example
+mbstate_t ps;
+int wlen = mbrtowcs(wbuf, string, sizeof(wbuf)/sizeof(wchar_t), &ps);
+@end example
+

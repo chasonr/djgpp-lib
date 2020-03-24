@@ -1,0 +1,37 @@
+@c ----------------------------------------------------------------------
+@node mbrtowc, locale
+@findex mbrtowc
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+int mbrtowc(wchar_t *pwc, const char *s, size_t n, mbstate_t *ps);
+@end example
+
+@subheading Description
+
+Convert the first multibyte sequence in @var{s} to a wide character.
+At most @var{n} characters are checked.  If @var{pwc} is not
+@code{NULL}, the result is stored there.
+
+The shift state in @var{ps} is used; if @var{ps} is NULL, an internal
+shift state is used.
+
+If @var{s} is null, the shift state is reset.
+
+@subheading Return Value
+
+The number of characters used by the multibyte sequence.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001
+
+@subheading Example
+
+@example
+mbstate_t ps;
+string += mbrtowc(&wc, string, strlen(string), &ps);
+@end example
+

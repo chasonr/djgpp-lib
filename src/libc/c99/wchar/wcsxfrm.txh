@@ -23,5 +23,5 @@ The actual number of characters required to transform @var{s2}, including the
 
 @subheading Portability
 
-@portability ansi, posix
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001
 

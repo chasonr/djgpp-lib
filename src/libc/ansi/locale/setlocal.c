@@ -56,6 +56,7 @@ static char mon_thousands_sep[2] = "";
 static char decimal_point[2] = ".";
 static char thousands_sep[2] = "";
 
+unsigned __dj_current_codepage = 0;
 extern unsigned char __dj_collate_table[];
 extern char __dj_date_format[];
 extern char __dj_time_format[];
@@ -193,6 +194,7 @@ setlocalectype(const char *locale __attribute__((unused)), int selector,
 {
   int temp_flags;
   int i;
+  int codepage = regs->x.bx;
 
   regs->h.ah = 0x65;
   regs->h.al = 0x02;
@@ -234,6 +236,7 @@ setlocalectype(const char *locale __attribute__((unused)), int selector,
         temp_flags |= __dj_ISPUNCT;
       __dj_ctype_flags[i + 1] = temp_flags;
     }
+    __dj_current_codepage = codepage;
     return 1;
   }
 }

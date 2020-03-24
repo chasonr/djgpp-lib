@@ -26,12 +26,23 @@ SRC += wcstok.c
 SRC += wcsxfrm.c
 
 # Analogues to stdlib.h
-SRC += wcstod
-SRC += wcstof
-SRC += wcstol
-SRC += wcstold
-SRC += wcstoll
-SRC += wcstoul
-SRC += wcstoull
+SRC += wcstod.c
+SRC += wcstof.c
+SRC += wcstol.c
+SRC += wcstold.c
+SRC += wcstoll.c
+SRC += wcstoul.c
+SRC += wcstoull.c
+
+# Multibyte conversions
+SRC += codepage.c
+SRC += btowc.c
+SRC += mbrlen.c
+SRC += mbsinit.c
+SRC += mbrtowc.c
+SRC += wcrtomb.c
+SRC += wctob.c
+SRC += mbsrtowcs.c
+SRC += wcsrtombs.c
 
 include $(TOP)/../makefile.inc

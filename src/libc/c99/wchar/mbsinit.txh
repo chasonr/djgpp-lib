@@ -1,0 +1,32 @@
+@c ----------------------------------------------------------------------
+@node mbsinit, locale
+@findex mbsinit
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+int mbsinit(const mbstate_t *ps);
+@end example
+
+@subheading Description
+
+Returns nonzero if @var{ps} is NULL or if it represents the initial shift
+state. Returns zero if @var{ps} does not represent the initial shift state.
+
+@subheading Return Value
+
+Nonzero if @var{ps} is NULL or if it represents the initial shift
+state. Zero if @var{ps} does not represent the initial shift state.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001
+
+@subheading Example
+
+@example
+mbstate_t ps;
+int initial = mbsinit(&ps);
+@end example
+

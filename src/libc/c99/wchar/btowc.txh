@@ -1,0 +1,31 @@
+@c ----------------------------------------------------------------------
+@node btowc, locale
+@findex btowc
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+wint_t btowc(int c);
+@end example
+
+@subheading Description
+
+If @var{c} constitutes a valid single byte character in the initial shift
+state, this function returns the corresponding wide character. Otherwise,
+it returns @code{WEOF}.
+
+@subheading Return Value
+
+The number of characters that comprise the next multibyte character.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001
+
+@subheading Example
+
+@example
+wint_t wc = btowc('X');
+@end example
+

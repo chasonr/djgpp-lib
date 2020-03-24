@@ -1,0 +1,31 @@
+@c ----------------------------------------------------------------------
+@node wctob, locale
+@findex wctob
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+int wctob(wint_t c);
+@end example
+
+@subheading Description
+
+If @var{c} constitutes a wide character that corresponds to a single byte
+character in the initial shift state, this function returns that single byte
+character. Otherwise, it returns @code{EOF}.
+
+@subheading Return Value
+
+The number of characters that comprise the next multibyte character.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001
+
+@subheading Example
+
+@example
+int ch = btowc(L'X');
+@end example
+

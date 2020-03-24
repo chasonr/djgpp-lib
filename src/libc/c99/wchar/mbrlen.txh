@@ -1,0 +1,37 @@
+@c ----------------------------------------------------------------------
+@node mbrlen, locale
+@findex mbrlen
+@subheading Syntax
+
+@example
+#include <wchar.h>
+
+int mbrlen(const char *s, size_t n, mbstate_t *ps);
+@end example
+
+@subheading Description
+
+This function returns the number of characters of string @var{s} that
+make up the next multibyte character, given the shift state in @var{ps}.
+No more than @var{n} characters are checked.
+
+If @var{ps} is @code{NULL}, an internal state object is used.
+
+If @var{s} is @code{NULL}, the shift state is reset.
+
+@subheading Return Value
+
+The number of characters that comprise the next multibyte character.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001
+
+@subheading Example
+
+@example
+mbstate_t ps;
+int n = mbrlen(string, INT_MAX, &ps);
+string += n;
+@end example
+

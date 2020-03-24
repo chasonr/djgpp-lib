@@ -57,7 +57,7 @@ representable by the type @code{double}, the function returns either
 @port-note ansi-c99 Support for ``Inf'', ``Infinity'', ``NaN'' and
 ``NaN(@dots{})'' was standardised in ANSI C99.
 
-@portability ansi, posix
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001
 
 @subheading Example
 
