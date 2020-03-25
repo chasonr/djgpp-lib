@@ -10,10 +10,12 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <wchar.h>
 #include <ctype.h>
 #include <locale.h>
 #include <stddef.h>
 #include <errno.h>
+#include <limits.h>
 #include <libc/file.h>
 #include <libc/local.h>
 
@@ -42,6 +44,9 @@ static int _innum(int *ptr, int type, int len, int size, FILE *iop,
 static int _instr(char *ptr, int type, int len, FILE *iop,
                   int (*scan_getc)(FILE *), int (*scan_ungetc)(int, FILE *),
                   int *eofptr, const bool allocate_char_buffer);
+static int _inwstr(wchar_t *ptr, int type, int len, FILE *iop,
+                   int (*scan_getc)(FILE *), int (*scan_ungetc)(int, FILE *),
+                   int *eofptr, const bool allocate_char_buffer);
 static const char *_getccl(const unsigned char *s);
 
 static char _sctab[256] = {
@@ -280,8 +285,14 @@ _innum(int *ptr, int type, int len, int size, FILE *iop,
   int cpos;
 
   if (type == 'c' || type == 's' || type == '[')
-    return (_instr(ptr ? (char *)ptr : (char *)NULL, type, len,
-                   iop, scan_getc, scan_ungetc, eofptr, allocate_char_buffer));
+  {
+    if (size == LONG)
+      return (_inwstr(ptr ? (wchar_t *)ptr : (wchar_t *)NULL, type, len,
+                      iop, scan_getc, scan_ungetc, eofptr, allocate_char_buffer));
+    else
+      return (_instr(ptr ? (char *)ptr : (char *)NULL, type, len,
+                     iop, scan_getc, scan_ungetc, eofptr, allocate_char_buffer));
+  }
   lcval = 0;
   ndigit = 0;
   scale = INT;
@@ -534,6 +545,166 @@ _instr(char *ptr, int type, int len, FILE *iop,
     if (allocate_char_buffer)
     {
       *(char **)arg_ptr = realloc(orig_ptr, string_length);
+      ptr = arg_ptr;
+      if (!*ptr)
+      {
+        free(orig_ptr);
+        errno = ENOMEM;
+        return 0;
+      }
+    }
+
+    return 1;
+  }
+
+  return 0;
+}
+
+static int
+_inwstr(wchar_t *ptr, int type, int len, FILE *iop,
+        int (*scan_getc)(FILE *), int (*scan_ungetc)(int, FILE *),
+        int *eofptr, const bool allocate_char_buffer)
+{
+  register int ch;
+  wchar_t *arg_ptr = NULL, *orig_ptr = NULL;
+  size_t string_length;
+  int ignstp;
+  int matched = 0;
+  size_t buffer_size = BUFFER_INCREMENT;
+  mbstate_t mbs;
+
+  wcrtomb(NULL, L'\0', &mbs); /* initial shift state */
+
+  *eofptr = 0;
+  if (type == 'c' && len == DEFAULT_WIDTH)
+    len = 1;
+
+  if (allocate_char_buffer)
+  {
+    if (!len)
+    {
+      errno = ENOMEM;
+      return 0;
+    }
+    else
+    {
+      arg_ptr = ptr;
+      orig_ptr = ptr = malloc(buffer_size * sizeof(wchar_t));
+      if (!ptr)
+      {
+        errno = ENOMEM;
+        return 0;
+      }
+    }
+  }
+
+  ignstp = 0;
+  if (type == 's')
+    ignstp = SPC;
+
+  while ((string_length = nchars++, ch = scan_getc(iop)) != EOF && _sctab[ch & 0xff] & ignstp)
+    ;
+
+  ignstp = SPC;
+  if (type == 'c')
+    ignstp = 0;
+  else if (type == '[')
+    ignstp = STP;
+
+  while (ch != EOF && (_sctab[ch & 0xff] & ignstp) == 0)
+  {
+    char chrbuf[MB_LEN_MAX];
+    unsigned mbcsize;
+    wchar_t wc;
+
+    matched = 1;
+
+    mbcsize = 0;
+    while (1)
+    {
+      size_t l;
+      chrbuf[mbcsize++] = ch;
+      l = mbrtowc(&wc, chrbuf, mbcsize, &mbs);
+      if (l == (size_t)(-1))
+      {
+        /* conversion error */
+        free(orig_ptr);
+        return 0;
+      }
+      if (l == (size_t)(-2))
+      {
+        /* character is incomplete */
+        ch = scan_getc(iop);
+        if (ch == EOF)
+        {
+          /* conversion error */
+          free(orig_ptr);
+          errno = EILSEQ;
+          return 0;
+        }
+      }
+      else
+      {
+        break;
+      }
+    }
+
+    if (ptr)
+      *ptr++ = wc;
+
+    if (allocate_char_buffer && type != 'c')
+    {
+      if (--buffer_size < 1)
+      {
+        const ptrdiff_t offset = ptr - orig_ptr;
+        wchar_t *new_ptr = realloc(orig_ptr, (size_t)(offset + BUFFER_INCREMENT) * sizeof(wchar_t));
+        if (!new_ptr)
+        {
+          free(orig_ptr);
+          errno = ENOMEM;
+          return 0;
+        }
+        orig_ptr = new_ptr;
+        ptr = orig_ptr + offset;
+        buffer_size = BUFFER_INCREMENT;
+
+        if (--len < 1)
+          len = DEFAULT_WIDTH;
+      }
+    }
+    else if (--len < 1)
+      break;
+
+    ch = scan_getc(iop);
+    nchars++;
+  }
+
+  if (ch != EOF)
+  {
+    if (len > 0)
+    {
+      scan_ungetc(ch, iop);
+      nchars--;
+    }
+    *eofptr = 0;
+  }
+  else
+  {
+    nchars--;
+    *eofptr = 1;
+  }
+
+  if (matched)
+  {
+    string_length = nchars - string_length;
+    if (ptr && type != 'c')
+    {
+      *ptr++ = L'\0';
+      string_length++;
+    }
+    if (allocate_char_buffer)
+    {
+      *(wchar_t **)arg_ptr = realloc(orig_ptr, string_length * sizeof(wchar_t));
       ptr = arg_ptr;
       if (!*ptr)
       {
