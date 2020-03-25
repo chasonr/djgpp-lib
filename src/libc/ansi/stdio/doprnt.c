@@ -20,6 +20,7 @@
 #include <locale.h>
 #include <stddef.h>
 #include <string.h>
+#include <wchar.h>
 #include <math.h>
 #include <limits.h>
 #include <libc/file.h>
@@ -111,6 +112,7 @@ static __inline__ char * __grouping_format(char *string_start, char *string_end,
 static __inline__ va_list __traverse_argument_list(int index_of_arg_to_be_fetched, const char *format_string, va_list arg_list);
 
 static char NULL_REP[] = "(null)";
+static wchar_t WNULL_REP[] = L"(null)";
 static const char LOWER_DIGITS[] = "0123456789abcdef";
 static const char UPPER_DIGITS[] = "0123456789ABCDEF";
 
@@ -144,6 +146,8 @@ _doprnt(const char *fmt0, va_list argp, FILE *fp)
   va_list arg_list;                  /* argument list */
   va_list to_be_printed = NULL;      /* argument to be printed if numeric specifier are used */
   const char *pos;                   /* position in format string when checking for numeric conv spec */
+  wchar_t *wt;                       /* buffer pointer for wide string conversion */
+  wchar_t wch;                       /* wide character for %lc */
 
 
   locale_info = localeconv();
@@ -177,6 +181,7 @@ _doprnt(const char *fmt0, va_list argp, FILE *fp)
     flags = 0; dprec = 0; fpprec = 0; width = 0;
     prec = -1;
     sign = '\0';
+    wt = NULL;
 rflag:
     switch (*++fmt)
     {
@@ -307,7 +312,16 @@ rflag:
       /* t => int, which is the default. */
       goto rflag;
     case 'c':
-      *(t = buf) = va_arg(argp, int);
+      if (flags & LONGINT)
+      {
+        wch = (wchar_t)va_arg(argp, wint_t);
+        wt = &wch;
+        t = NULL;
+      }
+      else
+      {
+        *(t = buf) = va_arg(argp, int);
+      }
       size = 1;
       sign = '\0';
       goto pforw;
@@ -465,28 +479,57 @@ rflag:
     case 's':
       if (using_numeric_conv_spec)
         argp = to_be_printed;
-      if (!(t = va_arg(argp, char *)))
-	t = NULL_REP;
-      if (prec >= 0)
+      if (flags & LONGINT)
       {
-	/*
-	 * can't use strlen; can only look for the
-	 * NUL in the first `prec' characters, and
-	 * strlen() will go further.
-	 */
-	char *p			/*, *memchr() */;
+        t = NULL;
+        if (!(wt = va_arg(argp, wchar_t *)))
+          wt = WNULL_REP;
+        if (prec >= 0)
+        {
+          /*
+           * can't use wcslen; can only look for the
+           * NUL in the first `prec' characters, and
+           * wcslen() will go further.
+           */
+          wchar_t *p			/*, *memchr() */;
 
-	if ((p = memchr(t, 0, (size_t)prec)))
-	{
-	  size = p - t;
-	  if (size > prec)
-	    size = prec;
-	}
-	else
-	  size = prec;
+          if ((p = wmemchr(wt, 0, (size_t)prec)))
+          {
+            size = p - wt;
+            if (size > prec)
+              size = prec;
+          }
+          else
+            size = prec;
+        }
+        else
+          size = wcslen(wt);
       }
       else
-	size = strlen(t);
+      {
+        if (!(t = va_arg(argp, char *)))
+          t = NULL_REP;
+        if (prec >= 0)
+        {
+          /*
+           * can't use strlen; can only look for the
+           * NUL in the first `prec' characters, and
+           * strlen() will go further.
+           */
+          char *p			/*, *memchr() */;
+
+          if ((p = memchr(t, 0, (size_t)prec)))
+          {
+            size = p - t;
+            if (size > prec)
+              size = prec;
+          }
+          else
+            size = prec;
+        }
+        else
+          size = strlen(t);
+      }
       sign = '\0';
       goto pforw;
     case 'U':
@@ -568,6 +611,8 @@ pforw:
        * the string proper, then emit zeroes required by any
        * leftover floating precision; finally, if LADJUST,
        * pad with blanks.
+       * If `wt' is not NULL, it points to a wide string to
+       * be used in place of `t'.
        */
 
       /*
@@ -605,8 +650,26 @@ pforw:
 	PUTC('0');
 
       /* the string or number proper */
-      for (n = size; n > 0; n--)
-        PUTC(*t++);
+      if (wt != NULL)
+      {
+        mbstate_t mbs;
+        wcrtomb(NULL, L'\0', &mbs); /* initial shift state */
+        for (n = size; n > 0; n--)
+        {
+          char str8[MB_LEN_MAX];
+          size_t n2;
+          size_t l = wcrtomb(str8, *wt++, &mbs);
+          if (l == (size_t)(-1))
+            return -1; /* conversion error */
+          for (n2 = 0; n2 < l; n2++)
+            PUTC(str8[n2]);
+        }
+      }
+      else
+      {
+        for (n = size; n > 0; n--)
+          PUTC(*t++);
+      }
 
       /* trailing f.p. zeroes */
       while (--fpprec >= 0)

@@ -116,7 +116,7 @@ math.h
 
 stdio.h:
 * all items present
-* `printf` supports C11 features except for wide strings
+* `printf` supports C11 features including wide strings
 * `scanf` needs to be checked
 
 stdlib.h
