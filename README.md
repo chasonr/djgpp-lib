@@ -54,6 +54,7 @@ Headers completely supported
 * signal.h
 * stdbool.h
 * stdint.h
+* stdio.h
 * string.h
 * wctype.h
 
@@ -113,11 +114,6 @@ math.h
   * `remainderl`
   * `copysignl`
   * `nextafterl`
-
-stdio.h:
-* all items present
-* `printf` supports C11 features including wide strings
-* `scanf` needs to be checked
 
 stdlib.h
 * `aligned_alloc` missing
