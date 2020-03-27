@@ -10,6 +10,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <wchar.h>
 #include <ctype.h>
 #include <locale.h>
@@ -22,6 +23,19 @@
 typedef enum {
   false = 0, true = 1
 } bool;
+
+typedef struct char_range {
+  wchar_t first;
+  wchar_t last;
+} char_range;
+
+typedef struct char_set {
+  bool invert;
+  size_t num_ranges;
+  /* size of 2 holds the number of ranges in the set of space characters,
+     0x08-0x0D and 0x20 */
+  char_range range[2];
+} char_set;
 
 #define SPC               01
 #define STP               02
@@ -40,14 +54,50 @@ typedef enum {
 
 static int _innum(int *ptr, int type, int len, int size, FILE *iop,
                   int (*scan_getc)(FILE *), int (*scan_ungetc)(int, FILE *),
-                  int *eofptr, const bool allocate_char_buffer);
+                  int *eofptr, const bool allocate_char_buffer,
+                  const char_set *cset);
 static int _instr(char *ptr, int type, int len, FILE *iop,
                   int (*scan_getc)(FILE *), int (*scan_ungetc)(int, FILE *),
-                  int *eofptr, const bool allocate_char_buffer);
+                  int *eofptr, const bool allocate_char_buffer,
+                  const char_set *cset);
 static int _inwstr(wchar_t *ptr, int type, int len, FILE *iop,
                    int (*scan_getc)(FILE *), int (*scan_ungetc)(int, FILE *),
-                   int *eofptr, const bool allocate_char_buffer);
-static const char *_getccl(const unsigned char *s);
+                   int *eofptr, const bool allocate_char_buffer,
+                   const char_set *cset);
+static char_set *_getccl(const char **pfmt, int len);
+static bool in_charset(const char_set *cset, wchar_t chr);
+
+static const char_set no_chars = {
+  false, 0,
+  {
+    { 0x00, 0x00 },
+    { 0x00, 0x00 }
+  }
+};
+
+static const char_set all_chars = {
+  true, 0,
+  {
+    { 0x00, 0x00 },
+    { 0x00, 0x00 }
+  }
+};
+
+static const char_set spaces = {
+  false, 2,
+  {
+    { 0x09, 0x0D },
+    { 0x20, 0x20 }
+  }
+};
+
+static const char_set nonspaces = {
+  true, 2,
+  {
+    { 0x09, 0x0D },
+    { 0x20, 0x20 }
+  }
+};
 
 static char _sctab[256] = {
   0,0,0,0,0,0,0,0,
@@ -80,6 +130,8 @@ _doscan_low(FILE *iop, int (*scan_getc)(FILE *), int (*scan_ungetc)(int, FILE *)
   int previous_errno = errno;
   const va_list arg_list = argp;
   bool retrieve_arg_ptr;
+  char_set *cset;
+  bool ok;
 
   decimal_point = localeconv()->decimal_point[0];
   nchars = 0;
@@ -101,6 +153,7 @@ _doscan_low(FILE *iop, int (*scan_getc)(FILE *), int (*scan_ungetc)(int, FILE *)
       retrieve_arg_ptr = true;
       allocate_char_buffer = false;
       ptr = NULL;
+      cset = NULL;
 repeat:
       if (ch != '*' && retrieve_arg_ptr)
         ptr = va_arg(argp, int *);
@@ -176,11 +229,18 @@ repeat:
         /* POSIX.1 and GNU glibc extension */
         allocate_char_buffer = true;
         ch = *fmt++;
-        if (ch == '[')
-          fmt = _getccl((const unsigned char *)fmt);
+        if (ch == 'l')
+        {
+          size = LONG;
+          ch = *fmt++;
+        }
       }
-      else if (ch == '[')
-        fmt = _getccl((const unsigned char *)fmt);
+      if (ch == '[')
+      {
+        cset = _getccl(&fmt, size);
+        if (cset == NULL)
+          return EOF;
+      }
 
       if (isupper(ch & 0xff))
       {
@@ -225,7 +285,9 @@ repeat:
         break;
       }
 
-      if (_innum(ptr, ch, len, size, iop, scan_getc, scan_ungetc, &fileended, allocate_char_buffer))
+      ok = _innum(ptr, ch, len, size, iop, scan_getc, scan_ungetc, &fileended, allocate_char_buffer, cset);
+      free(cset);
+      if (ok)
       {
         if (ptr)
           nmatch++;
@@ -275,7 +337,8 @@ def:
 static int
 _innum(int *ptr, int type, int len, int size, FILE *iop,
        int (*scan_getc)(FILE *), int (*scan_ungetc)(int, FILE *),
-       int *eofptr, const bool allocate_char_buffer)
+       int *eofptr, const bool allocate_char_buffer,
+       const char_set *cset)
 {
   register char *np;
   char numbuf[64];
@@ -288,10 +351,12 @@ _innum(int *ptr, int type, int len, int size, FILE *iop,
   {
     if (size == LONG)
       return (_inwstr(ptr ? (wchar_t *)ptr : (wchar_t *)NULL, type, len,
-                      iop, scan_getc, scan_ungetc, eofptr, allocate_char_buffer));
+                      iop, scan_getc, scan_ungetc, eofptr, allocate_char_buffer,
+                      cset));
     else
       return (_instr(ptr ? (char *)ptr : (char *)NULL, type, len,
-                     iop, scan_getc, scan_ungetc, eofptr, allocate_char_buffer));
+                     iop, scan_getc, scan_ungetc, eofptr, allocate_char_buffer,
+                     cset));
   }
   lcval = 0;
   ndigit = 0;
@@ -441,12 +506,13 @@ _innum(int *ptr, int type, int len, int size, FILE *iop,
 static int
 _instr(char *ptr, int type, int len, FILE *iop,
        int (*scan_getc)(FILE *), int (*scan_ungetc)(int, FILE *),
-       int *eofptr, const bool allocate_char_buffer)
+       int *eofptr, const bool allocate_char_buffer,
+       const char_set *cset)
 {
   register int ch;
   char *arg_ptr = NULL, *orig_ptr = NULL;
   size_t string_length;
-  int ignstp;
+  const char_set *ignstp;
   int matched = 0;
   size_t buffer_size = BUFFER_INCREMENT;
 
@@ -473,20 +539,20 @@ _instr(char *ptr, int type, int len, FILE *iop,
     }
   }
 
-  ignstp = 0;
+  ignstp = &no_chars;
   if (type == 's')
-    ignstp = SPC;
+    ignstp = &spaces;
 
-  while ((string_length = nchars++, ch = scan_getc(iop)) != EOF && _sctab[ch & 0xff] & ignstp)
+  while ((string_length = nchars++, ch = scan_getc(iop)) != EOF && in_charset(ignstp, ch & 0xff))
     ;
 
-  ignstp = SPC;
+  ignstp = &nonspaces;
   if (type == 'c')
-    ignstp = 0;
+    ignstp = &all_chars;
   else if (type == '[')
-    ignstp = STP;
+    ignstp = cset;
 
-  while (ch != EOF && (_sctab[ch & 0xff] & ignstp) == 0)
+  while (ch != EOF && in_charset(ignstp, ch & 0xff))
   {
     matched = 1;
     if (ptr)
@@ -563,15 +629,18 @@ _instr(char *ptr, int type, int len, FILE *iop,
 static int
 _inwstr(wchar_t *ptr, int type, int len, FILE *iop,
         int (*scan_getc)(FILE *), int (*scan_ungetc)(int, FILE *),
-        int *eofptr, const bool allocate_char_buffer)
+        int *eofptr, const bool allocate_char_buffer,
+        const char_set *cset)
 {
   register int ch;
   wchar_t *arg_ptr = NULL, *orig_ptr = NULL;
   size_t string_length;
-  int ignstp;
+  const char_set *ignstp;
   int matched = 0;
   size_t buffer_size = BUFFER_INCREMENT;
   mbstate_t mbs;
+  char chrbuf[MB_LEN_MAX];
+  unsigned mbcsize = 0;
 
   wcrtomb(NULL, L'\0', &mbs); /* initial shift state */
 
@@ -598,23 +667,21 @@ _inwstr(wchar_t *ptr, int type, int len, FILE *iop,
     }
   }
 
-  ignstp = 0;
+  ignstp = &no_chars;
   if (type == 's')
-    ignstp = SPC;
+    ignstp = &spaces;
 
-  while ((string_length = nchars++, ch = scan_getc(iop)) != EOF && _sctab[ch & 0xff] & ignstp)
+  while ((string_length = nchars++, ch = scan_getc(iop)) != EOF && in_charset(ignstp, ch & 0xff))
     ;
 
-  ignstp = SPC;
+  ignstp = &nonspaces;
   if (type == 'c')
-    ignstp = 0;
+    ignstp = &all_chars;
   else if (type == '[')
-    ignstp = STP;
+    ignstp = cset;
 
-  while (ch != EOF && (_sctab[ch & 0xff] & ignstp) == 0)
+  while (ch != EOF)
   {
-    char chrbuf[MB_LEN_MAX];
-    unsigned mbcsize;
     wchar_t wc;
 
     matched = 1;
@@ -649,6 +716,9 @@ _inwstr(wchar_t *ptr, int type, int len, FILE *iop,
       }
     }
 
+    if (!in_charset(ignstp, wc))
+      break;
+
     if (ptr)
       *ptr++ = wc;
 
@@ -681,9 +751,9 @@ _inwstr(wchar_t *ptr, int type, int len, FILE *iop,
 
   if (ch != EOF)
   {
-    if (len > 0)
+    while (mbcsize != 0)
     {
-      scan_ungetc(ch, iop);
+      scan_ungetc(chrbuf[--mbcsize], iop);
       nchars--;
     }
     *eofptr = 0;
@@ -720,53 +790,112 @@ _inwstr(wchar_t *ptr, int type, int len, FILE *iop,
   return 0;
 }
 
-static const char *
-_getccl(const unsigned char *s)
+static char_set *
+_getccl(const char **pfmt, int len)
 {
-  register int t;
-  size_t c;
+  char_set *set;
+  size_t set_size;
+  unsigned char c;
+  const char *s = *pfmt;
 
-  t = 0;
+  /* Upper bound on number of character ranges */
+  set_size = strcspn(s, "]");
+  set = malloc(offsetof(char_set, range) + sizeof(set->range[0])*set_size);
+  if (set == NULL)
+    return NULL;
+
+  set->invert = false;
   if (*s == '^')
   {
-    t++;
+    set->invert = true;
     s++;
   }
+  set->num_ranges = 0;
 
-  for (c = 0; c < (sizeof _sctab / sizeof _sctab[0]); c++)
-  {
-    if (t)
-      _sctab[c] &= ~STP;
-    else
-      _sctab[c] |= STP;
-  }
-
-  if ((c = *s) == ']' || c == '-')
+  if ((c = (unsigned char)*s) == ']' || c == '-')
   { /* first char is special */
-    if (t)
-      _sctab[c] |= STP;
-    else
-      _sctab[c] &= ~STP;
+    set->range[0].first = c;
+    set->range[0].last  = c;
+    set->num_ranges = 1;
     s++;
   }
 
-  while ((c = *s++) != ']')
+  if (len == LONG)
   {
-    if (c == 0)
-      return (const char *)--s;
-    else if (c == '-' && *s != ']' && s[-2] < *s)
+    /* %l[...] */
+    wchar_t wc1, wc2;
+    mbstate_t mbs;
+    wcrtomb(NULL, L'\0', &mbs); /* initial shift state */
+    while (true)
     {
-      for (c = s[-2] + 1; c < *s; c++)
-        if (t)
-          _sctab[c & 0xff] |= STP;
-        else
-          _sctab[c & 0xff] &= ~STP;
+      size_t l = mbsrtowcs(&wc1, &s, 1, &mbs);
+      if (l == (size_t)(-1))
+      {
+        /* encoding error */
+        free(set);
+        return NULL;
+      }
+      if (wc1 == L']' || wc1 == L'\0')
+        break;
+      set->range[set->num_ranges].first = wc1;
+      set->range[set->num_ranges].last  = wc1;
+      if (s[0] == '-' && s[1] != ']')
+      {
+        s++;
+        l = mbsrtowcs(&wc2, &s, 1, &mbs);
+        if (l == (size_t)(-1))
+        {
+          /* encoding error */
+          free(set);
+          return NULL;
+        }
+        if (wc2 > wc1)
+          set->range[set->num_ranges].last  = wc1;
+      }
+      set->num_ranges++;
     }
-    else if (t)
-      _sctab[c & 0xff] |= STP;
-    else
-      _sctab[c & 0xff] &= ~STP;
+  }
+  else
+  {
+    while ((c = (unsigned char)*s++) != ']')
+    {
+      if (c == 0)
+      {
+        /* end of string */
+        *pfmt = s;
+        return set;
+      }
+      else if (s[0] == '-' && s[1] != ']' && c <= (unsigned char)s[1])
+      {
+        /* range of characters */
+        set->range[set->num_ranges].first = c;
+        set->range[set->num_ranges].last  = (unsigned char)s[1];
+        set->num_ranges++;
+        s += 2;
+      }
+      else
+      {
+        /* single character */
+        set->range[set->num_ranges].first = c;
+        set->range[set->num_ranges].last  = c;
+        set->num_ranges++;
+      }
+    }
   }
 
-  return (const char *)s;
+  *pfmt = s;
+  return set;
+}
+
+static bool
+in_charset(const char_set *cset, wchar_t chr)
+{
+  size_t i;
+
+  for (i = 0; i < cset->num_ranges; ++i) {
+    if (cset->range[i].first <= chr && chr <= cset->range[i].last)
+      break;
+  }
+
+  return (i < cset->num_ranges) ^ !!cset->invert;
 }
