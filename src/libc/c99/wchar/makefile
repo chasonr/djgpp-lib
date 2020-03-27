@@ -34,6 +34,9 @@ SRC += wcstoll.c
 SRC += wcstoul.c
 SRC += wcstoull.c
 
+# Analogue to time.h
+SRC += wcsftime.c
+
 # Multibyte conversions
 SRC += codepage.c
 SRC += btowc.c

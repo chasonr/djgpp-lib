@@ -154,6 +154,7 @@ wchar.h
   * `wcstoll`
   * `wcstoul`
   * `wcstoull`
+  * `wcsftime`
   * `btowc`
   * `mbrlen`
   * `mbrtowc`
@@ -188,7 +189,6 @@ wchar.h
   * `vwscanf`
   * `wprintf`
   * `wscanf`
-  * `wcsftime`
 
 Missing headers
 ---------------
