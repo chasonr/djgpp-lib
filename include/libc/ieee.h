@@ -23,14 +23,14 @@ typedef struct {
   unsigned mantissa:23;
   unsigned exponent:8;
   unsigned sign:1;
-} float_t;
+} __dj_float_t;
 
 typedef struct {
   unsigned mantissal:32;
   unsigned mantissah:20;
   unsigned exponent:11;
   unsigned sign:1;
-} double_t;
+} __dj_double_t;
 
 typedef struct {
   unsigned mantissal:32;
@@ -43,13 +43,13 @@ typedef struct {
 typedef union
 {
   float f;
-  float_t ft;
+  __dj_float_t ft;
 } _float_union_t;
 
 typedef union
 {
   double d;
-  double_t dt;
+  __dj_double_t dt;
 } _double_union_t;
 
 typedef union

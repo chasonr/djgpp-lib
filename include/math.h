@@ -92,6 +92,19 @@ extern float fmodf(float, float);
 #if (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L) \
   || !defined(__STRICT_ANSI__) || defined(__cplusplus)
 
+#if __FLT_EVAL_METHOD__ == 0
+typedef float float_t;
+typedef double double_t;
+#elif __FLT_EVAL_METHOD__ == 1
+typedef double float_t;
+typedef double double_t;
+#elif __FLT_EVAL_METHOD__ == 2
+typedef long double float_t;
+typedef long double double_t;
+#else
+#error "Unknown value of __FLT_EVAL_METHOD__"
+#endif
+
 extern float       __dj_huge_valf;
 extern long double __dj_huge_vall;
 
