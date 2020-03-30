@@ -62,7 +62,6 @@ Headers completely supported
 Headers partially or incorrectly supported
 ------------------------------------------
 math.h
-* `FP_ILOGB0` and `FP_ILOGBNAN` missing
 * All forms missing for some functions:
   * `scalbln{,f,l}`
   * `tgamma{,f,l}`

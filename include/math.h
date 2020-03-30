@@ -182,6 +182,9 @@ int         __signbitld(long double x) __attribute__((const));
 int __get_math_errhandling(void);
 #define math_errhandling (__get_math_errhandling())
 
+#define FP_ILOGB0 (-__INT_MAX__)
+#define FP_ILOGBNAN __INT_MAX__
+
 double acosh(double _x);
 double asinh(double _x);
 double atanh(double _x);
