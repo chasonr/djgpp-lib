@@ -1,0 +1,32 @@
+@node fetestexcept, cpu
+@findex fetestexcept
+@subheading Syntax
+
+@example
+#include <fenv.h>
+
+int fetestexcept(int excepts);
+@end example
+
+@subheading Description
+
+@code{fetestexcept} returns the current state of the exceptions indicated
+in @var{excepts}.
+
+@var{excepts} is an OR of zero or more of the following:
+* @var{FE_INEXACT}
+* @var{FE_UNDERFLOW}
+* @var{FE_OVERFLOW}
+* @var{FE_DIVBYZERO}
+* @var{FE_SUBNORMAL}
+* @var{FE_INVALID}
+
+Note that @var{FE_SUBNORMAL} is not specified by ISO C.
+
+@subheading Return Value
+
+The OR of the requested exceptions that are actually set.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001

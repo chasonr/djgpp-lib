@@ -48,6 +48,7 @@ Headers completely supported
 * assert.h
 * ctype.h
 * errno.h
+* fenv.h
 * inttypes.h
 * locale.h
 * setjmp.h
@@ -191,6 +192,5 @@ wchar.h
 
 Missing headers
 ---------------
-* fenv.h
 * complex.h
 * uchar.h

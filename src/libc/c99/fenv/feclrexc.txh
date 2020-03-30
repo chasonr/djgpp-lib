@@ -1,0 +1,31 @@
+@node feclearexcept, cpu
+@findex feclearexcept
+@subheading Syntax
+
+@example
+#include <fenv.h>
+
+int feclearexcept(int excepts);
+@end example
+
+@subheading Description
+
+@code{feclearexcept} clears the exception flags specified in @var{excepts}.
+
+@var{excepts} is an OR of zero or more of the following:
+* @var{FE_INEXACT}
+* @var{FE_UNDERFLOW}
+* @var{FE_OVERFLOW}
+* @var{FE_DIVBYZERO}
+* @var{FE_SUBNORMAL}
+* @var{FE_INVALID}
+
+Note that @var{FE_SUBNORMAL} is not specified by ISO C.
+
+@subheading Return Value
+
+0 if the exceptions were cleared; nonzero on error.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001

@@ -1,0 +1,23 @@
+@node feholdexcept, cpu
+@findex feholdexcept
+@subheading Syntax
+
+@example
+#include <fenv.h>
+
+int feholdexcept(fenv_t *envp);
+@end example
+
+@subheading Description
+
+@code{feholdexcept} stores the current state of the pending exceptions
+indicated by @var{excepts} into the object referenced by @var{flagp},
+clears the exceptions and masks all signals from floating point exceptions. 
+
+@subheading Return Value
+
+0 if the operation completed; nonzero on error.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001

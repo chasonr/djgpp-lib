@@ -1,0 +1,25 @@
+@node fegetround, cpu
+@findex fegetround
+@subheading Syntax
+
+@example
+#include <fenv.h>
+
+int fegetround(void);
+@end example
+
+@subheading Description
+
+@code{fegetround} returns the current rounding direction, which is one of:
+* @var{FE_TONEAREST}
+* @var{FE_DOWNWARD}
+* @var{FE_UPWARD}
+* @var{FE_TOWARDZERO}
+
+@subheading Return Value
+
+@code{fegetround} returns the current rounding direction.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001

@@ -1,0 +1,23 @@
+@node fegetenv, cpu
+@findex fegetenv
+@subheading Syntax
+
+@example
+#include <fenv.h>
+
+int fegetenv(fenv_t *envp);
+@end example
+
+@subheading Description
+
+@code{fegetenv} reads the current floating point environment into the object
+referenced by @var{envp}. This includes the rounding mode and any pending
+exceptions.
+
+@subheading Return Value
+
+0 if the floating point environment was read; nonzero on error.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001

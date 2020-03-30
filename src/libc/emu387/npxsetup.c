@@ -26,6 +26,7 @@ int _emu_entry(jmp_buf exc);
 #endif
 
 int _8087;
+int _sse;
 
 /* crt0.o references __emu387_load_hook just to pull in this object in libemu.a.
    Using -lemu -lc brings in the static objects instead of a dynamic link. */
@@ -67,6 +68,11 @@ void _npxsetup(char *argv0)
 #ifdef RESTORE_FPU
   static int veryfirst = 1;
 #endif
+
+  /* Look for SSE instructions; if found, initialize the SSE unit */
+  _sse = _detect_sse();
+  if (_sse & SSE_SSE)   
+      asm("push $0x00001F80; ldmxcsr (%esp); add $4, %esp");
 
   cp = getenv("387");
   if (cp && (tolower((unsigned char)cp[0]) == 'y'))

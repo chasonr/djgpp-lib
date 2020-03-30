@@ -1,0 +1,32 @@
+@node fesetexceptflag, cpu
+@findex fesetexceptflag
+@subheading Syntax
+
+@example
+#include <fenv.h>
+
+int fesetexceptflag(const fexcept_t *flagp, int excepts);
+@end example
+
+@subheading Description
+
+@code{fesetexceptflag} sets the exception flags indicated by @var{excepts} to
+the states saved in the object referenced by @var{flagp}.
+
+@var{excepts} is an OR of zero or more of the following:
+* @var{FE_INEXACT}
+* @var{FE_UNDERFLOW}
+* @var{FE_OVERFLOW}
+* @var{FE_DIVBYZERO}
+* @var{FE_SUBNORMAL}
+* @var{FE_INVALID}
+
+Note that @var{FE_SUBNORMAL} is not specified by ISO C.
+
+@subheading Return Value
+
+0 if the exceptions were set; nonzero on error.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001

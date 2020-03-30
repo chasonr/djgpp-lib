@@ -1,0 +1,22 @@
+@node fesetenv, cpu
+@findex fesetenv
+@subheading Syntax
+
+@example
+#include <fenv.h>
+
+int fesetenv(const fenv_t *envp);
+@end example
+
+@subheading Description
+
+@code{fesetenv} sets the floating point environment from the object indicated
+by @var{envp}.
+
+@subheading Return Value
+
+0 if the floating point environment was set; nonzero on error.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001

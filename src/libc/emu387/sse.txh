@@ -1,0 +1,64 @@
+@node _detect_sse, cpu
+@findex _detect_sse
+@subheading Syntax
+
+@example
+#include <dos.h>
+
+int _detect_sse(void);
+@end example
+
+@subheading Description
+
+Detects whether SSE instructions are supported. Detected instruction sets
+are: SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2 and AVX.
+
+@subheading Return Value
+
+An OR of the following bits, according to which instruction sets are available:
+* @code{SSE_SSE}
+* @code{SSE_SSE2}
+* @code{SSE_SSE3}
+* @code{SSE_SSSE3}
+* @code{SSE_SSE41}
+* @code{SSE_SSE42}
+* @code{SSE_AVX}
+
+@subheading Portability
+
+@portability !ansi, !posix
+
+@subheading Example
+
+@example
+if (_detect_sse() & SSE_SSE2)
+  printf("SSE2 instructions are available\n");
+@end example
+
+@c ----------------------------------------------------------------------
+@node _sse, cpu
+@vindex _sse
+@subheading Syntax
+
+@example
+#include <dos.h>
+
+extern int _sse;
+@end example
+
+@subheading Description
+
+This variable contains an OR of the following bits:
+* @code{SSE_SSE}
+* @code{SSE_SSE2}
+* @code{SSE_SSE3}
+* @code{SSE_SSSE3}
+* @code{SSE_SSE41}
+* @code{SSE_SSE42}
+* @code{SSE_AVX}
+
+@subheading Portability
+
+@portability !ansi, !posix
+
+@c ----------------------------------------------------------------------

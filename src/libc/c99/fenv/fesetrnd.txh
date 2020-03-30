@@ -1,0 +1,27 @@
+@node fesetround, cpu
+@findex fesetround
+@subheading Syntax
+
+@example
+#include <fenv.h>
+
+int fesetround(int round);
+@end example
+
+@subheading Description
+
+@code{fesetround} sets the rounding mode to @var{round}.
+
+@code{round} is one of:
+* @var{FE_TONEAREST}
+* @var{FE_DOWNWARD}
+* @var{FE_UPWARD}
+* @var{FE_TOWARDZERO}
+
+@subheading Return Value
+
+0 if the rounding mode was set; nonzero on error.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001

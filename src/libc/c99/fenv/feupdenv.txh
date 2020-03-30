@@ -1,0 +1,23 @@
+@node feupdateenv, cpu
+@findex feupdateenv
+@subheading Syntax
+
+@example
+#include <fenv.h>
+
+int feupdateenv(const fenv_t *envp);
+@end example
+
+@subheading Description
+
+@code{feupdateenv} restores the environment saved in the object referenced
+by @var{envp}, keeping any currently pending exceptions and any exceptions
+newly pending, and then raises the exceptions.
+
+@subheading Return Value
+
+Zero if the environment is restored; nonzero if error.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001

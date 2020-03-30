@@ -25,6 +25,17 @@ extern int _8087;
 
 int _detect_80387(void);
 
+extern int _sse;
+
+int _detect_sse(void);
+#define SSE_SSE    0x02000000
+#define SSE_SSE2   0x04000000
+#define SSE_SSE3   0x00000001
+#define SSE_SSSE3  0x00000200
+#define SSE_SSE41  0x00080000
+#define SSE_SSE42  0x00100000
+#define SSE_AVX    0x10000000
+
 struct DWORDREGS {
   unsigned long edi;
   unsigned long esi;
