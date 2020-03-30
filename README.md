@@ -62,57 +62,107 @@ Headers completely supported
 Headers partially or incorrectly supported
 ------------------------------------------
 math.h
-* All forms missing for some functions:
-  * `scalbln{,f,l}`
-  * `tgamma{,f,l}`
-  * `nearbyint{,f,l}`
-  * `remquo{,f,l}`
-  * `fdim{,f,l}`
-  * `fmax{,f,l}`
-  * `fmin{,f,l}`
-  * `fma{,f,l}`
-  * `nexttoward{,f,l}`
-* `exp2f` and `exp2l` missing
-* Most long double functions missing:
-  * `acosl`
-  * `asinl`
-  * `atanl`
-  * `atan2l`
-  * `cosl`
-  * `sinl`
-  * `tanl`
+* in progress
+* implemented:
+  * `acos`, `acosf`
+  * `acosh`, `acoshf`
+  * `asin`, `asinf`
+  * `asinh`, `asinhf`
+  * `atan2`, `atan2f`
+  * `atan`, `atanf`
+  * `atanh`, `atanhf`
+  * `cbrt`, `cbrtf`
+  * `ceil`, `ceilf`
+  * `copysign`, `copysignf`
+  * `cos`, `cosf`
+  * `cosh`, `coshf`
+  * `erf`, `erff`
+  * `erfc`, `erfcf`
+  * `exp`, `expf`
+  * `exp2`
+  * `expm1`, `expm1f`
+  * `fabs`, `fabsf`
+  * `floor`, `floorf`
+  * `fmod`, `fmodf`
+  * `frexp`, `frexpf`
+  * `hypot`, `hypotf`
+  * `ilogb`, `ilogbf`
+  * `ldexp`, `ldexpf`
+  * `lgamma`, `lgammaf`
+  * `llrint`, `llrintf`, `llrintl`
+  * `llround`, `llroundf`, `llroundl`
+  * `log10`, `log10f`
+  * `log1p`, `log1pf`
+  * `log2`, `log2f`
+  * `log`, `logf`
+  * `logb`, `logbf`
+  * `lrint`, `lrintf`, `lrintl`
+  * `lround`, `lroundf`, `lroundl`
+  * `modf`, `modff`
+  * `nan`, `nanf`
+  * `nextafter`, `nextafterf`
+  * `pow`, `powf`
+  * `remainder`, `remainderf`
+  * `rint`, `rintf`, `rintl`
+  * `round`, `roundf`, `roundl`
+  * `scalbn`, `scalbnf`
+  * `sin`, `sinf`
+  * `sinh`, `sinhf`
+  * `sqrt`, `sqrtf`
+  * `tan`, `tanf`
+  * `tanh`, `tanhf`
+  * `trunc`, `truncf`, `truncl`
+* missing:
   * `acoshl`
+  * `acosl`
   * `asinhl`
+  * `asinl`
+  * `atan2l`
   * `atanhl`
+  * `atanl`
+  * `cbrtl`
+  * `ceill`
+  * `copysignl`
   * `coshl`
-  * `sinhl`
-  * `tanhl`
+  * `cosl`
+  * `erfcl`
+  * `erfl`
+  * `exp2f`, `exp2l`
   * `expl`
-  * `expm1`
+  * `expm1l`
+  * `fabsl`
+  * `fdim`, `fdimf`, `fdiml`
+  * `floorl`
+  * `fma`, `fmaf`, `fmal`
+  * `fmax`, `fmaxf`, `fmaxl`
+  * `fmin`, `fminf`, `fminl`
+  * `fmodl`
   * `frexpl`
+  * `hypotl`
   * `ilogbl`
   * `ldexpl`
-  * `logl`
+  * `lgammal`
   * `log10l`
   * `log1pl`
   * `log2l`
   * `logbl`
+  * `logl`
   * `modfl`
-  * `scalbnl`
-  * `cbrtl`
-  * `fabsl`
-  * `hypotl`
-  * `powl`
-  * `sqrtl`
-  * `erfl`
-  * `erfcl`
-  * `lgammal`
-  * `ceill`
-  * `floorl`
-  * `fmodl`
-  * `remainderl`
-  * `copysignl`
+  * `nanl`
+  * `nearbyint`, `nearbyintf`, `nearbyintl`
   * `nextafterl`
+  * `nexttoward`, `nexttowardf`, `nexttowardl`
+  * `powl`
+  * `remainderl`
+  * `remquo`, `remquof`, `remquol`
+  * `scalbln`, `scalblnf`, `scalblnl`
+  * `scalbnl`
+  * `sinhl`
+  * `sinl`
+  * `sqrtl`
+  * `tanhl`
+  * `tanl`
+  * `tgamma`, `tgammaf`, `tgammal`
 
 stdlib.h
 * `aligned_alloc` missing
