@@ -23,6 +23,9 @@ SRC += sgnbitd.c
 SRC += sgnbitf.c
 SRC += sgnbitld.c
 
+SRC += acosf.S
+SRC += acosl.S
+
 include $(TOP)/../makefile.inc
 
 fpclassf.S: fp-asm.h

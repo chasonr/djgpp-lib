@@ -248,6 +248,8 @@ extern int isinfl(long double);
 extern int isnanl(long double);
 extern int finitel(long double);
 
+extern long double acosl(long double);
+
 /* End libm.a. */
 
 #endif /* (__STDC_VERSION__ >= 199901L) || !__STRICT_ANSI__ */
