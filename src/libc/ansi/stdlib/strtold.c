@@ -226,18 +226,30 @@ strtold(const char *s, char **sret)
     if (digits >= max_digits)
     {
       /*
+       *  Fill in bits from the next digit if present.
+       */
+      int lsd = IS_DEC_DIGIT(*next_char) ? *next_char - '0' :  /*  Least significant hex digit.  Will be rounded out.  */
+                ((*next_char >= 'A') && (*next_char <= 'F')) ? *next_char - 'A' + 10 :
+                ((*next_char >= 'a') && (*next_char <= 'f')) ? *next_char - 'a' + 10 :
+                0;
+      int shift = 0;
+      while ((mantissa & 0x8000000000000000ULL) == 0)
+      {
+        mantissa <<= 1;
+        shift++;
+      }
+      mantissa |= lsd >> (4 - shift);
+      lsd = (lsd << shift) & 0xF;
+      /*
        *  Round half towards plus infinity (round half up).
        */
-      const int lsd = IS_DEC_DIGIT(*next_char) ? *next_char - '0' :  /*  Least significant hex digit.  Will be rounded out.  */
-                      ((*next_char >= 'A') && (*next_char <= 'F')) ? *next_char - 'A' + 10 : *next_char - 'a' + 10;
       if (lsd > 0x07)
       {
         mantissa += 0x0000000000000001ULL;  /* Smallest float greater than x.  */
-        if (!(mantissa & msb_mask))
+        if (mantissa == 0)
         {
           /*  Overflow.  */
-          mantissa >>= 1;
-          mantissa |= 0x8000000000000000ULL;
+          mantissa = 0x8000000000000000ULL;
           bin_exponent++;
         }
       }
