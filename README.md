@@ -17,7 +17,7 @@ How to build
 ============
 
 I am cross-compiling from Linux Mint using a compiler built from the Github
-repository https://github.com/dimkr/build-djgpp.git . Building natively does
+repository https://github.com/andrewwutw/build-djgpp.git . Building natively does
 not seem to work, at least on FreeDOS; the make utility crashes for no apparent
 reason. I have not yet tried it on real MS-DOS.
 
