@@ -74,7 +74,7 @@ or call matherr() on error. See the file info/libc.info for details.
 | `acosh`      | libm.a         | libc.a, libm.a | _missing_       |
 | `asin`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `asinh`      | libm.a         | libc.a, libm.a | _missing_       |
-| `atan`       | libm.a         | libc.a, libm.a | _missing_       |
+| `atan`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `atan2`      | libm.a         | libc.a, libm.a | _missing_       |
 | `atanh`      | libm.a         | libc.a, libm.a | _missing_       |
 | `cbrt`       | libm.a         | libc.a, libm.a | _missing_       |

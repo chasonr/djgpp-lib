@@ -27,6 +27,8 @@ SRC += acosf.S
 SRC += acosl.S
 SRC += asinf.S
 SRC += asinl.S
+SRC += atanf.S
+SRC += atanl.S
 
 include $(TOP)/../makefile.inc
 
