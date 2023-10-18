@@ -132,7 +132,7 @@ strtold(const char *s, char **sret)
   {
     const char *next_char = NULL;
     const int max_digits = MANTISSA_SIZE / HEX_DIGIT_SIZE;  /* The exact number of digits that fits in mantissa.  */
-    int bin_exponent, digits, integer_digits;
+    int bin_exponent, digits, integer_digits, msb_bit;
     unsigned long long int mantissa, msb_mask;
     _longdouble_union_t ieee754;
 
@@ -203,6 +203,10 @@ strtold(const char *s, char **sret)
 
         msb_mask = 0x01ULL;
         bin_exponent = -fraction_zeros * HEX_DIGIT_SIZE;  /*  2**bin_exponent.  */
+        msb_bit = digits * HEX_DIGIT_SIZE + bin_exponent;
+        // Avoid undefined behavior in shifting msb_mask
+        if (msb_bit >= 64)
+          bin_exponent -= msb_bit - 63;
         for (msb_mask <<= (digits * HEX_DIGIT_SIZE + bin_exponent); !(mantissa & msb_mask); msb_mask >>= 1)
           bin_exponent--;
       }
