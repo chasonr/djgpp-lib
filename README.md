@@ -33,211 +33,200 @@ support for C11:
 
 Headers provided by GCC
 -----------------------
-* float.h
-* iso646.h
-* limits.h
-* stdalign.h
-* stdarg.h
-* stdatomic.h
-* stddef.h
-* stdnoreturn.h
-* tgmath.h
+  * float.h
+  * iso646.h
+  * limits.h
+  * stdalign.h
+  * stdarg.h
+  * stdatomic.h
+  * stddef.h
+  * stdnoreturn.h
+  * tgmath.h
 
 Headers completely supported
 ----------------------------
-* assert.h
-* ctype.h
-* errno.h
-* fenv.h
-* inttypes.h
-* locale.h
-* setjmp.h
-* signal.h
-* stdbool.h
-* stdint.h
-* stdio.h
-* string.h
-* wctype.h
+  * assert.h
+  * ctype.h
+  * errno.h
+  * fenv.h
+  * inttypes.h
+  * locale.h
+  * setjmp.h
+  * signal.h
+  * stdbool.h
+  * stdint.h
+  * stdio.h
+  * string.h
+  * wctype.h
 
 Headers partially or incorrectly supported
 ------------------------------------------
 math.h
-* in progress
-* implemented:
-  * `acos`, `acosf`
-  * `acosh`, `acoshf`
-  * `asin`, `asinf`
-  * `asinh`, `asinhf`
-  * `atan2`, `atan2f`
-  * `atan`, `atanf`
-  * `atanh`, `atanhf`
-  * `cbrt`, `cbrtf`
-  * `ceil`, `ceilf`
-  * `copysign`, `copysignf`
-  * `cos`, `cosf`
-  * `cosh`, `coshf`
-  * `erf`, `erff`
-  * `erfc`, `erfcf`
-  * `exp`, `expf`
-  * `exp2`
-  * `expm1`, `expm1f`
-  * `fabs`, `fabsf`
-  * `floor`, `floorf`
-  * `fmod`, `fmodf`
-  * `frexp`, `frexpf`
-  * `hypot`, `hypotf`
-  * `ilogb`, `ilogbf`
-  * `ldexp`, `ldexpf`
-  * `lgamma`, `lgammaf`
-  * `llrint`, `llrintf`, `llrintl`
-  * `llround`, `llroundf`, `llroundl`
-  * `log10`, `log10f`
-  * `log1p`, `log1pf`
-  * `log2`, `log2f`
-  * `log`, `logf`
-  * `logb`, `logbf`
-  * `lrint`, `lrintf`, `lrintl`
-  * `lround`, `lroundf`, `lroundl`
-  * `modf`, `modff`
-  * `nan`, `nanf`
-  * `nextafter`, `nextafterf`
-  * `pow`, `powf`
-  * `remainder`, `remainderf`
-  * `rint`, `rintf`, `rintl`
-  * `round`, `roundf`, `roundl`
-  * `scalbn`, `scalbnf`
-  * `sin`, `sinf`
-  * `sinh`, `sinhf`
-  * `sqrt`, `sqrtf`
-  * `tan`, `tanf`
-  * `tanh`, `tanhf`
-  * `trunc`, `truncf`, `truncl`
-* missing:
-  * `acoshl`
-  * `acosl`
-  * `asinhl`
-  * `asinl`
-  * `atan2l`
-  * `atanhl`
-  * `atanl`
-  * `cbrtl`
-  * `ceill`
-  * `copysignl`
-  * `coshl`
-  * `cosl`
-  * `erfcl`
-  * `erfl`
-  * `exp2f`, `exp2l`
-  * `expl`
-  * `expm1l`
-  * `fabsl`
-  * `fdim`, `fdimf`, `fdiml`
-  * `floorl`
-  * `fma`, `fmaf`, `fmal`
-  * `fmax`, `fmaxf`, `fmaxl`
-  * `fmin`, `fminf`, `fminl`
-  * `fmodl`
-  * `frexpl`
-  * `hypotl`
-  * `ilogbl`
-  * `ldexpl`
-  * `lgammal`
-  * `log10l`
-  * `log1pl`
-  * `log2l`
-  * `logbl`
-  * `logl`
-  * `modfl`
-  * `nanl`
-  * `nearbyint`, `nearbyintf`, `nearbyintl`
-  * `nextafterl`
-  * `nexttoward`, `nexttowardf`, `nexttowardl`
-  * `powl`
-  * `remainderl`
-  * `remquo`, `remquof`, `remquol`
-  * `scalbln`, `scalblnf`, `scalblnl`
-  * `scalbnl`
-  * `sinhl`
-  * `sinl`
-  * `sqrtl`
-  * `tanhl`
-  * `tanl`
-  * `tgamma`, `tgammaf`, `tgammal`
+
+Many functions in math.h have two versions. The one defined in libc.a is
+coded specifically for the x87 unit and sets errno on any math errors.
+The one defined in libm.a is more generically coded, and may set errno
+or call matherr() on error. See the file info/libc.info for details.
+
+| __Function__ | __float__      | __double__     | __long double__ |
+|--------------|----------------|----------------|-----------------|
+| `acos`       | libm.a         | libc.a, libm.a | _missing_       |
+| `acosh`      | libm.a         | libc.a, libm.a | _missing_       |
+| `asin`       | libm.a         | libc.a, libm.a | _missing_       |
+| `asinh`      | libm.a         | libc.a, libm.a | _missing_       |
+| `atan`       | libm.a         | libc.a, libm.a | _missing_       |
+| `atan2`      | libm.a         | libc.a, libm.a | _missing_       |
+| `atanh`      | libm.a         | libc.a, libm.a | _missing_       |
+| `cbrt`       | libm.a         | libc.a, libm.a | _missing_       |
+| `ceil`       | libm.a         | libc.a, libm.a | _missing_       |
+| `copysign`   | libm.a         | libm.a         | _missing_       |
+| `cos`        | libm.a         | libc.a, libm.a | _missing_       |
+| `cosh`       | libm.a         | libc.a, libm.a | _missing_       |
+| `erf`        | libm.a         | libm.a         | _missing_       |
+| `erfc`       | libm.a         | libm.a         | _missing_       |
+| `exp`        | libm.a         | libc.a, libm.a | _missing_       |
+| `exp2`       | _missing_      | libc.a         | _missing_       |
+| `expm1`      | libm.a         | libc.a, libm.a | _missing_       |
+| `fabs`       | libm.a         | libc.a, libm.a | _missing_       |
+| `fdim`       | _missing_      | _missing_      | _missing_       |
+| `floor`      | libm.a         | libc.a, libm.a | _missing_       |
+| `fma`        | _missing_      | _missing_      | _missing_       |
+| `fmax`       | _missing_      | _missing_      | _missing_       |
+| `fmin`       | _missing_      | _missing_      | _missing_       |
+| `fmod`       | libm.a         | libc.a, libm.a | _missing_       |
+| `frexp`      | libm.a         | libc.a, libm.a | _missing_       |
+| `hypot`      | libm.a         | libc.a, libm.a | _missing_       |
+| `ilogb`      | libm.a         | libm.a         | _missing_       |
+| `ldexp`      | libm.a         | libc.a, libm.a | _missing_       |
+| `lgamma`     | libm.a         | libm.a         | _missing_       |
+| `llrint`     | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
+| `llround`    | libm.a         | libm.a         | libm.a          |
+| `log`        | libm.a         | libc.a, libm.a | _missing_       |
+| `log10`      | libm.a         | libc.a, libm.a | _missing_       |
+| `log1p`      | libm.a         | libc.a, libm.a | _missing_       |
+| `log2`       | libm.a         | libc.a, libm.a | _missing_       |
+| `logb`       | libm.a         | libm.a         | _missing_       |
+| `lrint`      | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
+| `lround`     | libm.a         | libm.a         | libm.a          |
+| `modf`       | libm.a         | libc.a, libm.a | libc.a          |
+| `nan`        | libm.a         | libm.a         | libc.a          |
+| `nearbyint`  | _missing_      | _missing_      | _missing_       |
+| `nextafter`  | libm.a         | libm.a         | _missing_       |
+| `nexttoward` | _missing_      | _missing_      | _missing_       |
+| `pow`        | libm.a         | libc.a, libm.a | _missing_       |
+| `remainder`  | libm.a         | libm.a         | _missing_       |
+| `remquo`     | _missing_      | _missing_      | _missing_       |
+| `rint`       | libm.a         | libm.a         | libm.a          |
+| `round`      | libm.a         | libm.a         | libm.a          |
+| `scalbln`    | _missing_      | _missing_      | _missing_       |
+| `scalbn`     | libm.a         | libm.a         | _missing_       |
+| `sin`        | libm.a         | libc.a, libm.a | _missing_       |
+| `sinh`       | libm.a         | libc.a, libm.a | _missing_       |
+| `sqrt`       | libm.a         | libc.a, libm.a | _missing_       |
+| `tan`        | libm.a         | libc.a, libm.a | _missing_       |
+| `tanh`       | libm.a         | libc.a, libm.a | _missing_       |
+| `tgamma`     | _missing_      | _missing_      | _missing_       |
+| `trunc`      | libm.a         | libm.a         | libm.a          |
+
+libm.a implements additional functions not present in C11:
+
+| __Function__  | __float__ | __double__ | __long double__ |
+|---------------|-----------|------------|-----------------|
+| `cabs`        | libm.a    | libm.a     | _missing_       |
+| `drem`        | libm.a    | libm.a     | _missing_       |
+| `finite`      | libm.a    | libm.a     | libm.a          |
+| `gamma`       | libm.a    | libm.a     | _missing_       |
+| `gamma_r`     | libm.a    | libm.a     | _missing_       |
+| `infinity`    | libm.a    | libm.a     | _missing_       |
+| `isinf`       | libm.a    | libm.a     | libm.a          |
+| `isnan`       | libm.a    | libm.a     | libm.a          |
+| `j0`          | libm.a    | libm.a     | _missing_       |
+| `j1`          | libm.a    | libm.a     | _missing_       |
+| `jn`          | libm.a    | libm.a     | _missing_       |
+| `lgamma_r`    | libm.a    | libm.a     | _missing_       |
+| `scalb`       | libm.a    | libm.a     | _missing_       |
+| `significand` | libm.a    | libm.a     | _missing_       |
+| `y0`          | libm.a    | libm.a     | _missing_       |
+| `y1`          | libm.a    | libm.a     | _missing_       |
+| `yn`          | libm.a    | libm.a     | _missing_       |
 
 stdlib.h
-* `aligned_alloc` missing
-* `at_quick_exit` missing
-* `quick_exit` missing
+
+  * `aligned_alloc` missing
+  * `at_quick_exit` missing
+  * `quick_exit` missing
 
 time.h
-* `TIME_UTC` missing
-* `struct timespec` missing
-* `timespec_get` missing
+
+  * `TIME_UTC` missing
+  * `struct timespec` missing
+  * `timespec_get` missing
 
 wchar.h
-* in progress
-* implemented:
-  * `wmemcpy`
-  * `wmemmove`
-  * `wmemcmp`
-  * `wmemchr`
-  * `wmemset`
-  * `wcscat`
-  * `wcschr`
-  * `wcscmp`
-  * `wcscpy`
-  * `wcscspn`
-  * `wcslen`
-  * `wcsncat`
-  * `wcsncmp`
-  * `wcsncpy`
-  * `wcspbrk`
-  * `wcsrchr`
-  * `wcsspn`
-  * `wcsstr`
-  * `wcstok`
-  * `wcstod`
-  * `wcstof`
-  * `wcstol`
-  * `wcstold`
-  * `wcstoll`
-  * `wcstoul`
-  * `wcstoull`
-  * `wcsftime`
-  * `btowc`
-  * `mbrlen`
-  * `mbrtowc`
-  * `mbsinit`
-  * `mbsrtowcs`
-  * `wcrtomb`
-  * `wcsrtombs`
-  * `wctob`
-* partially implemented:
-  * `wcscoll` -- same as `wcscmp`, no locale-dependent behavior
-  * `wcsxfrm` -- identity map, no locale-dependent behavior
-* missing:
-  * `fgetwc`
-  * `fgetws`
-  * `fputwc`
-  * `fputws`
-  * `fwide`
-  * `fwprintf`
-  * `fwscanf`
-  * `getwc`
-  * `getwchar`
-  * `putwc`
-  * `putwchar`
-  * `swprintf`
-  * `swscanf`
-  * `ungetwc`
-  * `vfwprintf`
-  * `vfwscanf`
-  * `vswprintf`
-  * `vswscanf`
-  * `vwprintf`
-  * `vwscanf`
-  * `wprintf`
-  * `wscanf`
+
+  * in progress
+  * implemented:
+    * `wmemcpy`
+    * `wmemmove`
+    * `wmemcmp`
+    * `wmemchr`
+    * `wmemset`
+    * `wcscat`
+    * `wcschr`
+    * `wcscmp`
+    * `wcscpy`
+    * `wcscspn`
+    * `wcslen`
+    * `wcsncat`
+    * `wcsncmp`
+    * `wcsncpy`
+    * `wcspbrk`
+    * `wcsrchr`
+    * `wcsspn`
+    * `wcsstr`
+    * `wcstok`
+    * `wcstod`
+    * `wcstof`
+    * `wcstol`
+    * `wcstold`
+    * `wcstoll`
+    * `wcstoul`
+    * `wcstoull`
+    * `wcsftime`
+    * `btowc`
+    * `mbrlen`
+    * `mbrtowc`
+    * `mbsinit`
+    * `mbsrtowcs`
+    * `wcrtomb`
+    * `wcsrtombs`
+    * `wctob`
+  * partially implemented:
+    * `wcscoll` -- same as `wcscmp`, no locale-dependent behavior
+    * `wcsxfrm` -- identity map, no locale-dependent behavior
+  * missing:
+    * `fgetwc`
+    * `fgetws`
+    * `fputwc`
+    * `fputws`
+    * `fwide`
+    * `fwprintf`
+    * `fwscanf`
+    * `getwc`
+    * `getwchar`
+    * `putwc`
+    * `putwchar`
+    * `swprintf`
+    * `swscanf`
+    * `ungetwc`
+    * `vfwprintf`
+    * `vfwscanf`
+    * `vswprintf`
+    * `vswscanf`
+    * `vwprintf`
+    * `vwscanf`
+    * `wprintf`
+    * `wscanf`
 
 Missing headers
 ---------------
