@@ -17,7 +17,7 @@
 #include <sys/system.h>
 #include <libc/file.h>	/* Workaround for stderr bug below */
 
-extern char *source_path;
+char *source_path;
 extern char *setupfilename;
 /* ------------------------------------------------------------------------- */
 static void

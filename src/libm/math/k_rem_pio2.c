@@ -277,6 +277,8 @@ recompute:
 	}
 
     /* compute PIo2[0,...,jp]*q[jz,...,0] */
+	for(i=0;i<(int)(sizeof(fq)/sizeof(fq[0]));i++)
+	    fq[i] = 0.0;
 	for(i=jz;i>=0;i--) {
 	    for(fw=0.0,k=0;k<=jp&&k<=jz-i;k++) fw += PIo2[k]*q[i+k];
 	    fq[jz-i] = fw;

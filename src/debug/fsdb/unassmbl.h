@@ -25,7 +25,7 @@ char *unassemble_source (word32 v);
 void put_source_line(int, char *, int, char *);
 int file_line_count (char *);
 FILE *cache_fopen(char *name);
-char *source_path;
+extern char *source_path;
 #else
 word32 unassemble(word32 v, int showregs);
 #endif

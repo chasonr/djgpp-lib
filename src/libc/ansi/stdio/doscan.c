@@ -610,9 +610,10 @@ _instr(char *ptr, int type, int len, FILE *iop,
     }
     if (allocate_char_buffer)
     {
-      *(char **)arg_ptr = realloc(orig_ptr, string_length);
+      char *new_ptr = realloc(orig_ptr, string_length);
+      *(char **)arg_ptr = new_ptr;
       ptr = arg_ptr;
-      if (!*ptr)
+      if (!new_ptr)
       {
         free(orig_ptr);
         errno = ENOMEM;
@@ -774,9 +775,10 @@ _inwstr(wchar_t *ptr, int type, int len, FILE *iop,
     }
     if (allocate_char_buffer)
     {
-      *(wchar_t **)arg_ptr = realloc(orig_ptr, string_length * sizeof(wchar_t));
+      wchar_t *new_ptr = realloc(orig_ptr, string_length * sizeof(wchar_t));
+      *(wchar_t **)arg_ptr = new_ptr;
       ptr = arg_ptr;
-      if (!*ptr)
+      if (!new_ptr)
       {
         free(orig_ptr);
         errno = ENOMEM;
