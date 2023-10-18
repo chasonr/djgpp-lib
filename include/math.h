@@ -249,6 +249,7 @@ extern int isnanl(long double);
 extern int finitel(long double);
 
 extern long double acosl(long double);
+extern long double asinl(long double);
 
 /* End libm.a. */
 

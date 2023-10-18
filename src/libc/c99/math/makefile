@@ -25,6 +25,8 @@ SRC += sgnbitld.c
 
 SRC += acosf.S
 SRC += acosl.S
+SRC += asinf.S
+SRC += asinl.S
 
 include $(TOP)/../makefile.inc
 
