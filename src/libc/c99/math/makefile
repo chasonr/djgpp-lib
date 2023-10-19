@@ -29,6 +29,8 @@ SRC += acoshf.S
 SRC += acoshl.S
 SRC += asinf.S
 SRC += asinl.S
+SRC += asinhf.S
+SRC += asinhl.S
 SRC += atanf.S
 SRC += atanl.S
 

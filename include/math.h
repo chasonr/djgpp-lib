@@ -251,6 +251,7 @@ extern int finitel(long double);
 extern long double acosl(long double);
 extern long double acoshl(long double);
 extern long double asinl(long double);
+extern long double asinhl(long double);
 extern long double atanl(long double);
 
 /* End libm.a. */
