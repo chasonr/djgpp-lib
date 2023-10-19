@@ -33,6 +33,8 @@ SRC += asinhf.S
 SRC += asinhl.S
 SRC += atanf.S
 SRC += atanl.S
+SRC += atanhf.S
+SRC += atanhl.S
 
 include $(TOP)/../makefile.inc
 
