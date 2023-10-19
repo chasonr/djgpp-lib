@@ -37,6 +37,8 @@ SRC += atan2f.S
 SRC += atan2l.S
 SRC += atanhf.S
 SRC += atanhl.S
+SRC += cbrtf.S
+SRC += cbrtl.S
 
 include $(TOP)/../makefile.inc
 
