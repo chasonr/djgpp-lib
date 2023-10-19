@@ -33,6 +33,8 @@ SRC += asinhf.S
 SRC += asinhl.S
 SRC += atanf.S
 SRC += atanl.S
+SRC += atan2f.S
+SRC += atan2l.S
 SRC += atanhf.S
 SRC += atanhl.S
 

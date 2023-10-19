@@ -253,6 +253,7 @@ extern long double acoshl(long double);
 extern long double asinl(long double);
 extern long double asinhl(long double);
 extern long double atanl(long double);
+extern long double atan2l(long double, long double);
 extern long double atanhl(long double);
 
 /* End libm.a. */
