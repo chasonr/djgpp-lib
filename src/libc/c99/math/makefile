@@ -25,6 +25,8 @@ SRC += sgnbitld.c
 
 SRC += acosf.S
 SRC += acosl.S
+SRC += acoshf.S
+SRC += acoshl.S
 SRC += asinf.S
 SRC += asinl.S
 SRC += atanf.S

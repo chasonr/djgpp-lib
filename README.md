@@ -71,7 +71,7 @@ or call matherr() on error. See the file info/libc.info for details.
 | __Function__ | __float__      | __double__     | __long double__ |
 |--------------|----------------|----------------|-----------------|
 | `acos`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `acosh`      | libm.a         | libc.a, libm.a | _missing_       |
+| `acosh`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `asin`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `asinh`      | libm.a         | libc.a, libm.a | _missing_       |
 | `atan`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
