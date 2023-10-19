@@ -16,21 +16,11 @@ _atan2:
 	cmpl	$0x7FF00000, %edx
 	je	abx
 
-	orl	%eax, %edx		/* OR exponents together. */
-	je	verysmall		/* Both args are very small; */
-					/* do more tests. */
-
 argok:
 	fldl	4(%esp)
 	fldl	12(%esp)
 	fpatan
 	ret
-
-verysmall:
-	movl	4(%esp), %eax
-	orl	12(%esp), %eax
-	jz	badarg			/* x = 0 and y = 0 */
-	jmp	argok
 
 aby:
 	movl	8(%esp), %eax		/* inf or NaN */
@@ -38,12 +28,7 @@ aby:
 	jne	badarg			/* y = NaN */
 	movl	4(%esp), %eax
 	testl	%eax, %eax
-	jnz	badarg
-
-	movl	16(%esp), %eax
-	andl	$0x7FF00000, %eax
-	cmpl	$0x7FF00000, %eax
-	jne	argok			/* x is finite */
+	jz	argok
 	jmp	badarg
 
 abx:
@@ -52,12 +37,7 @@ abx:
 	jne	badarg			/* x = NaN */
 	movl	12(%esp), %eax
 	testl	%eax, %eax
-	jnz	badarg
-
-	movl	8(%esp), %eax
-	andl	$0x7FF00000, %eax
-	cmpl	$0x7FF00000, %eax
-	jne	argok			/* y is finite */
+	jz	argok
 
 badarg:					/* arg is NaN */
 	movl	$1, _errno
