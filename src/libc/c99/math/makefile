@@ -46,6 +46,8 @@ SRC += copysign.S
 SRC += copysignl.S
 SRC += cosf.S
 SRC += cosl.S
+SRC += coshf.S
+SRC += coshl.S
 
 include $(TOP)/../makefile.inc
 

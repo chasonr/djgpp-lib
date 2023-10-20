@@ -259,6 +259,7 @@ extern long double cbrtl(long double);
 extern long double ceill(long double);
 extern long double copysignl(long double, long double);
 extern long double cosl(long double);
+extern long double coshl(long double);
 
 /* End libm.a. */
 
