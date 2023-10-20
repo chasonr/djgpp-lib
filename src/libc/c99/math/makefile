@@ -39,6 +39,8 @@ SRC += atanhf.S
 SRC += atanhl.S
 SRC += cbrtf.S
 SRC += cbrtl.S
+SRC += ceilf.S
+SRC += ceill.S
 
 include $(TOP)/../makefile.inc
 

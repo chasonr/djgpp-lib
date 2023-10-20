@@ -78,7 +78,7 @@ or call matherr() on error. See the file info/libc.info for details.
 | `atan2`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `atanh`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `cbrt`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `ceil`       | libm.a         | libc.a, libm.a | _missing_       |
+| `ceil`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `copysign`   | libm.a         | libm.a         | _missing_       |
 | `cos`        | libm.a         | libc.a, libm.a | _missing_       |
 | `cosh`       | libm.a         | libc.a, libm.a | _missing_       |
