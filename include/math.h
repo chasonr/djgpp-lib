@@ -222,6 +222,7 @@ extern long long int llround(double);
 extern long long int llroundl(long double);
 extern float erff(float);
 extern float erfcf(float);
+extern float exp2f(float);
 extern float hypotf(float, float);
 extern float lgammaf(float);
 extern float acoshf(float);
@@ -260,6 +261,7 @@ extern long double ceill(long double);
 extern long double copysignl(long double, long double);
 extern long double cosl(long double);
 extern long double coshl(long double);
+extern long double exp2l(long double);
 
 /* End libm.a. */
 

@@ -48,6 +48,8 @@ SRC += cosf.S
 SRC += cosl.S
 SRC += coshf.S
 SRC += coshl.S
+SRC += exp2f.S
+SRC += exp2l.S
 
 include $(TOP)/../makefile.inc
 
