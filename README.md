@@ -79,7 +79,7 @@ or call matherr() on error. See the file info/libc.info for details.
 | `atanh`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `cbrt`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `ceil`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `copysign`   | libm.a         | libm.a         | _missing_       |
+| `copysign`   | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `cos`        | libm.a         | libc.a, libm.a | _missing_       |
 | `cosh`       | libm.a         | libc.a, libm.a | _missing_       |
 | `erf`        | libm.a         | libm.a         | _missing_       |
