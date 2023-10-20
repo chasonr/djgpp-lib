@@ -48,6 +48,8 @@ SRC += cosf.S
 SRC += cosl.S
 SRC += coshf.S
 SRC += coshl.S
+SRC += expf.S
+SRC += expl.S
 SRC += exp2f.S
 SRC += exp2l.S
 
