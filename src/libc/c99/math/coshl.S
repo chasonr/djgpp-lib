@@ -66,14 +66,14 @@ alt_formula:
 
 	/* 0x0.B174DDC031AEC0E8p+14 */
 	movl	4(%esp), %eax
+	movl	8(%esp), %edx
+	mov	12(%esp), %ecx
+	and	$0x7FFFFFFF, %edx	/* Ignore the unused significand bit */
+	and	$0x00007FFF, %ecx
 	cmpl	$0x31AEC0E8, %eax
-	movl	8(%esp), %eax
-	and	$0x7FFFFFFF, %eax	/* Ignore the unused significand bit */
-	subl	$0x3174DDC0, %eax
-	mov	12(%esp), %eax
-	and	$0x00007FFF, %eax
-	subl	$0x0000400C, %eax
-	jg	bigarg
+	sbbl	$0x3174DDC0, %edx
+	sbbl	$0x0000400C, %ecx
+	jge	bigarg
 
 	fldt	4(%esp)
 	fldl2e				/* log2(e)   x		   */
