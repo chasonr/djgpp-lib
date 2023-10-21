@@ -264,6 +264,7 @@ extern long double coshl(long double);
 extern long double expl(long double);
 extern long double exp2l(long double);
 extern long double expm1l(long double);
+extern long double fabsl(long double);
 
 /* End libm.a. */
 

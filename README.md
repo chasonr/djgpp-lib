@@ -87,7 +87,7 @@ or call matherr() on error. See the file info/libc.info for details.
 | `exp`        | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `exp2`       | libc.a         | libc.a         | libc.a          |
 | `expm1`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `fabs`       | libm.a         | libc.a, libm.a | _missing_       |
+| `fabs`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `fdim`       | _missing_      | _missing_      | _missing_       |
 | `floor`      | libm.a         | libc.a, libm.a | _missing_       |
 | `fma`        | _missing_      | _missing_      | _missing_       |
