@@ -52,6 +52,8 @@ SRC += expf.S
 SRC += expl.S
 SRC += exp2f.S
 SRC += exp2l.S
+SRC += expm1f.S
+SRC += expm1l.S
 
 include $(TOP)/../makefile.inc
 
