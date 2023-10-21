@@ -13,10 +13,10 @@ _expf:
 	andl	$0x7FFFFFFF, %eax
 	cmpl	$0x7F800000, %eax
 	je	infarg
-	jg	badarg
+	ja	badarg
 	xorl	$0x80000000, %edx
 	cmpl	$0xC2B17218, %edx
-	jge	bigarg			/* normal args: */
+	jae	bigarg			/* normal args: */
 					/* 0 < |x| <= log(FLT_MAX) */
 argok:					/* N.B. */
 					/* log(FLT_MAX) = 0x42B17218 */
