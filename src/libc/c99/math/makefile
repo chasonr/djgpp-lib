@@ -56,6 +56,9 @@ SRC += expm1f.S
 SRC += expm1l.S
 SRC += fabsf.S
 SRC += fabsl.S
+SRC += fdimf.c
+SRC += fdim.c
+SRC += fdiml.c
 
 include $(TOP)/../makefile.inc
 
