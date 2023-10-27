@@ -268,6 +268,7 @@ extern long double exp2l(long double);
 extern long double expm1l(long double);
 extern long double fabsl(long double);
 extern long double fdiml(long double, long double);
+extern long double floorl(long double);
 
 /* End libm.a. */
 
