@@ -32,6 +32,7 @@ double exp(double _x);
 double fabs(double _x);
 double fdim(double _x, double _y);
 double floor(double _x);
+double fma(double _x, double _y, double _z);
 double fmod(double _x, double _y);
 double frexp(double _x, int *_pexp);
 double ldexp(double _x, int _exp);
@@ -85,6 +86,7 @@ extern float ceilf(float);
 extern float fabsf(float);
 extern float fdimf(float, float);
 extern float floorf(float);
+extern float fmaf(float, float, float);
 extern float fmodf(float, float);
 
 /* End libm.a. */
@@ -269,6 +271,7 @@ extern long double expm1l(long double);
 extern long double fabsl(long double);
 extern long double fdiml(long double, long double);
 extern long double floorl(long double);
+extern long double fmal(long double, long double, long double);
 
 /* End libm.a. */
 

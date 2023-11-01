@@ -61,6 +61,12 @@ SRC += fdim.c
 SRC += fdiml.c
 SRC += floorf.S
 SRC += floorl.S
+SRC += fmaf.c
+SRC += fma.c
+SRC += fmal.c
+SRC += bigfma.c
+SRC += twosum.c
+SRC += setodd.S
 
 include $(TOP)/../makefile.inc
 
@@ -69,6 +75,16 @@ fpclassf.S: fp-asm.h
 fpclassd.S: fp-asm.h
 
 fpclassl.S: fp-asm.h
+
+fmaf.c: bigfma.h
+
+fma.c: bigfma.h
+
+fmal.c: bigfma.h
+
+bigfma.c: bigfma.h
+
+twosum.c: bigfma.h
 
 fp-asm.h: fp-asm.sed $(TOP)/../../include/math.h
 	sed -n -f fp-asm.sed $(TOP)/../../include/math.h > fp-asm.h
