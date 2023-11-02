@@ -1,8 +1,5 @@
 /* Copyright (C) 2011 DJ Delorie, see COPYING.DJ for details */
 /* Copyright (C) 1999 DJ Delorie, see COPYING.DJ for details */
-	.data
-NaN:
-	.long	0xFFC00000
 
 	.text
 	.globl	_ldexp
@@ -12,52 +9,43 @@ _ldexp:
 		result = x * (2^expon)
 	*/
 
-	subl	$8, %esp
-	movl	16(%esp), %eax		/* Get high word of x */
-	andl	$0x7FF00000, %eax
+	movl	8(%esp), %eax		/* Get high word of x */
+	andl	$0x7FFFFFFF, %eax
+	jz	maybezero		/* x may be zero */
 	cmpl	$0x7FF00000, %eax
-	je	abarg			/* x = INF or NaN */
+	jge	zeroinfnan		/* x = INF or NaN */
 
 argok:
-	fildl	20(%esp)
-	fldl	12(%esp)
+	fildl	12(%esp)
+	fldl	4(%esp)
 	fscale
 	fstp	%st(1)
 
-	fstl	(%esp)			/* Do integer tests on result. */
-	movl	4(%esp), %eax
-	testl	$0x7FF00000, %eax	/* Underflow test */
-	jz	VerySmall
-	andl	$0x7FF00000, %eax	/* Infinity test */
-	cmpl	$0x7FF00000, %eax
+	/* Check for overflow and underflow */
+	subl	$8, %esp
+	fstpl	(%esp)
+	fldl	(%esp)
+	addl	$8, %esp
+	fxam
+	fnstsw	%ax
+	andb	$0x45, %ah		/* Get the C3, C2 and C0 bits */
+	cmpb	$0x05, %ah		/* infinity */
+	je	RangeError
+	cmpb	$0x40, %ah		/* zero */
 	je	RangeError
 
-CleanUp:
-	addl	$8, %esp
 	ret
 
-abarg:
-	movl	$1, _errno
-	movl	16(%esp), %eax		/* inf or NaN */
-	testl	$0x000FFFFF, %eax
-	jnz	badarg
-	movl	12(%esp), %eax
-	testl	%eax, %eax
-	jz	argok
+maybezero:
+	movl	4(%esp), %eax
+	test	%eax, %eax
+	jnz	argok
+	/* else fall through */
 
-badarg:					/* arg is NaN */
-	flds	NaN
-	jmp	CleanUp
+zeroinfnan:				/* zero, inf or NaN */
+	fldl	4(%esp)
+	ret
 
 RangeError:
 	movl	$2, _errno
-	jmp	CleanUp
-
-VerySmall:				/* exp = max negative */
-	movl	16(%esp), %eax		/* Get high word of x */
-	testl	$0x7FF00000, %eax	/* Signal underflow (ERANGE) */
-	jnz	RangeError		/* unless x = 0 */
-	movl	12(%esp), %eax
-	testl	%eax, %eax
-	jnz	RangeError
-	jmp	CleanUp
+	ret
