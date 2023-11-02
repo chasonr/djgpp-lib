@@ -77,6 +77,8 @@ SRC += fmodf.S
 SRC += fmodl.S
 SRC += frexpf.S
 SRC += frexpl.S
+SRC += ldexpf.S
+SRC += ldexpl.S
 
 include $(TOP)/../makefile.inc
 
