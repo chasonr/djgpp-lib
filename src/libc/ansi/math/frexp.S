@@ -1,7 +1,5 @@
 /* Copyright (C) 2011 DJ Delorie, see COPYING.DJ for details */
 /* Copyright (C) 1999 DJ Delorie, see COPYING.DJ for details */
-NaN:
-	.long	0xFFC00000
 
 onehalf:
 	.float	0.5
@@ -18,22 +16,11 @@ _frexp:
 	movl	12(%esp), %edx		/* Load pointer to expon. */
 
 	movl	8(%esp), %eax
+	andl	$0x7FFFFFFF, %eax
+	jz	maybezero		/* arg might be 0 */
 
-	testl	%eax, %eax		/* Is x = 0 ? */
-	jnz	inftest
-
-	movl	4(%esp), %eax
-	testl	%eax, %eax
-	jnz	inftest
-	
-	movl	$0, (%edx)		/* If so, return zeros. */
-	fldz
-	ret
-
-inftest:
-	andl	$0x7FF00000, %eax
 	cmpl	$0x7FF00000, %eax
-	je	badarg			/* +/- inf or NaN */
+	jge	zeroinfnan		/* arg is inf or NaN */
 
 argok:
 	fldl	4(%esp)
@@ -46,8 +33,12 @@ argok:
 	incl	(%edx)
 	ret
 
-badarg:					/* arg is NaN */
-	movl	$1, _errno
+maybezero:				/* arg may be zero */
+	movl	4(%esp), %eax
+	testl	%eax, %eax
+	jnz	argok			/* arg is not zero */
+
+zeroinfnan:				/* arg is zero, inf or NaN */
 	movl	$0, (%edx)
-	flds	NaN
+	fldl	4(%esp)
 	ret
