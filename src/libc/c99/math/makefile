@@ -73,6 +73,8 @@ SRC += fmaxl.c
 SRC += fminf.c
 SRC += fmin.c
 SRC += fminl.c
+SRC += fmodf.S
+SRC += fmodl.S
 
 include $(TOP)/../makefile.inc
 
