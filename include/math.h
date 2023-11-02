@@ -280,6 +280,7 @@ extern long double fmaxl(long double, long double);
 extern long double fminl(long double, long double);
 extern long double fmodl(long double, long double);
 extern long double frexpl(long double, int *);
+extern int ilogbl(long double);
 extern long double ldexpl(long double, int);
 
 /* End libm.a. */

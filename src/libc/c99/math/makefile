@@ -77,6 +77,9 @@ SRC += fmodf.S
 SRC += fmodl.S
 SRC += frexpf.S
 SRC += frexpl.S
+SRC += ilogbf.S
+SRC += ilogb.S
+SRC += ilogbl.S
 SRC += ldexpf.S
 SRC += ldexpl.S
 

@@ -96,7 +96,7 @@ or call matherr() on error. See the file info/libc.info for details.
 | `fmod`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `frexp`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `hypot`      | libm.a         | libc.a, libm.a | _missing_       |
-| `ilogb`      | libm.a         | libm.a         | _missing_       |
+| `ilogb`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `ldexp`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `lgamma`     | libm.a         | libm.a         | _missing_       |
 | `llrint`     | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
