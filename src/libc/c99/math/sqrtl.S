@@ -2,16 +2,15 @@
 /* Copyright (C) 2011 DJ Delorie, see COPYING.DJ for details */
 /* Copyright (C) 1999 DJ Delorie, see COPYING.DJ for details */
 
-	.globl	_sqrt
-_sqrt:
-	movl	8(%esp), %eax		/* Test for NaN */
-	andl	$0x7FFFFFFF, %eax
-	cmpl	$0x7FF00000, %eax
-	jg	nanarg			/* x is NaN */
-	je	abarg			/* x is infinity or NaN */
+	.globl	_sqrtl
+_sqrtl:
+	movl	12(%esp), %eax		/* Test for infinity or NaN */
+	andl	$0x00007FFF, %eax
+	cmpl	$0x00007FFF, %eax
+	je	abarg
 
 argok:
-	fldl	4(%esp)
+	fldt	4(%esp)
 	fsqrt
 
 	/* Errors are indicated by a NaN result where the input was not a NaN */
@@ -24,14 +23,15 @@ argok:
 	ret
 
 abarg:					/* infinity or NaN */
-	movl	4(%esp), %eax
-	testl	%eax, %eax
+	movl	8(%esp), %eax
+	andl	$0x7FFFFFFF, %eax
+	orl	4(%esp), %eax
 	jz	argok			/* infinity */
 
 nanarg:
-	fldl	4(%esp)
+	fldt	4(%esp)
 	ret
 
-badarg:	
+badarg:					/* x is definitely <0 */
 	movl	$1, _errno
 	ret

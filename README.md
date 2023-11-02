@@ -95,7 +95,7 @@ or call matherr() on error. See the file info/libc.info for details.
 | `fmin`       | libc.a         | libc.a         | libc.a          |
 | `fmod`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `frexp`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `hypot`      | libm.a         | libc.a, libm.a | _missing_       |
+| `hypot`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `ilogb`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `ldexp`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `lgamma`     | libm.a         | libm.a         | _missing_       |
@@ -122,7 +122,7 @@ or call matherr() on error. See the file info/libc.info for details.
 | `scalbn`     | libm.a         | libm.a         | _missing_       |
 | `sin`        | libm.a         | libc.a, libm.a | _missing_       |
 | `sinh`       | libm.a         | libc.a, libm.a | _missing_       |
-| `sqrt`       | libm.a         | libc.a, libm.a | _missing_       |
+| `sqrt`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `tan`        | libm.a         | libc.a, libm.a | _missing_       |
 | `tanh`       | libm.a         | libc.a, libm.a | _missing_       |
 | `tgamma`     | _missing_      | _missing_      | _missing_       |
