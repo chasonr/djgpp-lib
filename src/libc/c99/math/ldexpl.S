@@ -39,7 +39,7 @@ maybezero:
 	/* else fall through */
 
 zeroinfnan:				/* zero, inf or NaN */
-	fldl	4(%esp)
+	fldt	4(%esp)
 	ret
 
 RangeError:
