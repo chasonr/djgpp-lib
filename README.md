@@ -91,7 +91,7 @@ or call matherr() on error. See the file info/libc.info for details.
 | `fdim`       | libc.a         | libc.a         | libc.a          |
 | `floor`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `fma`        | libc.a         | libc.a         | libc.a          |
-| `fmax`       | _missing_      | _missing_      | _missing_       |
+| `fmax`       | libc.a         | libc.a         | libc.a          |
 | `fmin`       | _missing_      | _missing_      | _missing_       |
 | `fmod`       | libm.a         | libc.a, libm.a | _missing_       |
 | `frexp`      | libm.a         | libc.a, libm.a | _missing_       |

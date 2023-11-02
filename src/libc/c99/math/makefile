@@ -67,6 +67,9 @@ SRC += fmal.c
 SRC += bigfma.c
 SRC += twosum.c
 SRC += setodd.S
+SRC += fmaxf.c
+SRC += fmax.c
+SRC += fmaxl.c
 
 include $(TOP)/../makefile.inc
 
