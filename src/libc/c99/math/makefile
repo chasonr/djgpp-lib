@@ -70,6 +70,9 @@ SRC += setodd.S
 SRC += fmaxf.c
 SRC += fmax.c
 SRC += fmaxl.c
+SRC += fminf.c
+SRC += fmin.c
+SRC += fminl.c
 
 include $(TOP)/../makefile.inc
 
