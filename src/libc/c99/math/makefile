@@ -111,6 +111,9 @@ SRC += nextafterl.c
 SRC += nexttowardf.c
 SRC += nexttoward.c
 SRC += nexttowardl.c
+SRC += remainderf.c
+SRC += remainder.c
+SRC += remainderl.c
 
 SRC += rintf.S
 SRC += rint.S
