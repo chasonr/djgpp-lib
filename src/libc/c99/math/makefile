@@ -90,6 +90,7 @@ SRC += llroundl.c
 SRC += lroundf.c
 SRC += lround.c
 SRC += lroundl.c
+SRC += modff.S
 
 SRC += roundf.c
 SRC += round.c
