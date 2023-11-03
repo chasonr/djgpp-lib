@@ -105,6 +105,9 @@ SRC += modff.S
 SRC += nearbyintf.c
 SRC += nearbyint.c
 SRC += nearbyintl.c
+SRC += nextafterf.c
+SRC += nextafter.c
+SRC += nextafterl.c
 
 SRC += rintf.S
 SRC += rint.S

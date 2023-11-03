@@ -292,6 +292,7 @@ extern long double log1pl(long double);
 extern long double log2l(long double);
 extern long double logbl(long double);
 extern long double nearbyintl(long double);
+extern long double nextafterl(long double, long double);
 
 /* End libm.a. */
 
