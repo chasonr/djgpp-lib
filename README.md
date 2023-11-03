@@ -118,8 +118,8 @@ or call matherr() on error. See the file info/libc.info for details.
 | `remquo`     | libc.a         | libc.a         | libc.a          |
 | `rint`       | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
 | `round`      | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
-| `scalbln`    | _missing_      | _missing_      | _missing_       |
-| `scalbn`     | libm.a         | libm.a         | _missing_       |
+| `scalbln`    | libc.a         | libc.a         | libc.a          |
+| `scalbn`     | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `sin`        | libm.a         | libc.a, libm.a | _missing_       |
 | `sinh`       | libm.a         | libc.a, libm.a | _missing_       |
 | `sqrt`       | libc.a, libm.a | libc.a, libm.a | libc.a          |

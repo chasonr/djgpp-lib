@@ -220,6 +220,7 @@ extern int ilogb(double);
 extern double rint(double);
 extern long double rintl(long double);
 extern double scalbn(double, int);
+extern double scalbln(double, long);
 extern double trunc(double);
 extern long double truncl(long double);
 extern long int lrint(double);
@@ -251,6 +252,7 @@ extern float copysignf(float, float);
 extern int ilogbf(float);
 extern float rintf(float);
 extern float scalbnf(float, int);
+extern float scalblnf(float, long);
 extern float expm1f(float);
 extern float log1pf(float);
 extern float truncf(float);
@@ -300,6 +302,8 @@ extern long double nextafterl(long double, long double);
 extern long double nexttowardl(long double, long double);
 extern long double remainderl(long double, long double);
 extern long double remquol(long double, long double, int *);
+extern long double scalbnl(long double, int);
+extern long double scalblnl(long double, long);
 
 /* End libm.a. */
 

@@ -117,13 +117,18 @@ SRC += remainderl.S
 SRC += remquof.c
 SRC += remquo.c
 SRC += remquol.c
-
 SRC += rintf.S
 SRC += rint.S
 SRC += rintl.S
 SRC += roundf.c
 SRC += round.c
 SRC += roundl.c
+SRC += scalblnf.c
+SRC += scalbln.c
+SRC += scalblnl.c
+SRC += scalbnf.c
+SRC += scalbn.c
+SRC += scalbnl.c
 SRC += sqrtf.S
 SRC += sqrtl.S
 
