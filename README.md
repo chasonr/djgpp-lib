@@ -101,7 +101,7 @@ or call matherr() on error. See the file info/libc.info for details.
 | `lgamma`     | libm.a         | libm.a         | _missing_       |
 | `llrint`     | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
 | `llround`    | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
-| `log`        | libm.a         | libc.a, libm.a | _missing_       |
+| `log`        | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `log10`      | libm.a         | libc.a, libm.a | _missing_       |
 | `log1p`      | libm.a         | libc.a, libm.a | _missing_       |
 | `log2`       | libm.a         | libc.a, libm.a | _missing_       |
