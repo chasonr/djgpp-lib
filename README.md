@@ -103,9 +103,9 @@ or call matherr() on error. See the file info/libc.info for details.
 | `llround`    | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
 | `log`        | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `log10`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `log1p`      | libm.a         | libc.a, libm.a | _missing_       |
+| `log1p`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `log2`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `logb`       | libm.a         | libm.a         | _missing_       |
+| `logb`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `lrint`      | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
 | `lround`     | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
 | `modf`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
