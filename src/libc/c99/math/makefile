@@ -84,6 +84,12 @@ SRC += ilogb.S
 SRC += ilogbl.S
 SRC += ldexpf.S
 SRC += ldexpl.S
+SRC += llroundf.c
+SRC += llround.c
+SRC += llroundl.c
+SRC += lroundf.c
+SRC += lround.c
+SRC += lroundl.c
 
 SRC += roundf.c
 SRC += round.c

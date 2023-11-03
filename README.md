@@ -100,14 +100,14 @@ or call matherr() on error. See the file info/libc.info for details.
 | `ldexp`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `lgamma`     | libm.a         | libm.a         | _missing_       |
 | `llrint`     | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
-| `llround`    | libm.a         | libm.a         | libm.a          |
+| `llround`    | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
 | `log`        | libm.a         | libc.a, libm.a | _missing_       |
 | `log10`      | libm.a         | libc.a, libm.a | _missing_       |
 | `log1p`      | libm.a         | libc.a, libm.a | _missing_       |
 | `log2`       | libm.a         | libc.a, libm.a | _missing_       |
 | `logb`       | libm.a         | libm.a         | _missing_       |
 | `lrint`      | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
-| `lround`     | libm.a         | libm.a         | libm.a          |
+| `lround`     | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
 | `modf`       | libm.a         | libc.a, libm.a | libc.a          |
 | `nan`        | libm.a         | libm.a         | libc.a          |
 | `nearbyint`  | _missing_      | _missing_      | _missing_       |
