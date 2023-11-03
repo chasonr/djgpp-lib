@@ -103,6 +103,9 @@ SRC += lround.c
 SRC += lroundl.c
 SRC += modff.S
 
+SRC += rintf.S
+SRC += rint.S
+SRC += rintl.S
 SRC += roundf.c
 SRC += round.c
 SRC += roundl.c
