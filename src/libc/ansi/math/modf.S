@@ -1,52 +1,83 @@
+/* Copyright (C) 2023 Ray Chason, see COPYING.DJ for details */
 /* Copyright (C) 2011 DJ Delorie, see COPYING.DJ for details */
 /* Copyright (C) 1999 DJ Delorie, see COPYING.DJ for details */
-	.data
-NaN:
-	.long	0xFFC00000
 
 	.text
 	.globl	_modf			/* fract = fmod(x, &integer) */
 _modf:
+	movl	12(%esp), %edx
+
 	movl	8(%esp), %eax
-	andl	$0x7FF00000, %eax
+	andl	$0x7FFFFFFF, %eax
 	cmpl	$0x7FF00000, %eax
+	jg	isnan
 	je	abarg			/* x is inf or NaN */
 
-	fldl	4(%esp)			/* x                 */
-	fld1				/* 1	    x        */
-	fld	%st(1)			/* x        1     x  */
-loop:
-	fprem				/* fract(x) 1     x  */
-	fnstsw	%ax
-	sahf
-	jpe	loop
+	shrl	$20, %eax
+	subl	$0x3FF, %eax		/* exponent as signed integer */
+	jc	smallarg		/* |x| < 1 */
 
-	fstp	%st(1)			/* fract(x) x        */
-	fxch 	%st(1)			/* x        fract(x) */
-	fsub	%st(1), %st		/* int(x)   fract(x) */
+	cmpl	$52, %eax
+	jge	bigarg
 
-	movl	12(%esp), %eax		/* Point to second arg */
-	fstpl	(%eax)			/* Store int(x) */
-	ret				/* fract(x) */
+	cmpl	$21, %eax
+	jge	loword
 
-abarg:					/* arg is inf or NaN */
-	movl	$1, _errno
+	/* radix point is in the high word */
+	movl	%eax, %ecx
+	movl	$0xFFF00000, %eax
+	sarl	%cl, %eax		/* bit mask to form integer part */
+	andl	8(%esp), %eax
+	movl	%eax, 4(%edx)
+	movl	$0, (%edx)
+	jmp	makefraction
+
+	/* radix point is in the low word */
+loword:
+	subl	$21, %eax
+	movl	%eax, %ecx
+	movl	$0x80000000, %eax
+	sarl	%cl, %eax		/* bit mask to form integer part */
+	andl	4(%esp), %eax
+	movl	%eax, (%edx)
 	movl	8(%esp), %eax
-	testl	$0x000FFFFF, %eax
-	jne	badarg			/* y = NaN */
-	movl	4(%esp), %eax
-	testl	%eax, %eax
-	jnz	badarg
+	movl	%eax, 4(%edx)
 
-infarg:
-	movl	12(%esp), %eax		/* Point to second arg */
-	fldl	4(%esp)			/* Load x */
-	fstpl	(%eax)			/* Store int(x) */
-	flds	NaN
+	/* subtract to make the fraction */
+makefraction:
+	fldl	4(%esp)
+	fsubl	(%edx)
 	ret
 
-badarg:
-	movl	12(%esp), %eax		/* Point to second arg */
-	flds	NaN
-	fstl	(%eax)			/* Store int(x) */
+	/* |x| < 1 */
+smallarg:
+	fldl	4(%esp)
+	movl	8(%esp), %eax
+	andl	$0x80000000, %eax	/* a zero with the correct sign */
+	movl	%eax, 4(%edx)
+	movl	$0, (%edx)
+	ret
+
+	/* |x| possibly infinity or possibly NaN */
+abarg:
+	movl	4(%esp), %eax
+	testl	%eax, %eax
+	jnz	isnan
+
+	/* |x| too big to have a fraction; includes infinity */
+bigarg:
+	movl	4(%esp), %eax
+	movl	%eax, (%edx)
+	movl	8(%esp), %eax
+	movl	%eax, 4(%edx)
+	andl	$0x80000000, %eax	/* a zero with the correct sign */
+	movl	%eax, 8(%esp)
+	movl	$0, 4(%esp)
+	fldl	4(%esp)
+	ret
+
+	/* NaNs return both as the fraction and as the integer */
+isnan:
+	fldl	4(%esp)
+	fstl	(%edx)
 	ret
