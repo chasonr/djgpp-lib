@@ -212,6 +212,7 @@ extern double erfc(double);
 extern double lgamma(double);
 extern double logb(double);
 extern double nextafter(double, double);
+extern double nexttoward(double, long double);
 extern double remainder(double, double);
 extern double copysign(double, double);
 extern int ilogb(double);
@@ -241,6 +242,7 @@ extern float atanhf(float);
 extern float cbrtf(float);
 extern float logbf(float);
 extern float nextafterf(float, float);
+extern float nexttowardf(float, long double);
 extern float remainderf(float, float);
 extern float scalbf(float, float);
 extern float copysignf(float, float);
@@ -293,6 +295,7 @@ extern long double log2l(long double);
 extern long double logbl(long double);
 extern long double nearbyintl(long double);
 extern long double nextafterl(long double, long double);
+extern long double nexttowardl(long double, long double);
 
 /* End libm.a. */
 

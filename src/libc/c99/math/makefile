@@ -108,6 +108,9 @@ SRC += nearbyintl.c
 SRC += nextafterf.c
 SRC += nextafter.c
 SRC += nextafterl.c
+SRC += nexttowardf.c
+SRC += nexttoward.c
+SRC += nexttowardl.c
 
 SRC += rintf.S
 SRC += rint.S
