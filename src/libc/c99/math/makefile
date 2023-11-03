@@ -131,6 +131,8 @@ SRC += scalbn.c
 SRC += scalbnl.c
 SRC += sinf.S
 SRC += sinl.S
+SRC += sinhf.S
+SRC += sinhl.S
 SRC += sqrtf.S
 SRC += sqrtl.S
 

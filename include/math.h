@@ -305,6 +305,7 @@ extern long double remquol(long double, long double, int *);
 extern long double scalbnl(long double, int);
 extern long double scalblnl(long double, long);
 extern long double sinl(long double);
+extern long double sinhl(long double);
 
 /* End libm.a. */
 

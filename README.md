@@ -121,7 +121,7 @@ or call matherr() on error. See the file info/libc.info for details.
 | `scalbln`    | libc.a         | libc.a         | libc.a          |
 | `scalbn`     | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `sin`        | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `sinh`       | libm.a         | libc.a, libm.a | _missing_       |
+| `sinh`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `sqrt`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `tan`        | libm.a         | libc.a, libm.a | _missing_       |
 | `tanh`       | libm.a         | libc.a, libm.a | _missing_       |
