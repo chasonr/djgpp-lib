@@ -214,6 +214,7 @@ extern double logb(double);
 extern double nextafter(double, double);
 extern double nexttoward(double, long double);
 extern double remainder(double, double);
+extern double remquo(double, double, int *);
 extern double copysign(double, double);
 extern int ilogb(double);
 extern double rint(double);
@@ -244,6 +245,7 @@ extern float logbf(float);
 extern float nextafterf(float, float);
 extern float nexttowardf(float, long double);
 extern float remainderf(float, float);
+extern float remquof(float, float, int *);
 extern float scalbf(float, float);
 extern float copysignf(float, float);
 extern int ilogbf(float);
@@ -297,6 +299,7 @@ extern long double nearbyintl(long double);
 extern long double nextafterl(long double, long double);
 extern long double nexttowardl(long double, long double);
 extern long double remainderl(long double, long double);
+extern long double remquol(long double, long double, int *);
 
 /* End libm.a. */
 

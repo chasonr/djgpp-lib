@@ -115,7 +115,7 @@ or call matherr() on error. See the file info/libc.info for details.
 | `nexttoward` | libc.a         | libc.a         | libc.a          |
 | `pow`        | libm.a         | libc.a, libm.a | _missing_       |
 | `remainder`  | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `remquo`     | _missing_      | _missing_      | _missing_       |
+| `remquo`     | libc.a         | libc.a         | libc.a          |
 | `rint`       | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
 | `round`      | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
 | `scalbln`    | _missing_      | _missing_      | _missing_       |
