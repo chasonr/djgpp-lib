@@ -85,6 +85,9 @@ SRC += ilogbl.S
 SRC += ldexpf.S
 SRC += ldexpl.S
 
+SRC += roundf.c
+SRC += round.c
+SRC += roundl.c
 SRC += sqrtf.S
 SRC += sqrtl.S
 
