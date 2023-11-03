@@ -123,7 +123,7 @@ or call matherr() on error. See the file info/libc.info for details.
 | `sin`        | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `sinh`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `sqrt`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `tan`        | libm.a         | libc.a, libm.a | _missing_       |
+| `tan`        | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `tanh`       | libm.a         | libc.a, libm.a | _missing_       |
 | `tgamma`     | _missing_      | _missing_      | _missing_       |
 | `trunc`      | libm.a         | libm.a         | libm.a          |
