@@ -286,6 +286,7 @@ extern long double ldexpl(long double, int);
 extern long double sqrtl(long double);
 extern long double logl(long double);
 extern long double log10l(long double);
+extern long double log1pl(long double);
 extern long double log2l(long double);
 
 /* End libm.a. */
