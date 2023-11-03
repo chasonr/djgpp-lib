@@ -1,7 +1,7 @@
 /* Copyright (C) 2023 Ray Chason, see COPYING.DJ for details */
 
-	.globl	_logf
-_logf:
+	.globl	_log2f
+_log2f:
 	/* NaNs and positive infinities should propagate quietly */
 	movl	4(%esp), %eax
 	cmpl	$0x7F800000, %eax
