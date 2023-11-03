@@ -137,6 +137,8 @@ SRC += sqrtf.S
 SRC += sqrtl.S
 SRC += tanf.S
 SRC += tanl.S
+SRC += tanhf.S
+SRC += tanhl.S
 
 include $(TOP)/../makefile.inc
 
