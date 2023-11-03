@@ -78,7 +78,7 @@ argok:
 	fmuls	onehalf
 
 dosign:
-	testl	$0x80000000, %edx	/* Fix up sign. */
+	testl	$0x00008000, %edx	/* Fix up sign. */
 	jz	return
 	fchs
 
