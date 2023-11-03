@@ -126,7 +126,7 @@ or call matherr() on error. See the file info/libc.info for details.
 | `tan`        | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `tanh`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `tgamma`     | _missing_      | _missing_      | _missing_       |
-| `trunc`      | libm.a         | libm.a         | libm.a          |
+| `trunc`      | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
 
 libm.a implements additional functions not present in C11:
 

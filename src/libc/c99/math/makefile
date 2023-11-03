@@ -139,6 +139,9 @@ SRC += tanf.S
 SRC += tanl.S
 SRC += tanhf.S
 SRC += tanhl.S
+SRC += truncf.S
+SRC += trunc.S
+SRC += truncl.S
 
 include $(TOP)/../makefile.inc
 
