@@ -120,7 +120,7 @@ or call matherr() on error. See the file info/libc.info for details.
 | `round`      | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
 | `scalbln`    | libc.a         | libc.a         | libc.a          |
 | `scalbn`     | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `sin`        | libm.a         | libc.a, libm.a | _missing_       |
+| `sin`        | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `sinh`       | libm.a         | libc.a, libm.a | _missing_       |
 | `sqrt`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `tan`        | libm.a         | libc.a, libm.a | _missing_       |
