@@ -102,6 +102,9 @@ SRC += lroundf.c
 SRC += lround.c
 SRC += lroundl.c
 SRC += modff.S
+SRC += nearbyintf.c
+SRC += nearbyint.c
+SRC += nearbyintl.c
 
 SRC += rintf.S
 SRC += rint.S

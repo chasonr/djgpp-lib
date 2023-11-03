@@ -110,7 +110,7 @@ or call matherr() on error. See the file info/libc.info for details.
 | `lround`     | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
 | `modf`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `nan`        | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `nearbyint`  | _missing_      | _missing_      | _missing_       |
+| `nearbyint`  | libc.a         | libc.a         | libc.a          |
 | `nextafter`  | libm.a         | libm.a         | _missing_       |
 | `nexttoward` | _missing_      | _missing_      | _missing_       |
 | `pow`        | libm.a         | libc.a, libm.a | _missing_       |

@@ -42,6 +42,7 @@ double log(double _y);
 double log10(double _x);
 double log2(double _x);
 double modf(double _x, double *_pint);
+double nearbyint(double _x);
 double pow(double _x, double _y);
 double sin(double _x);
 double sinh(double _x);
@@ -82,6 +83,7 @@ extern float logf(float);
 extern float log10f(float);
 extern float log2f(float);
 extern float modff(float, float *);
+extern float nearbyintf(float);
 extern float powf(float, float);
 extern float sqrtf(float);
 extern float ceilf(float);
@@ -289,6 +291,7 @@ extern long double log10l(long double);
 extern long double log1pl(long double);
 extern long double log2l(long double);
 extern long double logbl(long double);
+extern long double nearbyintl(long double);
 
 /* End libm.a. */
 
