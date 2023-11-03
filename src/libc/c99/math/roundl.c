@@ -5,12 +5,18 @@
 long double
 roundl(long double x)
 {
-    long double y;
+    long double xfrac, xint;
 
-    if (signbit(x)) {
-        y = ceill(x - 0.5L);
-    } else {
-        y = floorl(x + 0.5L);
+    if (!isfinite(x)) {
+        return x;
     }
-    return y;
+
+    xfrac = modfl(x, &xint);
+    if (xfrac >= 0.5L) {
+        xint += 1.0L;
+    } else if (xfrac <= -0.5L) {
+        xint -= 1.0L;
+    }
+
+    return xint;
 }

@@ -5,12 +5,18 @@
 double
 round(double x)
 {
-    double y;
+    double xfrac, xint;
 
-    if (signbit(x)) {
-        y = ceil(x - 0.5L);
-    } else {
-        y = floor(x + 0.5L);
+    if (!isfinite(x)) {
+        return x;
     }
-    return y;
+
+    xfrac = modf(x, &xint);
+    if (xfrac >= 0.5) {
+        xint += 1.0;
+    } else if (xfrac <= -0.5) {
+        xint -= 1.0;
+    }
+
+    return xint;
 }

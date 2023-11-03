@@ -5,12 +5,18 @@
 float
 roundf(float x)
 {
-    float y;
+    float xfrac, xint;
 
-    if (signbit(x)) {
-        y = ceilf(x - 0.5F);
-    } else {
-        y = floorf(x + 0.5F);
+    if (!isfinite(x)) {
+        return x;
     }
-    return y;
+
+    xfrac = modff(x, &xint);
+    if (xfrac >= 0.5F) {
+        xint += 1.0F;
+    } else if (xfrac <= -0.5F) {
+        xint -= 1.0F;
+    }
+
+    return xint;
 }
