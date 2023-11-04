@@ -23,6 +23,7 @@ argok:
 	flds	8(%esp)
 	flds	4(%esp)
 	fprem
+	fstp	%st(1)
 	ret
 
 abx:

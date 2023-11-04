@@ -23,6 +23,7 @@ argok:
 	fldl	12(%esp)
 	fldl	4(%esp)
 	fprem1
+	fstp	%st(1)
 	ret
 
 abx:					/* x is inf or NaN */
