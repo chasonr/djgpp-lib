@@ -79,9 +79,9 @@ increment(long double x)
         }
     }
     /* Skip past unsupported formats */
-    if (u.i[2] == 0) {
+    if ((u.i[2] & 0x7FFF) == 0) {
         if ((u.i[1] & 0x80000000) != 0) {
-            u.i[2] = 1;
+            u.i[2] |= 0x0001;
         }
     } else {
         u.i[1] |= 0x80000000;
@@ -107,12 +107,12 @@ decrement(long double x)
     }
     --u.i[0];
     /* Skip past unsupported formats */
-    if (u.i[1] == 0x7FFFFFFF && u.i[2] != 0) {
+    if (u.i[1] == 0x7FFFFFFF && (u.i[2] & 0x7FFF) != 0) {
         --u.i[2];
-        if (u.i[2] != 0) {
+        if ((u.i[2] & 0x7FFF) != 0) {
             u.i[1] |= 0x80000000;
         }
-    } else if (u.i[2] == 0) {
+    } else if ((u.i[2] & 0x7FFF) == 0) {
         u.i[1] &= 0x7FFFFFFF;
     }
     return u.f;
