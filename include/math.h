@@ -300,6 +300,7 @@ extern long double logbl(long double);
 extern long double nearbyintl(long double);
 extern long double nextafterl(long double, long double);
 extern long double nexttowardl(long double, long double);
+extern long double powl(long double, long double);
 extern long double remainderl(long double, long double);
 extern long double remquol(long double, long double, int *);
 extern long double scalbnl(long double, int);
