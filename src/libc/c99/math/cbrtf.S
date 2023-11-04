@@ -12,9 +12,9 @@ _cbrtf:
 	movl	%eax, %ecx		/* Save sign */
 
 	andl	$0x7FFFFFFF, %eax
-	je	zero			/* Avoid log of zero */
+	je	zero_inf_nan		/* Avoid log of zero */
 	cmpl	$0x7F800000, %eax
-	ja	badarg			/* x is a NaN */
+	jge	zero_inf_nan		/* Propagate infinity and NaN */
 
 	fld1
 	flds	4(%esp)
@@ -40,8 +40,6 @@ _cbrtf:
 
 	ret
 
-badarg:
-	movl	$1, _errno
-zero:
+zero_inf_nan:
 	flds	4(%esp)
 	ret

@@ -14,7 +14,7 @@ _cbrtl:
 	andl	$0x00007FFF, %eax
 	je	verysmall
 	cmpl	$0x00007FFF, %eax
-	je	abarg			/* x is infinite or a NaN */
+	je	zero_inf_nan		/* x is infinite or a NaN */
 
 argok:
 	fld1
@@ -43,18 +43,9 @@ argok:
 
 verysmall:
 	mov	8(%esp), %eax
-	and	$0x7FFFFFFF, %eax	/* Ignore the unused significand bit */
 	or	4(%esp), %eax
 	jne	argok			/* Process denormal through argok */
 	/* arg is zero: return it */
 zero_inf_nan:
 	fldt	4(%esp)
 	ret
-
-abarg:
-	mov	8(%esp), %eax
-	and	$0x7FFFFFFF, %eax	/* Ignore the unused significand bit */
-	or	4(%esp), %eax
-	je	zero_inf_nan		/* Return infinity unchanged */
-	movl	$1, _errno		/* Set errno for NaN */
-	jmp	zero_inf_nan
