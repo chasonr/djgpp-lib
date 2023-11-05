@@ -1,7 +1,5 @@
 /* Copyright (C) 2011 DJ Delorie, see COPYING.DJ for details */
 /* Copyright (C) 1999 DJ Delorie, see COPYING.DJ for details */
-NaN:
-	.long	0xFFC00000
 
 	.globl	_asinh
 _asinh:
@@ -29,7 +27,7 @@ _asinh:
 	movl	%eax, %ecx
 	andl	$0x7FF00000, %eax
 	cmpl	$0x7FF00000, %eax
-	je	abarg
+	je	inf_nan
 
 
 	fldln2				/* ln2			  */
@@ -62,19 +60,6 @@ _asinh:
 3:
 	ret
 
-abarg:
-	movl	8(%esp), %eax		/* inf or NaN */
-	testl	$0x000FFFFF, %eax
-	jnz	badarg
-	movl	4(%esp), %eax
-	testl	%eax, %eax
-	jnz	badarg
-
-infarg:
+inf_nan:
 	fldl	4(%esp)			/* +/- inf: just load arg */
-	ret
-
-badarg:					/* arg is NaN */
-	movl	$1, _errno
-	flds	NaN
 	ret
