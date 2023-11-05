@@ -1,7 +1,5 @@
 /* Copyright (C) 2011 DJ Delorie, see COPYING.DJ for details */
 /* Copyright (C) 1999 DJ Delorie, see COPYING.DJ for details */
-NaN:
-	.long	0xFFC00000
 
 	.globl	_asinl
 _asinl:
@@ -20,9 +18,8 @@ _asinl:
 
 	movl	12(%esp), %eax		/* is x >= 1? */
 	andl	$0x00007FFF, %eax	/* |x| */
-	cmpl	$0x00003FFF, %eax
-	jg	badarg			/* |x| >= 2 or x = inf or NaN */
-	je	onetotwo		/* 1 <= |x| < 2 */
+	cmpl	$0x00007FFF, %eax
+	je	abarg			/* inf or NaN */
 
 argok:
 	fldt	4(%esp)			/* x		  */
@@ -36,15 +33,26 @@ argok:
 	fmulp				/* 1-x2 x	  */
 	fsqrt
 	fpatan
+
+	/* Check for NaN return */
+	fxam
+	fnstsw	%ax
+	andb	$0x45, %ah
+	cmpb	$0x01, %ah		/* NaN */
+	je	badarg
+
 	ret
 
-onetotwo:
-	movl	8(%esp), %eax		/* is x = +/-1? */
-	andl	$0x7FFFFFFF, %eax	/* ignore the unused significand bit */
-	orl	4(%esp), %eax
-	jz	argok
-	
 badarg:
 	movl	$1, _errno
-	flds	NaN
+	ret
+
+abarg:
+	movl	8(%esp), %eax
+	andl	$0x7FFFFFFF, %eax
+	orl	4(%esp), %eax
+	je	argok			/* infinity */
+
+nanarg:
+	fldt	4(%esp)
 	ret

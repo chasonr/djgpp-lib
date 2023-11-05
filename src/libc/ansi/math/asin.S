@@ -19,10 +19,10 @@ _asin:
 	which is used here. */
 
 	movl	8(%esp), %eax		/* is x >= 1? */
-	andl	$0x7FF00000, %eax	/* |x| */
-	cmpl	$0x3FF00000, %eax
-	jg	badarg			/* |x| >= 2 or x = inf or NaN */
-	je	onetotwo		/* 1 <= |x| < 2 */
+	andl	$0x7FFFFFFF, %eax	/* |x| */
+	cmpl	$0x7FF00000, %eax
+	jg	nanarg			/* x is NaN */
+	je	abarg			/* x is infinity or NaN */
 
 argok:
 	fldl	4(%esp)			/* x		  */
@@ -36,18 +36,25 @@ argok:
 	fmulp				/* 1-x2 x	  */
 	fsqrt
 	fpatan
+
+	/* Check for NaN return */
+	fxam
+	fnstsw	%ax
+	andb	$0x45, %ah
+	cmpb	$0x01, %ah		/* NaN */
+	je	badarg
+
 	ret
 
-onetotwo:
-	movl	8(%esp), %eax		/* is x = +/-1? */
-	andl	$0x7FFFFFFF, %eax	/* |x| */
-	cmpl	$0x3FF00000, %eax
-	jne	badarg
-	movl	4(%esp), %eax
-	testl	%eax, %eax
-	jz	argok
-	
 badarg:
 	movl	$1, _errno
-	flds	NaN
+	ret
+
+abarg:
+	movl	4(%esp), %eax
+	testl	%eax, %eax
+	je	argok			/* infinity */
+
+nanarg:
+	fldl	4(%esp)
 	ret
