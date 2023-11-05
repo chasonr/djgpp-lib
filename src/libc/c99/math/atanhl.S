@@ -31,6 +31,8 @@ _atanhl:
 	movl	12(%esp), %eax		/* is x >= 1? */
 	movl	%eax, %ecx
 	andl	$0x00007FFF, %eax	/* |x| */
+	cmpl	$0x00007FFF, %eax
+	je	abarg
 	cmpl	$0x00003FFF, %eax
 	jg	badarg			/* |x| >= 2 or x = inf or NaN */
 	je	onetotwo		/* 1 <= |x| < 2 */
@@ -70,13 +72,27 @@ onetotwo:
 	orl	4(%esp), %eax
 	jnz	badarg
 
+infarg:
 	movl	$2, _errno
 	fldz
 	fldt	4(%esp)
 	fdivp
 	ret
 
+	/* Intentionally raise the "invalid" exception */
 badarg:
 	movl	$1, _errno
-	flds	NaN
+	fld1
+	fchs
+	fsqrt
+	ret
+
+abarg:					/* Infinity or NaN */
+	movl	8(%esp), %eax
+	andl	$0x7FFFFFFF, %eax	/* ignore the unused significand bit */
+	orl	4(%esp), %eax
+	jz	badarg			/* Infinity */
+
+nanarg:
+	fldt	4(%esp)
 	ret

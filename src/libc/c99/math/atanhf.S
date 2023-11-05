@@ -2,8 +2,6 @@
 /* Copyright (C) 1999 DJ Delorie, see COPYING.DJ for details */
 LC0:
 	.float	0f0.5
-NaN:
-	.long	0xFFC00000
 
 	.globl	_atanhf
 _atanhf:
@@ -31,9 +29,11 @@ _atanhf:
 	movl	4(%esp), %eax		/* is x >= 1? */
 	movl	%eax, %ecx
 	andl	$0x7FFFFFFF, %eax	/* |x| */
+	cmpl	$0x7F800000, %eax
+	ja	nanarg
 	cmpl	$0x3F800000, %eax
 	je	one
-	jg	badarg			/* |x| > 1 or x = inf or NaN */
+	ja	badarg			/* |x| > 1 or x = inf or NaN */
 
 argok:
 	fldln2				/* ln2 */
@@ -68,7 +68,14 @@ one:
 	movl	$2, _errno
 	jmp	argok
 
+	/* Intentionally raise the "invalid" exception */
 badarg:
 	movl	$1, _errno
-	flds	NaN
+	fld1
+	fchs
+	fsqrt
+	ret
+
+nanarg:
+	flds	4(%esp)
 	ret
