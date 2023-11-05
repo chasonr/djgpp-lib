@@ -22,10 +22,12 @@ _acoshf:
 	subl	$4, %esp
 
 	movl	8(%esp), %eax # is x < 1?
+	cmpl	$0xFF800000, %eax
+	ja	inf_nan			/* NaN with sign bit set */
 	cmpl	$0x3F800000, %eax
 	jl	badarg
 	cmpl	$0x7FF00000, %eax	/* Control flows straight through for */
-	ja	badarg			/* normal args 1 <= x <= +inf */
+	jg	inf_nan			/* normal args 1 <= x <= +inf */
 
 argok:
 	fldln2				/* ln2		     */
@@ -56,8 +58,17 @@ argok:
 	addl	$4, %esp
 	ret
 
+	/* Intentionally raise the "invalid" exception */
 badarg:
 	movl	$1, _errno
-	flds	NaN
+	fld1
+	fchs
+	fsqrt
+	addl	$4, %esp
+	ret
+
+	/* Propagate NaN */
+inf_nan:
+	flds	8(%esp)
 	addl	$4, %esp
 	ret

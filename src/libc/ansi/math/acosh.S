@@ -1,7 +1,5 @@
 /* Copyright (C) 2011 DJ Delorie, see COPYING.DJ for details */
 /* Copyright (C) 1999 DJ Delorie, see COPYING.DJ for details */
-NaN:
-	.long	0xFFC00000
 
 	.text
 	.globl	_acosh
@@ -22,10 +20,12 @@ _acosh:
 	subl	$4, %esp
 
 	movl	12(%esp), %eax # is x < 1?
+	cmpl	$0xFFF00000, %eax
+	jae	abarg			/* Negative infinity or NaN */
 	cmpl	$0x3FF00000, %eax
 	jl	badarg
-	cmpl	$0x7FF00000, %eax	/* Control flows straight through for */
-	jae	abarg			/* normal args 1 <= x < +inf */
+	cmpl	$0x7FF00000, %eax
+	jge	inf_nan			/* Positive infinity or NaN */
 
 argok:
 	fldln2				/* ln2		     */
@@ -57,15 +57,21 @@ argok:
 	ret
 
 abarg:
-	movl	12(%esp), %eax		/* inf or NaN */
-	testl	$0x000FFFFF, %eax
-	jnz	badarg
-	movl	8(%esp), %eax
+	movl	8(%esp), %eax		/* inf or NaN */
 	testl	%eax, %eax
-	jz	argok
+	jnz	inf_nan			/* NaN */
 
+	/* Intentionally raise the "invalid" exception */
 badarg:
 	movl	$1, _errno
-	flds	NaN
+	fld1
+	fchs
+	fsqrt
+	addl	$4, %esp
+	ret
+
+	/* NaN or positive infinity */
+inf_nan:
+	fldl	8(%esp)
 	addl	$4, %esp
 	ret
