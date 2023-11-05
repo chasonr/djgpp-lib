@@ -23,9 +23,16 @@ argok:
 zero:
 	movl	$1, _errno
 	movl	$0x80000001, %eax	/* FP_ILOGB0 */
-	ret
+	jmp	invalid
 
 abarg:
 	movl	$1, _errno
 	movl	$0x7FFFFFFF, %eax
+
+	/* Raise the "invalid" exception */
+invalid:
+	fld1
+	fchs
+	fsqrt
+	fstp	%st
 	ret
