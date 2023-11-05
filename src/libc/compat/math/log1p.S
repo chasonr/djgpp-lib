@@ -13,54 +13,54 @@ pinf:
 	.globl	_log1p
 _log1p:					/* ln(1.+x) */
 					/* log1p(x) */
+	/* NaNs and positive infinities should propagate quietly */
 	movl	8(%esp), %eax
-	movl	%eax, %edx
-
-	cmpl	$0xBFF00000, %eax	/* x <= -1 ? */
-	jae	nonpos
-
-	andl	$0x7FF00000, %eax	
-	cmpl	$0x7FF00000, %eax	
-	je	abarg			/* x == +inf or +NaN */
-
-	movl	%edx, %eax
+	cmpl	$0xFFF00000, %eax
+	jae	maybenan		/* negative infinity or NaN */
 	andl	$0x7FFFFFFF, %eax
+	cmpl	$0x7FF00000, %eax
+	jae	infnan			/* positive infinity or NaN */
+
+argok:
 	cmpl	$0x3FD2BEC3, %eax	/* 1 - sqrt(0.5) */
 	fldln2				/* ln(2) */
-	jbe	1f
+	jbe	logp1
 	fld1
 	faddl	4(%esp)
 	fyl2x				/* logi(x) */
+
+	/* Check for errors */
+	/* log never overflows but may return negative infinity */
+	fxam
+	fnstsw	%ax
+	andb	$0x45, %ah
+	cmpb	$0x01, %ah		/* NaN */
+	je	edom
+	cmpb	$0x05, %ah		/* infinity */
+	je	erange
+
 	ret
-1:					/* log1pi(x) */
+logp1:					/* log1pi(x) */
 	fldl	4(%esp)
 	fyl2xp1
 	ret
 
-nonpos:
-	cmpl	$0xBFF00000, %eax	
-	ja	badarg			/* x == -1 ? */
-	movl	4(%esp), %eax
-	testl	%eax, %eax
-	jz	negone
+maybenan:
+	andl	$0x7FFFFFFF, %eax
+	movl	4(%esp), %edx
+	testl	%edx, %edx
+	jz	argok			/* Raise exception on negative infinity */
 
-badarg:
+infnan:
+	fldl	4(%esp)
+	ret
+
+	/* Domain error */
+edom:
 	movl	$1, _errno
-	flds	NaN
 	ret
 
-negone:
+	/* Range error */
+erange:
 	movl	$2, _errno
-	flds	ninf			/* arg == -1; load -inf. */
-	ret
-
-abarg:
-	movl	%edx, %eax
-	testl	$0x000FFFFF, %eax
-	jnz	badarg
-	movl	4(%esp), %eax
-	testl	%eax, %eax
-	jnz	badarg
-
-	flds	pinf			/* arg = +inf */
 	ret

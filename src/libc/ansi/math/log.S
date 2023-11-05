@@ -1,51 +1,51 @@
 /* Copyright (C) 2011 DJ Delorie, see COPYING.DJ for details */
 /* Copyright (C) 1999 DJ Delorie, see COPYING.DJ for details */
-ninf:
-	.long	0xFF800000
-
-NaN:
-	.long	0xFFC00000
 
 	.globl	_log
 _log:
 	movl	8(%esp), %eax		/* Test for abnormal arg. */
-	cmpl	$0x7FF00000, %eax	/* Control flows straight through for */
-	jae	abarg			/* normal args: 0 < x < +inf */
-	testl	%eax, %eax
-	je	verysmall
+	andl	$0x7FFFFFFF, %eax
+	cmpl	$0x7FF00000, %eax
+	ja	nanarg
+	je	abarg
 
 argok:					/* Proceed with normal log calc. */
 	fldln2
 	fldl	4(%esp)
 	fyl2x
+
+	/* Check for errors */
+	/* log never overflows but may return negative infinity */
+	fxam
+	fnstsw	%ax
+	andb	$0x45, %ah
+	cmpb	$0x01, %ah		/* NaN */
+	je	edom
+	cmpb	$0x05, %ah		/* infinity */
+	je	erange
+
 	ret
 
-verysmall:				/* exp = max negative */
+abarg:
 	movl	4(%esp), %eax
 	testl	%eax, %eax
-	jne	argok			/* arg > 0; proceed */
+	jnz	nanarg			/* NaN */
 
-zeroarg:
-	movl	$2, _errno
-	flds	ninf			/* arg = 0; handle separately. */
+	movl	8(%esp), %eax
+	cmpl	$0xFFF00000, %eax
+	jz	argok			/* -inf; raise the exception */
+
+	/* Propagate NaNs */
+nanarg:
+	fldl	4(%esp)
 	ret
 
-abarg:					/* x = negative, +inf, or +NaN */
-	ja	badarg			/* arg is negative */
-	testl	$0x000FFFFF, %eax
-	jnz	badarg
-	movl	4(%esp), %eax
-	testl	%eax, %eax
-	jz	argok
-
-badarg:					/* arg is negative or NaN */
-	cmpl	$0x80000000, %eax
-	jne	negarg
-	movl	4(%esp), %eax		/* Test for abnormal arg. */
-	testl	%eax, %eax
-	jz	zeroarg
-
-negarg:
+	/* Domain error */
+edom:
 	movl	$1, _errno
-	flds	NaN
+	ret
+
+	/* Range error */
+erange:
+	movl	$2, _errno
 	ret
