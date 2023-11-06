@@ -1,5 +1,7 @@
 /* Copyright (C) 2013 DJ Delorie, see COPYING.DJ for details */
 
+#include <fenv.h>
+#include <limits.h>
 #include <stdint.h>
 #include <math.h>
 #include <libc/ieee.h>
@@ -88,6 +90,9 @@ long double x;
         result = ROUND_MANTISSA_TO_INTEGER(ieee_value, unbiased_exponent);
     }
 
+    if (ieee_value.ld < (long double)LLONG_MIN
+    ||  (long double)LLONG_MAX < ieee_value.ld)
+      feraiseexcept(FE_INVALID);
     return sign ? -result : result;
   }
 }
