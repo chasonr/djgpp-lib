@@ -68,6 +68,12 @@ coded specifically for the x87 unit and sets errno on any math errors.
 The one defined in libm.a is more generically coded, and may set errno
 or call matherr() on error. See the file info/libc.info for details.
 
+All functions currently implemented in libc.a and libm.a, and defined in
+C11, pass a number of tests for conformance to Annex F of the C11 standard,
+provided that `_LIB_VERSION` is set to `_IEEE_`.  `_IEEE_` is now the
+default; in the original library, the default is `_XOPEN_`, contrary to
+what info/libc.info says.
+
 | __Function__ | __float__      | __double__     | __long double__ |
 |--------------|----------------|----------------|-----------------|
 | `acos`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
