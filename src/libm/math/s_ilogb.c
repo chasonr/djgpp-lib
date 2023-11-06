@@ -59,6 +59,7 @@ PORTABILITY
  */
 
 #include "fdlibm.h"
+#include <fenv.h>
 #include <limits.h>
 
 #ifndef _DOUBLE_IS_32BITS
@@ -75,9 +76,10 @@ PORTABILITY
 	EXTRACT_WORDS(hx,lx,x);
 	hx &= 0x7fffffff;
 	if(hx<0x00100000) {
-	    if((hx|lx)==0) 
+	    if((hx|lx)==0) {
+		feraiseexcept(FE_INVALID);
 		return - INT_MAX;	/* ilogb(0) = 0x80000001 */
-	    else			/* subnormal x */
+	    } else			/* subnormal x */
 		if(hx==0) {
 		    for (ix = -1043; lx>0; lx<<=1) ix -=1;
 		} else {
@@ -86,7 +88,10 @@ PORTABILITY
 	    return ix;
 	}
 	else if (hx<0x7ff00000) return (hx>>20)-1023;
-	else return INT_MAX;
+	else {
+	    feraiseexcept(FE_INVALID);
+	    return INT_MAX;
+	}
 }
 
 #endif /* _DOUBLE_IS_32BITS */

@@ -14,6 +14,7 @@
  */
 
 #include "fdlibm.h"
+#include <fenv.h>
 #include <limits.h>
 
 #ifdef __STDC__
@@ -28,14 +29,18 @@
 	GET_FLOAT_WORD(hx,x);
 	hx &= 0x7fffffff;
 	if(hx<0x00800000) {
-	    if(hx==0) 
+	    if(hx==0) {
+		feraiseexcept(FE_INVALID);
 		return - INT_MAX;	/* ilogb(0) = 0x80000001 */
-	    else			/* subnormal x */
+	    } else			/* subnormal x */
 	        for (ix = -126,hx<<=8; hx>0; hx<<=1) ix -=1;
 	    return ix;
 	}
 	else if (hx<0x7f800000) return (hx>>23)-127;
-	else return INT_MAX;
+	else {
+	    feraiseexcept(FE_INVALID);
+	    return INT_MAX;
+	}
 }
 
 #ifdef _DOUBLE_IS_32BITS
