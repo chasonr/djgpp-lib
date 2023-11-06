@@ -2,8 +2,6 @@
 /* Copyright (C) 1999 DJ Delorie, see COPYING.DJ for details */
 LC0:
 	.float	0f0.5
-NaN:
-	.long	0xFFC00000
 
 	.globl	_atanhl
 _atanhl:

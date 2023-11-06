@@ -109,7 +109,7 @@ strtold(const char *s, char **sret)
         if (mantissa_bits)
         {
           t.ldt.mantissal = mantissa_bits & 0xffffffff;
-          t.ldt.mantissah = ((mantissa_bits >> 32) & 0xffffffff ) | 0x80000000;
+          t.ldt.mantissah = ((mantissa_bits >> 32) & 0xffffffff ) | 0xC0000000;
         }
         if (sret)
           *sret = endptr + 1;

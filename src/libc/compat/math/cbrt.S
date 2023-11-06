@@ -4,9 +4,6 @@
 pinf:
 	.long	0xFF800000
 
-NaN:
-	.long	0xFFC00000
-
 temp:
 	.long	0, 0
 
@@ -136,8 +133,7 @@ abarg:					/* x = inf, or NaN */
 	jz	special
 
 badarg:					/* arg is negative or NaN */
-	movl	$1, _errno
-	flds	NaN
+	fldl	4(%esp)
 	ret
 
 special:

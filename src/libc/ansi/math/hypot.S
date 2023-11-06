@@ -1,23 +1,22 @@
 /* Copyright (C) 2011 DJ Delorie, see COPYING.DJ for details */
 /* Copyright (C) 1999 DJ Delorie, see COPYING.DJ for details */
-NaN:
-	.long	0xFFC00000
 
-DBL_MAX:
-	.long   0xFFFFFFFF, 0x7FEFFFFF
+inf:
+	.long	0x7F800000
 
 	.globl	_hypot
 _hypot:
 	movl	8(%esp), %eax
-	xorb	%cl, %cl
-	andl	$0x7FF00000, %eax
-	cmpl	$0x7FE00000, %eax
-	jae	abx			/* x = huge, INF or NaN */
+	andl	$0x7FFFFFFF, %eax
+	cmpl	$0x7FF00000, %eax
+	ja	nanx
+	je	abx			/* x = huge, INF or NaN */
 
-testy:
+	/* x is finite */
 	movl	16(%esp), %eax
-	andl	$0x7FF00000, %eax
-	cmpl	$0x7FE00000, %eax
+	andl	$0x7FFFFFFF, %eax
+	cmpl	$0x7FF00000, %eax
+	ja	return_y
 	jae	aby			/* y = huge, INF or NaN */
 
 argok:
@@ -27,55 +26,56 @@ argok:
 	fmul	%st, %st
 	faddp
 	fsqrt
-	ret
 
-abx:					/* x = huge, INF, or NaN */
-	je	aby			/* x = huge but not INF */
-	orb	$3, %cl
-	movl	8(%esp), %eax
-	testl	$0x000FFFFF, %eax
-	jnz	badarg			/* x = NaN */
-	movl	4(%esp), %eax
-	testl	%eax, %eax
-	jnz	badarg			/* x = NaN */
-
-aby:
-	orb	$1, %cl
-	movl	16(%esp), %eax
-	andl	$0x7FF00000, %eax
-	cmpl	$0x7FE00000, %eax
-	jbe	hugey			/* y = huge but not INF */
-	movl	16(%esp), %eax
-	testl	$0x000FFFFF, %eax
-	jnz	badarg			/* y = NaN */
-	movl	12(%esp), %eax
-	testl	%eax, %eax
-	jnz	badarg			/* y = NaN */
-	orb	$3, %cl
-
-hugey:
-	cmpb	$3, %cl
-	je	argok
-	jmp	bigarg
-
-badarg:					/* arg is NaN */
-	movl	$1, _errno
-	flds	NaN
-	ret
-					/* Both args are finite, but at */
-bigarg:					/* least one arg is huge.  Proceed */
-	fldl	4(%esp)			/* with caution. */
-	fmul	%st, %st
-	fldl	12(%esp)
-	fmul	%st, %st
-	faddp
-	fsqrt
-	fcoml	DBL_MAX
+	/* Check for overflow */
+	subl	$8, %esp
+	fstpl	(%esp)
+	fldl	(%esp)
+	addl	$8, %esp
+	fxam
 	fnstsw	%ax
-	sahf
-	ja	range_error
+	andb	$0x45, %ah
+	cmpb	$0x05, %ah		/* infinity */
+	je	range_error
+
 	ret
 
 range_error:
 	movl	$2, _errno
+	ret
+
+abx:
+	/* x may be infinity or NaN */
+	movl	4(%esp), %eax
+	testl	%eax, %eax
+	je	infinity
+
+nanx:
+	/* x is a NaN.  Return x unless y is infinity. */
+	movl	16(%esp), %eax
+	andl	$0x7FFFFFFF, %eax
+	cmpl	$0x7FF00000, %eax
+	jne	return_x
+	movl	12(%esp), %eax
+	testl	%eax, %eax
+	je	infinity
+
+	/* x is a NaN and y is not infinity */
+return_x:
+	fldl	4(%esp)
+	ret
+
+aby:
+	/* x is finite; y may be infinity or NaN */
+	movl	12(%esp), %eax
+	testl	%eax, %eax
+	je	infinity
+
+	/* x is finite and y is a NaN */
+return_y:
+	fldl	12(%esp)
+	ret
+
+infinity:
+	flds	inf
 	ret

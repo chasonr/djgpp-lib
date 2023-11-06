@@ -1,8 +1,6 @@
 /* Copyright (C) 2023 Ray Chason, see COPYING.DJ for details */
 /* Copyright (C) 2011 DJ Delorie, see COPYING.DJ for details */
 /* Copyright (C) 1999 DJ Delorie, see COPYING.DJ for details */
-NaN:
-	.long	0xFFC00000
 
 infinity:
 	.long	0x7F800000
@@ -22,9 +20,9 @@ _hypotf:
 	cmp	$0x7F800000, %edx
 	je	isinfinite
 
-	jg	isnan
+	jg	isnan_y
 	cmp	$0x7F800000, %eax
-	jg	isnan
+	jg	isnan_x
 
 	/* Both arguments are finite */
 
@@ -56,6 +54,10 @@ isinfinite:
 	flds	infinity
 	ret
 
-isnan:
-	flds	NaN
+isnan_x:
+	flds	4(%esp)
+	ret
+
+isnan_y:
+	flds	8(%esp)
 	ret

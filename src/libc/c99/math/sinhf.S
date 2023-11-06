@@ -3,9 +3,6 @@
 pinf:
 	.long	0x7F800000
 
-NaN:
-	.long	0xFFC00000
-
 onehalf:
 	.float	0.5
 
@@ -95,6 +92,5 @@ infarg:
 	jmp	dosign
 
 badarg:					/* arg is NaN */
-	movl	$1, _errno
-	flds	NaN
+	flds	4(%esp)
 	ret

@@ -1,7 +1,5 @@
 /* Copyright (C) 2011 DJ Delorie, see COPYING.DJ for details */
 /* Copyright (C) 1999 DJ Delorie, see COPYING.DJ for details */
-NaN:
-	.long	0xFFC00000
 
 pinf:
 	.long	0x7F800000
@@ -66,6 +64,5 @@ posinf:
 	ret
 
 badarg:					/* arg is NaN */
-	movl	$1, _errno
-	flds	NaN
+	fldt	4(%esp)
 	ret
