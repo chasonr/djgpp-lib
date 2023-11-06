@@ -12,7 +12,7 @@ nearbyintl(long double x)
     fenv_t fenv;
     feholdexcept(&fenv);
 
-    long double y = rintf(x);
+    long double y = rintl(x);
 
     feclearexcept(FE_INEXACT);
     feupdateenv(&fenv);

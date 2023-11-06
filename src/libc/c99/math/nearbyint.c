@@ -12,7 +12,7 @@ nearbyint(double x)
     fenv_t fenv;
     feholdexcept(&fenv);
 
-    double y = rintf(x);
+    double y = rint(x);
 
     feclearexcept(FE_INEXACT);
     feupdateenv(&fenv);
