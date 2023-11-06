@@ -23,7 +23,7 @@
 #endif
 
 /* CYGNUS LOCAL: Default to XOPEN_MODE.  */
-#define _XOPEN_MODE
+/*#define _XOPEN_MODE*/
 
 #ifndef __P
 #ifdef __STDC__
