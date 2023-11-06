@@ -35,10 +35,11 @@
 	ux.f = x;
 	uy.f = y;
 
+	/* Check isinf first; Annex F specifies hypot(inf, nan) = +inf */
+	if (isinff(ux.l) || isinff(uy.l))
+		return +HUGE_VAL;
 	if (isnanf(ux.l) || isnanf(uy.l))
 		return (x-x)/(y-y);
-	if (isinff(ux.l) || isinff(uy.l))
-		return __kernel_standard(x, y, 104);
 	GET_FLOAT_WORD(ha,x);
 	ha &= 0x7fffffff;
 	GET_FLOAT_WORD(hb,y);

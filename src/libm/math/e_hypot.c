@@ -57,8 +57,9 @@
 	double a=x,b=y,t1,t2,y_1,y_2,w;
 	__int32_t j,k,ha,hb;
 
+	/* Check isinf first; Annex F specifies hypot(inf, nan) = +inf */
+	if (isinf(x) || isinf(y)) return HUGE_VAL;
 	if (isnan(x) || isnan(y)) return (x-x)/(y-y);
-	if (isinf(x) || isinf(y)) return __kernel_standard(x, y, 104);
 	GET_HIGH_WORD(ha,x);
 	ha &= 0x7fffffff;
 	GET_HIGH_WORD(hb,y);
