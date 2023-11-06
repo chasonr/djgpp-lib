@@ -88,6 +88,10 @@ static double one = 1.0;
 {
 	__int32_t i0,i1,j_0;
 	__uint32_t i;
+	if (isnan(x)) {
+	    *iptr = x;
+	    return x;
+	}
 	EXTRACT_WORDS(i0,i1,x);
 	j_0 = ((i0>>20)&0x7ff)-0x3ff;	/* exponent of x */
 	if(j_0<20) {			/* integer part in high x */

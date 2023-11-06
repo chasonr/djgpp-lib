@@ -30,6 +30,10 @@ static float one = 1.0;
 {
 	__int32_t i0,j_0;
 	__uint32_t i;
+	if (isnan(x)) {
+	    *iptr = x;
+	    return x;
+	}
 	GET_FLOAT_WORD(i0,x);
 	j_0 = ((i0>>23)&0xff)-0x7f;	/* exponent of x */
 	if(j_0<23) {			/* integer part in x */
