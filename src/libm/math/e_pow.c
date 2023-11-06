@@ -118,6 +118,9 @@ ivln2_l  =  1.92596299112661746887e-08; /* 0x3E54AE0B, 0xF85DDF44 =1/ln2 tail*/
     /* y==zero: x**0 = 1 */
 	if((iy|ly)==0) return one; 	
 
+    /* x==one: 1**y = 1 */
+	if(hx == 0x3FF00000 && lx == 0) return one;
+
     /* +-NaN return x+y */
 	if(ix > 0x7ff00000 || ((ix==0x7ff00000)&&(lx!=0)) ||
 	   iy > 0x7ff00000 || ((iy==0x7ff00000)&&(ly!=0))) 
@@ -147,7 +150,7 @@ ivln2_l  =  1.92596299112661746887e-08; /* 0x3E54AE0B, 0xF85DDF44 =1/ln2 tail*/
 	if(ly==0) { 	
 	    if (iy==0x7ff00000) {	/* y is +-inf */
 	        if(((ix-0x3ff00000)|lx)==0)
-		    return  y - y;	/* inf**+-1 is NaN */
+		    return one;		/* inf**+-1 is +1.0 */
 	        else if (ix >= 0x3ff00000)/* (|x|>1)**+-inf = inf,0 */
 		    return (hy>=0)? y: zero;
 	        else			/* (|x|<1)**-,+inf = inf,0 */

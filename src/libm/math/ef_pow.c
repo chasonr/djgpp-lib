@@ -76,6 +76,9 @@ ivln2_l  =  7.0526075433e-06; /* 0x36eca570 =1/ln2 tail*/
     /* y==zero: x**0 = 1 */
 	if(iy==0) return one; 	
 
+    /* x==one: 1**y = 1 */
+	if(hx == 0x3F800000) return one;
+
     /* +-NaN return x+y */
 	if(ix > 0x7f800000 ||
 	   iy > 0x7f800000)
@@ -99,7 +102,7 @@ ivln2_l  =  7.0526075433e-06; /* 0x36eca570 =1/ln2 tail*/
     /* special value of y */
 	if (iy==0x7f800000) {	/* y is +-inf */
 	    if (ix==0x3f800000)
-	        return  y - y;	/* inf**+-1 is NaN */
+	        return one;	/* inf**+-1 is +1.0 */
 	    else if (ix > 0x3f800000)/* (|x|>1)**+-inf = inf,0 */
 	        return (hy>=0)? y: zero;
 	    else			/* (|x|<1)**-,+inf = inf,0 */
