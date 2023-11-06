@@ -131,7 +131,7 @@ what info/libc.info says.
 | `sqrt`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `tan`        | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `tanh`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `tgamma`     | _missing_      | _missing_      | _missing_       |
+| `tgamma`     | libm.a         | libm.a         | _missing_       |
 | `trunc`      | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
 
 libm.a implements additional functions not present in C11:
