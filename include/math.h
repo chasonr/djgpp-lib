@@ -279,6 +279,8 @@ extern long double ceill(long double);
 extern long double copysignl(long double, long double);
 extern long double cosl(long double);
 extern long double coshl(long double);
+extern long double erfl(long double);
+extern long double erfcl(long double);
 extern long double expl(long double);
 extern long double exp2l(long double);
 extern long double expm1l(long double);
@@ -293,6 +295,7 @@ extern long double frexpl(long double, int *);
 extern long double hypotl(long double, long double);
 extern int ilogbl(long double);
 extern long double ldexpl(long double, int);
+extern long double lgammal(long double);
 extern long double sqrtl(long double);
 extern long double logl(long double);
 extern long double log10l(long double);
@@ -311,6 +314,7 @@ extern long double sinl(long double);
 extern long double sinhl(long double);
 extern long double tanl(long double);
 extern long double tanhl(long double);
+extern long double tgammal(long double);
 
 /* End libm.a. */
 

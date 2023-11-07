@@ -192,6 +192,12 @@ SRC += s_isnanl.c
 SRC += finitel.c
 SRC += tgammaf.c
 SRC += tgamma.c
+SRC += derfc0.c
+SRC += erfcl.c
+SRC += erfl.c
+SRC += dgam1.c
+SRC += tgammal.c
+SRC += lgammal.c
 
 chobj = w_acos.def w_acosh.def w_asin.def s_asinh.def \
 	s_atan.def w_atan2.def w_atanh.def w_j0.def \

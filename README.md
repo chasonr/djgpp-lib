@@ -88,8 +88,8 @@ what info/libc.info says.
 | `copysign`   | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `cos`        | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `cosh`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `erf`        | libm.a         | libm.a         | _missing_       |
-| `erfc`       | libm.a         | libm.a         | _missing_       |
+| `erf`        | libm.a         | libm.a         | libm.a          |
+| `erfc`       | libm.a         | libm.a         | libm.a          |
 | `exp`        | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `exp2`       | libc.a         | libc.a         | libc.a          |
 | `expm1`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
@@ -104,7 +104,7 @@ what info/libc.info says.
 | `hypot`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `ilogb`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `ldexp`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `lgamma`     | libm.a         | libm.a         | _missing_       |
+| `lgamma`     | libm.a         | libm.a         | libm.a          |
 | `llrint`     | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
 | `llround`    | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
 | `log`        | libc.a, libm.a | libc.a, libm.a | libc.a          |
@@ -131,7 +131,7 @@ what info/libc.info says.
 | `sqrt`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `tan`        | libc.a, libm.a | libc.a, libm.a | libc.a          |
 | `tanh`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `tgamma`     | libm.a         | libm.a         | _missing_       |
+| `tgamma`     | libm.a         | libm.a         | libm.a          |
 | `trunc`      | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
 
 libm.a implements additional functions not present in C11:

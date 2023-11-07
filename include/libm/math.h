@@ -346,4 +346,16 @@ extern float lgammaf_r __P((float, int *));
 
 __END_DECLS
 
+extern long double copysignl(long double, long double);
+extern long double expl(long double);
+extern long double fabsl(long double);
+extern long double fmodl(long double, long double);
+extern long double erfl(long double);
+extern long double erfcl(long double);
+extern long double lgammal(long double);
+extern long double logl(long double);
+extern long double log1pl(long double);
+extern long double sinl(long double);
+extern long double tgammal(long double);
+
 #endif /* _MATH_H_ */
