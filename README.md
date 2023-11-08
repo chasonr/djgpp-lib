@@ -74,65 +74,68 @@ provided that `_LIB_VERSION` is set to `_IEEE_`.  `_IEEE_` is now the
 default; in the original library, the default is `_XOPEN_`, contrary to
 what info/libc.info says.
 
-| __Function__ | __float__      | __double__     | __long double__ |
-|--------------|----------------|----------------|-----------------|
-| `acos`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `acosh`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `asin`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `asinh`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `atan`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `atan2`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `atanh`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `cbrt`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `ceil`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `copysign`   | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `cos`        | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `cosh`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `erf`        | libm.a         | libm.a         | libm.a          |
-| `erfc`       | libm.a         | libm.a         | libm.a          |
-| `exp`        | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `exp2`       | libc.a         | libc.a         | libc.a          |
-| `expm1`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `fabs`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `fdim`       | libc.a         | libc.a         | libc.a          |
-| `floor`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `fma`        | libc.a         | libc.a         | libc.a          |
-| `fmax`       | libc.a         | libc.a         | libc.a          |
-| `fmin`       | libc.a         | libc.a         | libc.a          |
-| `fmod`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `frexp`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `hypot`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `ilogb`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `ldexp`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `lgamma`     | libm.a         | libm.a         | libm.a          |
-| `llrint`     | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
-| `llround`    | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
-| `log`        | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `log10`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `log1p`      | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `log2`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `logb`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `lrint`      | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
-| `lround`     | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
-| `modf`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `nan`        | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `nearbyint`  | libc.a         | libc.a         | libc.a          |
-| `nextafter`  | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `nexttoward` | libc.a         | libc.a         | libc.a          |
-| `pow`        | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `remainder`  | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `remquo`     | libc.a         | libc.a         | libc.a          |
-| `rint`       | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
-| `round`      | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
-| `scalbln`    | libc.a         | libc.a         | libc.a          |
-| `scalbn`     | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `sin`        | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `sinh`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `sqrt`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `tan`        | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `tanh`       | libc.a, libm.a | libc.a, libm.a | libc.a          |
-| `tgamma`     | libm.a         | libm.a         | libm.a          |
-| `trunc`      | libc.a, libm.a | libc.a, libm.a | libc.a, libm.a  |
+All math functions defined in C11 are now present in libc.a.  The ones
+present in libm.a are listed below.
+
+| __Function__  | __float__ | __double__ | __long double__ |
+|---------------|-----------|------------|-----------------|
+| `acos`        | libm.a    | libm.a     | _missing_       |
+| `acosh`       | libm.a    | libm.a     | _missing_       |
+| `asin`        | libm.a    | libm.a     | _missing_       |
+| `asinh`       | libm.a    | libm.a     | _missing_       |
+| `atan`        | libm.a    | libm.a     | _missing_       |
+| `atan2`       | libm.a    | libm.a     | _missing_       |
+| `atanh`       | libm.a    | libm.a     | _missing_       |
+| `cbrt`        | libm.a    | libm.a     | _missing_       |
+| `ceil`        | libm.a    | libm.a     | _missing_       |
+| `copysign`    | libm.a    | libm.a     | _missing_       |
+| `cos`         | libm.a    | libm.a     | _missing_       |
+| `cosh`        | libm.a    | libm.a     | _missing_       |
+| `erf`         | libm.a    | libm.a     | libm.a          |
+| `erfc`        | libm.a    | libm.a     | libm.a          |
+| `exp`         | libm.a    | libm.a     | _missing_       |
+| `exp2`        | _missing_ | _missing_  | _missing_       |
+| `expm1`       | libm.a    | libm.a     | _missing_       |
+| `fabs`        | libm.a    | libm.a     | _missing_       |
+| `fdim`        | _missing_ | _missing_  | _missing_       |
+| `floor`       | libm.a    | libm.a     | _missing_       |
+| `fma`         | _missing_ | _missing_  | _missing_       |
+| `fmax`        | _missing_ | _missing_  | _missing_       |
+| `fmin`        | _missing_ | _missing_  | _missing_       |
+| `fmod`        | libm.a    | libm.a     | _missing_       |
+| `frexp`       | libm.a    | libm.a     | _missing_       |
+| `hypot`       | libm.a    | libm.a     | _missing_       |
+| `ilogb`       | libm.a    | libm.a     | _missing_       |
+| `ldexp`       | libm.a    | libm.a     | _missing_       |
+| `lgamma`      | libm.a    | libm.a     | libm.a          |
+| `llrint`      | libm.a    | libm.a     | libm.a          |
+| `llround`     | libm.a    | libm.a     | libm.a          |
+| `log`         | libm.a    | libm.a     | _missing_       |
+| `log10`       | libm.a    | libm.a     | _missing_       |
+| `log1p`       | libm.a    | libm.a     | _missing_       |
+| `log2`        | libm.a    | libm.a     | _missing_       |
+| `logb`        | libm.a    | libm.a     | _missing_       |
+| `lrint`       | libm.a    | libm.a     | libm.a          |
+| `lround`      | libm.a    | libm.a     | libm.a          |
+| `modf`        | libm.a    | libm.a     | _missing_       |
+| `nan`         | libm.a    | libm.a     | _missing_       |
+| `nearbyint`   | _missing_ | _missing_  | _missing_       |
+| `nextafter`   | libm.a    | libm.a     | _missing_       |
+| `nexttoward`  | _missing_ | _missing_  | _missing_       |
+| `pow`         | libm.a    | libm.a     | _missing_       |
+| `remainder`   | libm.a    | libm.a     | _missing_       |
+| `remquo`      | _missing_ | _missing_  | _missing_       |
+| `rint`        | libm.a    | libm.a     | libm.a          |
+| `round`       | libm.a    | libm.a     | libm.a          |
+| `scalbln`     | _missing_ | _missing_  | _missing_       |
+| `scalbn`      | libm.a    | libm.a     | _missing_       |
+| `sin`         | libm.a    | libm.a     | _missing_       |
+| `sinh`        | libm.a    | libm.a     | _missing_       |
+| `sqrt`        | libm.a    | libm.a     | _missing_       |
+| `tan`         | libm.a    | libm.a     | _missing_       |
+| `tanh`        | libm.a    | libm.a     | _missing_       |
+| `tgamma`      | libm.a    | libm.a     | libm.a          |
+| `trunc`       | libm.a    | libm.a     | libm.a          |
 
 libm.a implements additional functions not present in C11:
 

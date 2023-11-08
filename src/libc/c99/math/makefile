@@ -144,6 +144,22 @@ SRC += tanhl.S
 SRC += truncf.S
 SRC += trunc.S
 SRC += truncl.S
+SRC += derfc0l.c
+SRC += erfcl.c
+SRC += erfl.c
+SRC += dgam1l.c
+SRC += lgammal.c
+SRC += tgammal.c
+SRC += derfc0.c
+SRC += erfc.c
+SRC += erf.c
+SRC += dgam1.c
+SRC += lgamma.c
+SRC += tgamma.c
+SRC += tgammaf.c
+SRC += lgammaf.c
+SRC += erff.c
+SRC += erfcf.c
 
 include $(TOP)/../makefile.inc
 
