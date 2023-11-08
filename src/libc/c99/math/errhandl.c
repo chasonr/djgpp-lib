@@ -1,7 +1,7 @@
 /* Copyright (C) 2003 DJ Delorie, see COPYING.DJ for details */
 #include <math.h>
 
-static int __math_errhandling = MATH_ERRNO;
+static int __math_errhandling = MATH_ERRNO|MATH_ERREXCEPT;
 
 int
 __get_math_errhandling (void)
