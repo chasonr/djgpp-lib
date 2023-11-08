@@ -171,6 +171,10 @@ time.h
   * `struct timespec` missing
   * `timespec_get` missing
 
+uchar.h
+  * All functions supported
+  * Single byte character sets only; no UTF-8
+
 wchar.h
 
   * in progress
@@ -240,4 +244,3 @@ wchar.h
 Missing headers
 ---------------
 * complex.h
-* uchar.h

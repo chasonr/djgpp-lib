@@ -43,10 +43,13 @@ __DJ_wint_t
 #define WEOF ((wint_t)(-1))
 #endif
 
+#ifndef _MBSTATE_T
+#define _MBSTATE_T
 typedef struct
 {
   int shift_state;
 } mbstate_t;
+#endif
 
 #if (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L) \
   || !defined(__STRICT_ANSI__) || defined(__cplusplus)
