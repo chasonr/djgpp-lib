@@ -3,6 +3,10 @@
 #ifndef __dj_include_fenv_h_
 #define __dj_include_fenv_h_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* The features enumerated in ieeefp.h are not in fact implemented.
    Definitions are according to the x86 architecture. */
 
@@ -49,5 +53,9 @@ int fegetenv(fenv_t *_envp);
 int feholdexcept(fenv_t *_envp);
 int fesetenv(const fenv_t *_envp);
 int feupdateenv(const fenv_t *_envp);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __dj_include_fenv_h_ */
