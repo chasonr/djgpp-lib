@@ -46,6 +46,7 @@ Headers provided by GCC
 Headers completely supported
 ----------------------------
   * assert.h
+  * complex.h with conformance to Annex G
   * ctype.h
   * errno.h
   * fenv.h
@@ -240,7 +241,3 @@ wchar.h
     * `vwscanf`
     * `wprintf`
     * `wscanf`
-
-Missing headers
----------------
-* complex.h
