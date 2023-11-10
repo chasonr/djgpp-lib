@@ -28,6 +28,8 @@ _asinhl:
 	andl	$0x00007FFF, %eax
 	cmpl	$0x00007FFF, %eax
 	je	inf_nan
+	cmpl	$0x00005FFE, %eax
+	ja	alt_formula		/* Avoid overflow */
 
 
 	fldln2				/* ln2			  */
@@ -58,6 +60,20 @@ _asinhl:
 	jz	3f
 		fchs
 3:
+	ret
+
+	/* Compute as log(x) + log(2) */
+alt_formula:
+	fldln2				/* ln2		     */
+	fldt	4(%esp)			/* x	 ln2	     */
+	fabs				/* |x|   ln2         */
+	fyl2x				/* log(|x|)          */
+	fldln2				/* ln2   log(|x|)    */
+	faddp
+	testl	$0x8000, %ecx
+	jz	4f
+		fchs
+4:
 	ret
 
 inf_nan:

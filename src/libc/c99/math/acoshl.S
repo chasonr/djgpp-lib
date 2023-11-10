@@ -26,6 +26,8 @@ _acoshl:
 	je	abarg			/* Check for negative infinity */
 	cmpw	$0x3FFF, %ax
 	jl	badarg			/* x < 1 */
+	cmpw	$0x5FFE, %ax
+	jg	alt_formula		/* Avoid overflow */
 
 argok:
 	fldln2				/* ln2		     */
@@ -53,6 +55,16 @@ argok:
 
 1:					/* log1pi(x) */
 	fyl2xp1
+	addl	$4, %esp
+	ret
+
+	/* Compute as log(x) + log(2) */
+alt_formula:
+	fldln2				/* ln2		     */
+	fldt	8(%esp)			/* x	 ln2	     */
+	fyl2x				/* log(x)            */
+	fldln2				/* ln2   log(x)      */
+	faddp
 	addl	$4, %esp
 	ret
 
