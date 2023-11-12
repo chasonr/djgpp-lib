@@ -37,6 +37,14 @@
 
 #define __DJ_wint_t     typedef int wint_t;
 
+#define __DJ_mbstate_t \
+typedef struct \
+{ \
+  unsigned short _surrogate; \
+  unsigned char _num_bytes; \
+  unsigned int _codepoint; \
+} mbstate_t;
+
 /* Define internal type to be used for avoiding strict
    aliasing warnings */
 #if (__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ > 3))

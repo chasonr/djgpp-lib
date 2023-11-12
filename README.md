@@ -58,6 +58,7 @@ Headers completely supported
   * stdint.h
   * stdio.h
   * string.h
+  * uchar.h
   * wctype.h
 
 Headers partially or incorrectly supported
@@ -171,10 +172,6 @@ time.h
   * `TIME_UTC` missing
   * `struct timespec` missing
   * `timespec_get` missing
-
-uchar.h
-  * All functions supported
-  * Single byte character sets only; no UTF-8
 
 wchar.h
 

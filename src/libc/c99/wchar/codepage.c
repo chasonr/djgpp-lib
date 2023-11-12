@@ -1,4 +1,4 @@
-/* Copyright 2020 Ray Chason. See COPYING.dj for details. */
+/* Copyright 2020, 2023 Ray Chason. See COPYING.dj for details. */
 
 #include <stdio.h>  // EOF
 #include <stdlib.h> // bsearch
@@ -548,4 +548,10 @@ __dj_get_conversion(void)
     }
 
     return last_conv;
+}
+
+int
+__dj_is_utf8(void)
+{
+    return __dj_current_codepage == UTF8_CODEPAGE;
 }

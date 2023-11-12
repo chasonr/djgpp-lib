@@ -10,11 +10,8 @@ extern "C" {
 #endif
 
 #ifndef _MBSTATE_T
+__DJ_mbstate_t
 #define _MBSTATE_T
-typedef struct
-{
-  int shift_state;
-} mbstate_t;
 #endif
 
 #ifndef _SIZE_T

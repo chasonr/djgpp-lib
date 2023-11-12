@@ -20,6 +20,7 @@
 #endif
 #include <go32.h>
 #include <limits.h>
+#include "../../c99/wchar/codepage.h"
 
 /*
  * Number of supported categories
@@ -237,6 +238,11 @@ setlocalectype(const char *locale __attribute__((unused)), int selector,
       __dj_ctype_flags[i + 1] = temp_flags;
     }
     __dj_current_codepage = codepage;
+    if (codepage == UTF8_CODEPAGE) {
+        __dj_mb_cur_max = 4;
+    } else {
+        __dj_mb_cur_max = 1;
+    }
     return 1;
   }
 }
@@ -528,8 +534,14 @@ setlocale(int category, const char *locale)
                 CID = loc2id[j].id;
                 break;
               }
-            if (*p == '.')
-              CCP = atoi(p + 1);
+            if (*p == '.') {
+              if (strnicmp(p + 1, "utf8", 4) == 0
+              ||  strnicmp(p + 1, "utf-8", 5) == 0) {
+                CCP = UTF8_CODEPAGE;
+              } else {
+                CCP = atoi(p + 1);
+              }
+            }
             /* User requested the country/codepage we doesn't know about */
             if ((CID == 0xffff) || ((*p == '.') && (CCP == 0xffff)))
             {
@@ -563,7 +575,11 @@ setlocale(int category, const char *locale)
                 locale = loc2id[j].loc;
                 break;
               }
-            sprintf(buf, "%s.%u", locale, CCP);
+            if (CCP == UTF8_CODEPAGE) {
+              sprintf(buf, "%s.UTF-8", locale);
+            } else {
+              sprintf(buf, "%s.%u", locale, CCP);
+            }
             locale = buf;
           }
 

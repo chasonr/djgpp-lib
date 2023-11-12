@@ -1,10 +1,9 @@
-/* Copyright 2020 Ray Chason. See COPYING.dj for details. */
+/* Copyright 2020, 2023 Ray Chason. See COPYING.dj for details. */
 
 #include <wchar.h>
 
 int
 mbsinit(const mbstate_t *ps)
 {
-    /* No supported encoding has non-initial shift states */
-    return 1;
+    return ps == NULL || (ps->_num_bytes == 0 && ps->_surrogate == 0);
 }

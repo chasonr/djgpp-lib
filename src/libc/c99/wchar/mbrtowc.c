@@ -1,32 +1,18 @@
-/* Copyright 2020 Ray Chason. See COPYING.dj for details. */
+/* Copyright 2020, 2023 Ray Chason. See COPYING.dj for details. */
 
 #include <wchar.h>
-#include <errno.h>
-#include "codepage.h"
+#include <uchar.h>
 
 size_t
 mbrtowc(wchar_t * __restrict__ pwc,
         const char * __restrict__ s, size_t n,
         mbstate_t * __restrict__ ps)
 {
-    const struct char_conv *table = __dj_get_conversion();
-    wint_t wch;
-    int rc;
+    static mbstate_t this_ps;
 
-    if (s == NULL || n == 0) {
-        return 0;
+    if (ps == NULL) {
+        ps = &this_ps;
     }
 
-    wch = __dj_single_map(table, (unsigned char)s[0]);
-    if (wch == WEOF) {
-        /* invalid byte */
-        errno = EILSEQ;
-        rc = -1;
-    } else {
-        if (pwc != NULL) {
-            *pwc = wch;
-        }
-        rc = 1;
-    }
-    return (size_t)rc;
+    return mbrtoc16((char16_t *)pwc, s, n, ps);
 }
