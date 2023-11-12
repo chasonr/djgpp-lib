@@ -104,7 +104,7 @@ wcstof(const wchar_t *s, wchar_t **sret)
       mantissa_bits = wcstoul(&s[4], &endptr, 0);
       if (*endptr == L')')
       {
-        mantissa_bits = mantissa_bits & 0x7fffff;
+        mantissa_bits = (mantissa_bits & 0x7fffff) | 0x400000;
         if (mantissa_bits)
           t.ft.mantissa = mantissa_bits;
         if (sret)

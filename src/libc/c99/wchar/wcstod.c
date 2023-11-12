@@ -106,7 +106,7 @@ wcstod(const wchar_t *s, wchar_t **sret)
         if (mantissa_bits)
         {
           t.dt.mantissal = mantissa_bits & 0xffffffff;
-          t.dt.mantissah = (mantissa_bits >> 32) & 0xfffff;
+          t.dt.mantissah = ((mantissa_bits >> 32) & 0xfffff) | 0x80000;
         }
         if (sret)
           *sret = endptr + 1;

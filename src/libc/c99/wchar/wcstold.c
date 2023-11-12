@@ -110,7 +110,7 @@ wcstold(const wchar_t *s, wchar_t **sret)
         if (mantissa_bits)
         {
           t.ldt.mantissal = mantissa_bits & 0xffffffff;
-          t.ldt.mantissah = ((mantissa_bits >> 32) & 0xffffffff ) | 0x80000000;
+          t.ldt.mantissah = ((mantissa_bits >> 32) & 0xffffffff ) | 0xC0000000;
         }
         if (sret)
           *sret = endptr + 1;
@@ -133,7 +133,7 @@ wcstold(const wchar_t *s, wchar_t **sret)
   {
     const wchar_t *next_char = NULL;
     const int max_digits = MANTISSA_SIZE / HEX_DIGIT_SIZE;  /* The exact number of digits that fits in mantissa.  */
-    int bin_exponent, digits, integer_digits;
+    int bin_exponent, digits, integer_digits, msb_bit;
     unsigned long long int mantissa, msb_mask;
     _longdouble_union_t ieee754;
 
@@ -204,6 +204,10 @@ wcstold(const wchar_t *s, wchar_t **sret)
 
         msb_mask = 0x01ULL;
         bin_exponent = -fraction_zeros * HEX_DIGIT_SIZE;  /*  2**bin_exponent.  */
+        msb_bit = digits * HEX_DIGIT_SIZE + bin_exponent;
+        // Avoid undefined behavior in shifting msb_mask
+        if (msb_bit >= 64)
+          bin_exponent -= msb_bit - 63;
         for (msb_mask <<= (digits * HEX_DIGIT_SIZE + bin_exponent); !(mantissa & msb_mask); msb_mask >>= 1)
           bin_exponent--;
       }
@@ -223,18 +227,30 @@ wcstold(const wchar_t *s, wchar_t **sret)
     if (digits >= max_digits)
     {
       /*
+       *  Fill in bits from the next digit if present.
+       */
+      int lsd = IS_DEC_DIGIT(*next_char) ? *next_char - L'0' :  /*  Least significant hex digit.  Will be rounded out.  */
+                ((*next_char >= L'A') && (*next_char <= L'F')) ? *next_char - L'A' + 10 :
+                ((*next_char >= L'a') && (*next_char <= L'f')) ? *next_char - L'a' + 10 :
+                0;
+      int shift = 0;
+      while ((mantissa & 0x8000000000000000ULL) == 0)
+      {
+        mantissa <<= 1;
+        shift++;
+      }
+      mantissa |= lsd >> (4 - shift);
+      lsd = (lsd << shift) & 0xF;
+      /*
        *  Round half towards plus infinity (round half up).
        */
-      const int lsd = IS_DEC_DIGIT(*next_char) ? *next_char - L'0' :  /*  Least significant hex digit.  Will be rounded out.  */
-                      ((*next_char >= L'A') && (*next_char <= L'F')) ? *next_char - L'A' + 10 : *next_char - L'a' + 10;
       if (lsd > 0x07)
       {
         mantissa += 0x0000000000000001ULL;  /* Smallest float greater than x.  */
-        if (!(mantissa & msb_mask))
+        if (mantissa == 0)
         {
           /*  Overflow.  */
-          mantissa >>= 1;
-          mantissa |= 0x8000000000000000ULL;
+          mantissa = 0x8000000000000000ULL;
           bin_exponent++;
         }
       }
