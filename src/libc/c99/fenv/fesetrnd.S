@@ -26,7 +26,7 @@ _fesetround:
     sub $4, %esp
     stmxcsr (%esp)
     pop %eax
-    and $~0x30, %ah
+    and $~0x60, %ah
     or %ch, %ah
     push %eax
     ldmxcsr (%esp)
