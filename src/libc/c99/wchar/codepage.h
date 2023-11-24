@@ -5,6 +5,11 @@
 
 #include <sys/djtypes.h>
 
+#ifndef _WCHAR_T
+__DJ_wchar_t
+#define _WCHAR_T
+#endif
+
 #ifndef _WINT_T
 __DJ_wint_t
 #define _WINT_T

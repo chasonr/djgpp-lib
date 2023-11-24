@@ -59,6 +59,11 @@ __DJ_ssize_t
 #define _SSIZE_T
 #endif
 
+#ifndef _DJ_MBSTATE_T
+__DJ_mbstate_t
+#define _DJ_MBSTATE_T
+#endif
+
 /* Note that the definitions of these fields are NOT guaranteed!  They
    may change with any release without notice!  The fact that they
    are here at all is to comply with ANSI specifictions. */
@@ -72,9 +77,15 @@ typedef struct __dj_FILE {
   int      _file;
   char    *_name_to_remove;
   size_t   _fillsize;
+  __dj_mbstate_t _mbstate;
+  unsigned short _wunget[2];
+  unsigned _wungetsize;
 } FILE;
 
-typedef unsigned long		fpos_t;
+typedef struct __dj_fpos_t {
+  unsigned long _pos;
+  __dj_mbstate_t _mbstate;
+} fpos_t;
 
 extern FILE __dj_stdin, __dj_stdout, __dj_stderr;
 #define stdin	(&__dj_stdin)

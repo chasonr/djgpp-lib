@@ -25,6 +25,29 @@ SRC += wcsstr.c
 SRC += wcstok.c
 SRC += wcsxfrm.c
 
+# Analogues to stdio.h
+SRC += fgetwc.c
+SRC += getwc.c
+SRC += getwchar.c
+SRC += fgetws.c
+SRC += ungetwc.c
+SRC += fputwc.c
+SRC += putwc.c
+SRC += putwchar.c
+SRC += fputws.c
+#SRC += fwscanf.c
+#SRC += swscanf.c
+#SRC += wscanf.c
+#SRC += vfwscanf.c
+#SRC += vswscanf.c
+#SRC += vwscanf.c
+#SRC += fwprintf.c
+#SRC += swprintf.c
+#SRC += wprintf.c
+#SRC += vfwprintf.c
+#SRC += vswprintf.c
+#SRC += vwprintf.c
+
 # Analogues to stdlib.h
 SRC += wcstod.c
 SRC += wcstof.c
@@ -47,5 +70,8 @@ SRC += wcrtomb.c
 SRC += wctob.c
 SRC += mbsrtowcs.c
 SRC += wcsrtombs.c
+
+# Other
+SRC += fwide.c
 
 include $(TOP)/../makefile.inc

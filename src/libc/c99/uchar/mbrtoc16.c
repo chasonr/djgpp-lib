@@ -20,7 +20,7 @@ mbrtoc16(char16_t * restrict pc16, const char * restrict s, size_t n,
         pc16 = &dummy;
     }
 
-    if (s == NULL || n == 0) {
+    if (s == NULL) {
         memset(ps, 0, sizeof(*ps));
         return 0;
     }

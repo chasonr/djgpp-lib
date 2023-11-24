@@ -17,6 +17,8 @@ fwrite(const void *vptr, size_t size, size_t count, FILE *f)
   const char *ptr = (const char *)vptr;
   ssize_t s;
 
+  f->_flag |= _IOBYTE;
+
   if (__libc_write_termios_hook
       && !(f->_flag & (_IOTERM | _IONTERM)))
   {

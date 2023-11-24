@@ -5,5 +5,6 @@
 int
 fgetc(FILE *f)
 {
+  f->_flag |= _IOBYTE;
   return __getc(f);
 }

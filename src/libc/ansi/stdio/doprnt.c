@@ -149,6 +149,7 @@ _doprnt(const char *fmt0, va_list argp, FILE *fp)
   wchar_t *wt;                       /* buffer pointer for wide string conversion */
   wchar_t wch;                       /* wide character for %lc */
 
+  fp->_flag |= _IOBYTE;
 
   locale_info = localeconv();
   decimal_point = locale_info->decimal_point[0];

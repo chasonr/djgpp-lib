@@ -8,7 +8,8 @@ fsetpos(FILE *stream, const fpos_t *pos)
 {
   if (stream && pos)
   {
-    return fseek(stream, (long)(*pos), SEEK_SET);
+    stream->_mbstate = pos->_mbstate;
+    return fseek(stream, (long)(pos->_pos), SEEK_SET);
   }
   errno = EFAULT;
   return -1;

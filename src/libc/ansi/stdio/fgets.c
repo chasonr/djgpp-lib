@@ -9,6 +9,7 @@ fgets(char *s, int n, FILE *f)
   int c = 0;
   char *cs;
 
+  f->_flag |= _IOBYTE;
   cs = s;
   while (--n > 0 && (c = __getc(f)) != EOF)
   {

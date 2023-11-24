@@ -12,6 +12,8 @@ ungetc(int c, FILE *f)
       || f->_base == NULL)
     return EOF;
 
+  f->_flag |= _IOBYTE;
+
   if (f->_ptr == f->_base)
   {
     if (f->_cnt == 0)

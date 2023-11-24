@@ -20,6 +20,8 @@ fread(void *vptr, size_t size, size_t count, FILE *f)
   int s;
   int c;
 
+  f->_flag |= _IOBYTE;
+
   /* grow if we know we're asking for a lot, even if it's in the
      buffer, since we'll probably read chunks this size for a while */
   while (size * count > f->_fillsize

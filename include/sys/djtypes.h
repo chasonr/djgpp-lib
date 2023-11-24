@@ -43,7 +43,7 @@ typedef struct \
   unsigned short _surrogate; \
   unsigned char _num_bytes; \
   unsigned int _codepoint; \
-} mbstate_t;
+} __dj_mbstate_t;
 
 /* Define internal type to be used for avoiding strict
    aliasing warnings */

@@ -15,7 +15,8 @@ fgetpos(FILE *stream, fpos_t *pos)
     ret = ftell(stream);
     if (ret != -1L)
       {
-	*pos = (fpos_t)ret;
+	pos->_pos = ret;
+	pos->_mbstate = stream->_mbstate;
 	return 0;
       }
     else

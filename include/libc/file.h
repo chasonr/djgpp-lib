@@ -38,6 +38,8 @@ extern "C" {
 #define _IOUNGETC 010000  /* there is an ungetc'ed character in the buffer */
 #define _IOTERM   020000  /* file's handle hooked by termios */
 #define _IONTERM  040000  /* file's handle not hooked by termios */
+#define _IOBYTE   0100000 /* file is byte-oriented */
+#define _IOWIDE   0200000 /* file is wide-oriented */
 
 int  _flsbuf(int, FILE*);
 int  _filbuf(FILE *);

@@ -6,5 +6,6 @@
 int
 putchar(int c)
 {
+  stdout->_flag |= _IOBYTE;
   return __putc(c, stdout);
 }

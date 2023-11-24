@@ -5,5 +5,6 @@
 int
 putc(int c, FILE *fp)
 {
+  fp->_flag |= _IOBYTE;
   return __putc(c, fp);
 }

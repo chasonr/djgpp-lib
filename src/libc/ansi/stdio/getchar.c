@@ -6,5 +6,6 @@
 int
 getchar(void)
 {
+  stdin->_flag |= _IOBYTE;
   return __getc(stdin);
 }

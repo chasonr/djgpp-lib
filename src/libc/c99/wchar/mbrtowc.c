@@ -14,5 +14,10 @@ mbrtowc(wchar_t * __restrict__ pwc,
         ps = &this_ps;
     }
 
-    return mbrtoc16((char16_t *)pwc, s, n, ps);
+    char16_t c16;
+    size_t size = mbrtoc16(&c16, s, n, ps);
+    if (size <= n || size == (size_t)(-3)) {
+        *pwc = (wchar_t)c16;
+    }
+    return size;
 }

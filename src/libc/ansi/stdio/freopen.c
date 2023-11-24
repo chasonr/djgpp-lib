@@ -8,6 +8,7 @@
 #include <libc/stubs.h>
 #include <sys/types.h>
 #include <stdio.h>
+#include <string.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <libc/file.h>
@@ -94,6 +95,9 @@ freopen(const char *file, const char *mode, FILE *f)
     f->_flag &= ~(_IORW|_IOREAD|_IOWRT);
     f->_flag |= _IOEOF;
   }
+
+  /* Reset the multibyte conversion state */
+  memset(&f->_mbstate, 0, sizeof(f->_mbstate));
 
   return f;
 }

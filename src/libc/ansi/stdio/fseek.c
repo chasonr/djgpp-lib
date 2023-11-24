@@ -7,6 +7,7 @@
 /* Copyright (C) 1995 DJ Delorie, see COPYING.DJ for details */
 #include <libc/stubs.h>
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 #include <libc/file.h>
 #include <fcntl.h>
@@ -18,6 +19,10 @@ fseek(FILE *f, long offset, int ptrname)
 {
   const int fd = fileno(f);
   long int p = -1;			/* can't happen? */
+
+  /* Reset the multibyte conversion state */
+  memset(&f->_mbstate, 0, sizeof(f->_mbstate));
+  f->_wungetsize = 0;
 
   /* If this is a FILE for a directory, we have no concept of position.
    * The stream I/O functions cannot be used to read/write a FILE

@@ -10,7 +10,11 @@ extern "C" {
 #endif
 
 #ifndef _MBSTATE_T
+#ifndef _DJ_MBSTATE_T
 __DJ_mbstate_t
+#define _DJ_MBSTATE_T
+#endif
+typedef __dj_mbstate_t mbstate_t;
 #define _MBSTATE_T
 #endif
 

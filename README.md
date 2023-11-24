@@ -212,24 +212,24 @@ wchar.h
     * `wcrtomb`
     * `wcsrtombs`
     * `wctob`
-  * partially implemented:
-    * `wcscoll` -- same as `wcscmp`, no locale-dependent behavior
-    * `wcsxfrm` -- identity map, no locale-dependent behavior
-  * missing:
     * `fgetwc`
     * `fgetws`
     * `fputwc`
     * `fputws`
     * `fwide`
-    * `fwprintf`
-    * `fwscanf`
     * `getwc`
     * `getwchar`
     * `putwc`
     * `putwchar`
+    * `ungetwc`
+  * partially implemented:
+    * `wcscoll` -- same as `wcscmp`, no locale-dependent behavior
+    * `wcsxfrm` -- identity map, no locale-dependent behavior
+  * missing:
+    * `fwprintf`
+    * `fwscanf`
     * `swprintf`
     * `swscanf`
-    * `ungetwc`
     * `vfwprintf`
     * `vfwscanf`
     * `vswprintf`

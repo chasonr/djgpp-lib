@@ -12,6 +12,7 @@ fputs(const char *s, FILE *f)
   int unbuffered;
   char localbuf[BUFSIZ];
 
+  f->_flag |= _IOBYTE;
   unbuffered = f->_flag & _IONBF;
   if (unbuffered)
   {

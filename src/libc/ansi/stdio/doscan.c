@@ -133,6 +133,8 @@ _doscan_low(FILE *iop, int (*scan_getc)(FILE *), int (*scan_ungetc)(int, FILE *)
   char_set *cset;
   bool ok;
 
+  iop->_flag |= _IOBYTE;
+
   decimal_point = localeconv()->decimal_point[0];
   nchars = 0;
   nmatch = 0;

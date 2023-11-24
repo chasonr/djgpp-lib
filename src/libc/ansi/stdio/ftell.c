@@ -9,6 +9,7 @@
 #include <fcntl.h>
 #include <libc/dosio.h>
 #include <libc/fd_props.h>
+#include "../../c99/wchar/codepage.h"
 
 long
 ftell(FILE *f)
@@ -38,5 +39,21 @@ ftell(FILE *f)
   if (tres < 0)
     return tres;
   tres += adjust;
+  if (__dj_is_utf8()) {
+    for (unsigned i = 0; i < f->_wungetsize; ++i) {
+      unsigned w = f->_wunget[i];
+      if (w < 0x80) {
+        --tres;
+      } else if (w < 0x800) {
+        tres -= 2;
+      } else if (0xD800 <= w && w <= 0xDFFF) {
+        tres -= 2;
+      } else {
+        tres -= 3;
+      }
+    }
+  } else {
+    tres -= f->_wungetsize;
+  }
   return tres;
 }
