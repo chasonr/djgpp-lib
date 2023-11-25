@@ -141,6 +141,8 @@ size_t wcsrtombs(char * __restrict__ _dst, const wchar_t ** __restrict__ _src, s
 #ifndef __STRICT_ANSI__
 
 int	_dowprnt(const wchar_t *_fmt, va_list _args, struct __dj_FILE *_f);
+int	_dowscan(struct __dj_FILE *_f, const wchar_t *_fmt, va_list _args);
+int	_dowscan_low(struct __dj_FILE *, wint_t (*)(struct __dj_FILE *_get), wint_t (*_unget)(wint_t, struct __dj_FILE *), const wchar_t *_fmt, va_list _args);
 
 #ifndef _POSIX_SOURCE
 

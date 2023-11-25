@@ -7,6 +7,7 @@
 #ifndef __dj_include_libc_file_h__
 #define __dj_include_libc_file_h__
 
+#include <wchar.h>
 #include <fcntl.h>
 #include <libc/dosio.h>
 #include <libc/ttyprvt.h>
@@ -127,11 +128,21 @@ static __inline__ void __stropenr(FILE *p, const char *str)
   } u;
 
   u.cs = str;
-  p->_flag = _IOREAD | _IOSTRG | _IONTERM;
+  p->_flag = _IOREAD | _IOSTRG | _IONTERM | _IOBYTE;
   p->_ptr = p->_base = u.s;
   p->_cnt = 0;
   while (*str++)
     p->_cnt++;
+  p->_bufsiz = p->_cnt;
+}
+
+static __inline__ void __stropenwr(FILE *p, const wchar_t *str)
+{
+  p->_flag = _IOREAD | _IOSTRG | _IONTERM | _IOWIDE;
+  p->_ptr = p->_base = (char *)str;
+  p->_cnt = 0;
+  while (*str++)
+    p->_cnt += sizeof(wchar_t);
   p->_bufsiz = p->_cnt;
 }
 

@@ -11,30 +11,37 @@ fgetwc(FILE *stream)
 
     wchar_t wch;
 
-    /* Input of a supplementary character may have left a surrogate in the
-       multibyte state */
-    size_t size = mbrtowc(&wch, "", 0, &stream->_mbstate);
-    if (size == (size_t)(-3)) {
-        return wch;
-    }
-
-    /* Read from _wunget if available */
-    if (stream->_wungetsize != 0) {
-        return stream->_wunget[--stream->_wungetsize];
-    }
-
-    while (1) {
-        int ch = __getc(stream);
-        if (ch < 0) {
-            return WEOF;
+    if (stream->_flag & _IOSTRG) {
+        if (stream->_ptr + sizeof(wchar_t) <= stream->_base + stream->_bufsiz) {
+            wch = *(const wchar_t *)stream->_ptr;
+            stream->_ptr += sizeof(wchar_t);
         }
-        char s = (char)ch;
-        size = mbrtowc(&wch, &s, 1, &stream->_mbstate);
-        if (size == (size_t)(-1)) {
-            return WEOF;
+    } else {
+        /* Input of a supplementary character may have left a surrogate in the
+           multibyte state */
+        size_t size = mbrtowc(&wch, "", 0, &stream->_mbstate);
+        if (size == (size_t)(-3)) {
+            return wch;
         }
-        if (size != (size_t)(-2)) {
-            break;
+
+        /* Read from _wunget if available */
+        if (stream->_wungetsize != 0) {
+            return stream->_wunget[--stream->_wungetsize];
+        }
+
+        while (1) {
+            int ch = __getc(stream);
+            if (ch < 0) {
+                return WEOF;
+            }
+            char s = (char)ch;
+            size = mbrtowc(&wch, &s, 1, &stream->_mbstate);
+            if (size == (size_t)(-1)) {
+                return WEOF;
+            }
+            if (size != (size_t)(-2)) {
+                break;
+            }
         }
     }
 

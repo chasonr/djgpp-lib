@@ -175,66 +175,7 @@ time.h
 
 wchar.h
 
-  * in progress
-  * implemented:
-    * `wmemcpy`
-    * `wmemmove`
-    * `wmemcmp`
-    * `wmemchr`
-    * `wmemset`
-    * `wcscat`
-    * `wcschr`
-    * `wcscmp`
-    * `wcscpy`
-    * `wcscspn`
-    * `wcslen`
-    * `wcsncat`
-    * `wcsncmp`
-    * `wcsncpy`
-    * `wcspbrk`
-    * `wcsrchr`
-    * `wcsspn`
-    * `wcsstr`
-    * `wcstok`
-    * `wcstod`
-    * `wcstof`
-    * `wcstol`
-    * `wcstold`
-    * `wcstoll`
-    * `wcstoul`
-    * `wcstoull`
-    * `wcsftime`
-    * `btowc`
-    * `mbrlen`
-    * `mbrtowc`
-    * `mbsinit`
-    * `mbsrtowcs`
-    * `wcrtomb`
-    * `wcsrtombs`
-    * `wctob`
-    * `fgetwc`
-    * `fgetws`
-    * `fputwc`
-    * `fputws`
-    * `fwide`
-    * `getwc`
-    * `getwchar`
-    * `putwc`
-    * `putwchar`
-    * `ungetwc`
-    * `fwprintf`
-    * `swprintf`
-    * `vfwprintf`
-    * `vswprintf`
-    * `vwprintf`
-    * `wprintf`
-  * partially implemented:
+  * All functions at least minimally implemented
+  * No locale support in:
     * `wcscoll` -- same as `wcscmp`, no locale-dependent behavior
     * `wcsxfrm` -- identity map, no locale-dependent behavior
-  * missing:
-    * `fwscanf`
-    * `swscanf`
-    * `vfwscanf`
-    * `vswscanf`
-    * `vwscanf`
-    * `wscanf`
