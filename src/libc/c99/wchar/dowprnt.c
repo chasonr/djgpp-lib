@@ -664,8 +664,6 @@ pforw:
             return -1; /* conversion error */
           else if (l == (size_t)(-2))
             break; /* incomplete character */
-          else if (l == (size_t)(-3))
-            l = 0;
           else if (l == 0)
             l = 1; /* null character */
           PUTC(wch);
