@@ -24,6 +24,8 @@ mbrtoc32(char32_t * restrict pc32, const char * restrict s, size_t n,
     }
 
     if (__dj_is_utf8()) {
+        size_t count = 0;
+
         if (ps->_num_bytes == 0) {
             /* Next byte is the start of a character */
             unsigned char byte = (unsigned char)s[0];
@@ -53,9 +55,8 @@ mbrtoc32(char32_t * restrict pc32, const char * restrict s, size_t n,
                 errno = EILSEQ;
                 return (size_t)(-1);
             }
+            count = 1;
         }
-
-        size_t count = 1;
 
         while (ps->_num_bytes != 0 && count < n) {
             unsigned char byte = (unsigned char)s[count];
