@@ -58,13 +58,13 @@
 #     define nmalloc  malloc
 #     define nfree    free
 #     define nrealloc realloc
-#     define nmemalign memalign
+#     define naligned_alloc aligned_alloc
 #     define ncalloc  calloc
 #  else
 #     define nmalloc  _malloc
 #     define nfree    _free
 #     define nrealloc _realloc
-#     define nmemalign _memalign
+#     define naligned_alloc _aligned_alloc
 #     define ncalloc   calloc  /* can't hook this */
 #  endif
 #  define fakesbrk sbrk
@@ -1031,7 +1031,7 @@ void *ncalloc(size_t n, size_t s)
 /* 1------------------1 */
 
 /* The remaining code is an attempt to graft on the
-   memalign function.  It can do with improvement.
+   aligned_alloc function.  It can do with improvement.
    The idea is to do this without disturbing the
    already checked and debugged package.
 
@@ -1124,7 +1124,7 @@ static inline int invalid(size_t alignment)
 /* multiple of alignment.  Otherwise similar to malloc */
 /* alignment MUST be a power of two, max 65536.        */
 
-void *nmemalign(size_t alignment, size_t size)
+void *naligned_alloc(size_t alignment, size_t size)
 {
    memblockp m = NULL;
    void     *minit;
@@ -1134,7 +1134,7 @@ void *nmemalign(size_t alignment, size_t size)
    /* compute the rounded up size needed */
    if (!sz) sz++;     /* avoid any 0 space allocation */
    szneed = roundup(sz);
-   DBGPRTM("memalign(%5lu) [%5lu] %5lu", sz, szneed, alignment);
+   DBGPRTM("aligned_alloc(%5lu) [%5lu] %5lu", sz, szneed, alignment);
    DBGEOLN;
 
    if (size < ((ulong)(INT_MAX - 65536)) &&
@@ -1162,6 +1162,6 @@ void *nmemalign(size_t alignment, size_t size)
    } /* valid parameters */
    if (m) return PTR(m);
    else return NULL;
-} /* nmemalign */
+} /* naligned_alloc */
 
 /* --------- nmalloc.c ----------- */

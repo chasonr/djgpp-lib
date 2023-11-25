@@ -107,6 +107,8 @@ unsigned long long int	strtoull(const char *_s, char **_endptr, int _base);
 void quick_exit(int _status) __attribute__((noreturn));
 int	at_quick_exit(void (*_func)(void));
 
+void *aligned_alloc(size_t _align, size_t _size);
+
 #endif /* (__STDC_VERSION__ >= 199901L) || !__STRICT_ANSI__ */
 
 #ifndef __STRICT_ANSI__

@@ -57,6 +57,7 @@ Headers completely supported
   * stdbool.h
   * stdint.h
   * stdio.h
+  * stdlib.h
   * string.h
   * time.h
   * uchar.h
@@ -161,10 +162,6 @@ libm.a implements additional functions not present in C11:
 | `y0`          | libm.a    | libm.a     | _missing_       |
 | `y1`          | libm.a    | libm.a     | _missing_       |
 | `yn`          | libm.a    | libm.a     | _missing_       |
-
-stdlib.h
-
-  * `aligned_alloc` missing
 
 wchar.h
 
