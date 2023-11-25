@@ -10,15 +10,22 @@ fputwc(wchar_t c, FILE *stream)
 {
     stream->_flag |= _IOWIDE;
 
-    char s[MB_LEN_MAX];
-    size_t size = wcrtomb(s, c, &stream->_mbstate);
-    if (size == (size_t)(-1)) {
-        return WEOF;
-    }
-    for (size_t i = 0; i < size; ++i) {
-        int rc = __putc(s[i], stream);
-        if (rc < 0) {
+    if (stream->_flag & _IOSTRG) {
+        unsigned char *s = (unsigned char *)&c;
+        for (size_t i = 0; i < sizeof(c); ++i) {
+            __putc(s[i], stream);
+        }
+    } else {
+        char s[MB_LEN_MAX];
+        size_t size = wcrtomb(s, c, &stream->_mbstate);
+        if (size == (size_t)(-1)) {
             return WEOF;
+        }
+        for (size_t i = 0; i < size; ++i) {
+            int rc = __putc(s[i], stream);
+            if (rc < 0) {
+                return WEOF;
+            }
         }
     }
     return c;

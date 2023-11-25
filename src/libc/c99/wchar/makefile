@@ -35,18 +35,19 @@ SRC += fputwc.c
 SRC += putwc.c
 SRC += putwchar.c
 SRC += fputws.c
+SRC += dowprnt.c
 #SRC += fwscanf.c
 #SRC += swscanf.c
 #SRC += wscanf.c
 #SRC += vfwscanf.c
 #SRC += vswscanf.c
 #SRC += vwscanf.c
-#SRC += fwprintf.c
-#SRC += swprintf.c
-#SRC += wprintf.c
-#SRC += vfwprintf.c
-#SRC += vswprintf.c
-#SRC += vwprintf.c
+SRC += fwprintf.c
+SRC += swprintf.c
+SRC += wprintf.c
+SRC += vfwprntf.c
+SRC += vswprntf.c
+SRC += vwprintf.c
 
 # Analogues to stdlib.h
 SRC += wcstod.c

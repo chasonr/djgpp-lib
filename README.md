@@ -222,19 +222,19 @@ wchar.h
     * `putwc`
     * `putwchar`
     * `ungetwc`
+    * `fwprintf`
+    * `swprintf`
+    * `vfwprintf`
+    * `vswprintf`
+    * `vwprintf`
+    * `wprintf`
   * partially implemented:
     * `wcscoll` -- same as `wcscmp`, no locale-dependent behavior
     * `wcsxfrm` -- identity map, no locale-dependent behavior
   * missing:
-    * `fwprintf`
     * `fwscanf`
-    * `swprintf`
     * `swscanf`
-    * `vfwprintf`
     * `vfwscanf`
-    * `vswprintf`
     * `vswscanf`
-    * `vwprintf`
     * `vwscanf`
-    * `wprintf`
     * `wscanf`

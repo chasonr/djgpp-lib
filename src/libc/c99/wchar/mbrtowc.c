@@ -1,6 +1,7 @@
 /* Copyright 2020, 2023 Ray Chason. See COPYING.dj for details. */
 
 #include <wchar.h>
+#include <string.h>
 #include <uchar.h>
 
 size_t
@@ -12,6 +13,11 @@ mbrtowc(wchar_t * __restrict__ pwc,
 
     if (ps == NULL) {
         ps = &this_ps;
+    }
+
+    if (s == NULL) {
+        memset(ps, 0, sizeof(*ps));
+        return 0;
     }
 
     char16_t c16;

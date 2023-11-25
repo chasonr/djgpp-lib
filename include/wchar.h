@@ -140,6 +140,8 @@ size_t wcsrtombs(char * __restrict__ _dst, const wchar_t ** __restrict__ _src, s
 
 #ifndef __STRICT_ANSI__
 
+int	_dowprnt(const wchar_t *_fmt, va_list _args, struct __dj_FILE *_f);
+
 #ifndef _POSIX_SOURCE
 
 #endif /* !_POSIX_SOURCE */
