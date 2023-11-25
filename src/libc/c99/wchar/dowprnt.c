@@ -655,10 +655,10 @@ pforw:
       {
         const char *nt_end = nt + size;
         mbstate_t mbs;
+        wchar_t wch = 0;
         mbrtowc(NULL, NULL, 0, &mbs); /* initial shift state */
-        while (nt < nt_end)
+        while (nt < nt_end || (0xD800 <= wch && wch <= 0xDBFF))
         {
-          wchar_t wch;
           size_t l = mbrtowc(&wch, nt, nt_end - nt, &mbs);
           if (l == (size_t)(-1))
             return -1; /* conversion error */
