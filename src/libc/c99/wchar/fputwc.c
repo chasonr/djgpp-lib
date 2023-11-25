@@ -11,9 +11,10 @@ fputwc(wchar_t c, FILE *stream)
     stream->_flag |= _IOWIDE;
 
     if (stream->_flag & _IOSTRG) {
-        unsigned char *s = (unsigned char *)&c;
-        for (size_t i = 0; i < sizeof(c); ++i) {
-            __putc(s[i], stream);
+        if (stream->_cnt >= (ssize_t)sizeof(wchar_t)) {
+            *(wchar_t *)stream->_ptr = c;
+            stream->_ptr += sizeof(wchar_t);
+            stream->_cnt -= sizeof(wchar_t);
         }
     } else {
         char s[MB_LEN_MAX];
