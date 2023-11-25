@@ -160,7 +160,7 @@ _dowprnt(const wchar_t *fmt0, va_list argp, FILE *fp)
     fp->_flag &= ~(_IOEOF | _IOREAD);
   }
   if ((fp->_flag & _IOWRT) == 0)
-    return (EOF);
+    return (WEOF);
 
   using_numeric_conv_spec = false;
   arg_list = argp;
