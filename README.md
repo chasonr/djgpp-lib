@@ -58,6 +58,7 @@ Headers completely supported
   * stdint.h
   * stdio.h
   * string.h
+  * time.h
   * uchar.h
   * wctype.h
 
@@ -166,12 +167,6 @@ stdlib.h
   * `aligned_alloc` missing
   * `at_quick_exit` missing
   * `quick_exit` missing
-
-time.h
-
-  * `TIME_UTC` missing
-  * `struct timespec` missing
-  * `timespec_get` missing
 
 wchar.h
 

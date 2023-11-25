@@ -72,6 +72,15 @@ time_t		time(time_t *_tod);
 #if (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L) \
   || !defined(__STRICT_ANSI__) || defined(__cplusplus)
 
+struct timespec {
+  time_t tv_sec;
+  long tv_nsec;
+};
+
+#define TIME_UTC 1
+
+int timespec_get(struct timespec *ts, int base);
+
 #endif /* (__STDC_VERSION__ >= 199901L) || !__STRICT_ANSI__ */
 
 #ifndef __STRICT_ANSI__
