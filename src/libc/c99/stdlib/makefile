@@ -5,5 +5,7 @@ TOP=../..
 
 SRC += _exit.S
 SRC += strtof.c
+SRC += atqkexit.c
+SRC += qkexit.c
 
 include $(TOP)/../makefile.inc

@@ -165,8 +165,6 @@ libm.a implements additional functions not present in C11:
 stdlib.h
 
   * `aligned_alloc` missing
-  * `at_quick_exit` missing
-  * `quick_exit` missing
 
 wchar.h
 

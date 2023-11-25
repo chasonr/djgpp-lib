@@ -26,6 +26,7 @@ struct __atexit {
 };
 
 extern struct __atexit *__atexit_ptr;
+extern struct __atexit *__at_quick_exit_ptr;
 
 #endif /* !_POSIX_SOURCE */
 #endif /* !__STRICT_ANSI__ */
