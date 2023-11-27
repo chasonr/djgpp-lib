@@ -1,0 +1,30 @@
+@node putwchar, stdio
+@findex putwchar
+@subheading Syntax
+
+@example
+#include <stdio.h>
+#include <wchar.h>
+
+wint_t putwchar(wint_t c);
+@end example
+
+@subheading Description
+
+This is the same as @code{fputwc(c, stdout)}.  @xref{fputwc}.
+
+@subheading Return Value
+
+The character written.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001
+
+@subheading Example
+
+@example
+while ((c = getwchar()) != WEOF)
+  putwchar(c);
+@end example
+

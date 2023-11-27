@@ -1,0 +1,34 @@
+@node _dowprnt, stdio
+@findex _dowprnt
+@subheading Syntax
+
+@example
+#include <wchar.h>
+#include <stdio.h>
+
+int _dowprnt(const wchar_t *format, void *params, FILE *file);
+@end example
+
+@subheading Description
+
+This is an internal function that is used by all the @code{wprintf} style
+functions, which simply pass their format, arguments, and stream to this
+function. 
+
+@xref{wprintf}, for a discussion of the allowed formats and arguments. 
+
+@subheading Return Value
+
+The number of characters generated is returned.
+
+@subheading Portability
+
+@portability !ansi, !posix
+
+@subheading Example
+
+@example
+int args[] = @{ 1, 2, 3, 66 @};
+_dowprnt(L"%d %d %d %c\n", args, stdout);
+@end example
+

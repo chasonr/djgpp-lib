@@ -1,0 +1,36 @@
+@node fgetws, stdio
+@findex fgetws
+@subheading Syntax
+
+@example
+#include <stdio.h>
+#include <wchar.h>
+
+wchar_t *fgetws(wchar_t *buffer, int maxlength, FILE *file);
+@end example
+
+@subheading Description
+
+This function reads as much of a line from a file as possible, stopping
+when the buffer is full (@var{maxlength}-1 characters), an end-of-line
+is detected, or @code{WEOF} or an error is detected.  It then stores a
+@code{NULL} to terminate the string.
+
+@subheading Return Value
+
+The address of the buffer is returned on success, if @code{WEOF} is
+encountered before any characters are stored, or if an error is
+detected, @code{NULL} is returned instead. 
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001
+
+@subheading Example
+
+@example
+wchar_t buf[100];
+while (fgetws(buf, 100, stdin))
+  fputws(buf, stdout);
+@end example
+

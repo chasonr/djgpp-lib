@@ -1,0 +1,25 @@
+@node fwscanf, stdio
+@findex fwscanf
+@subheading Syntax
+
+@example
+#include <stdio.h>
+#include <wchar.h>
+
+int fwscanf(FILE *file, const wchar_t *format, @dots{});
+@end example
+
+@subheading Description
+
+This function scans formatted text from @var{file} and stores it in the
+variables pointed to by the arguments.  @xref{wscanf}.
+
+@subheading Return Value
+
+The number of items successfully scanned.
+
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001
+

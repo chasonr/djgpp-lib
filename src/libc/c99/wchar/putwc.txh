@@ -1,0 +1,30 @@
+@node putwc, stdio
+@findex putwc
+@subheading Syntax
+
+@example
+#include <stdio.h>
+#include <wchar.h>
+
+wint_t putwc(wint_t c, FILE *file);
+@end example
+
+@subheading Description
+
+This function writes one character to the given @var{file}.
+
+@subheading Return Value
+
+The character written.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001
+
+@subheading Example
+
+@example
+while ((c=getwc(stdin)) != EOF)
+  putwc(c, stdout);
+@end example
+

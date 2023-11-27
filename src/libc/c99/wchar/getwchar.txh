@@ -1,0 +1,23 @@
+@node getwchar, stdio
+@findex getwchar
+@subheading Syntax
+
+@example
+#include <stdio.h>
+
+wint_t getwchar(void);
+@end example
+
+@subheading Description
+
+The same as @code{fgetwc(stdin)} (@pxref{fgetwc}).
+
+@subheading Return Value
+
+The character, or @code{EOF}.
+
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001
+

@@ -1,0 +1,31 @@
+@node getwc, stdio
+@findex getwc
+@subheading Syntax
+
+@example
+#include <stdio.h>
+#include <wchar.h>
+
+wint_t getwc(FILE *file);
+@end example
+
+@subheading Description
+
+Get one character from @var{file}.
+
+@subheading Return Value
+
+The character ([0..0xFFFF]) or @code{WEOF} if eof or error.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001
+
+@subheading Example
+
+@example
+wint_t c;
+while ((c=getwc(stdin)) != EOF)
+  wputc(c, stdout);
+@end example
+

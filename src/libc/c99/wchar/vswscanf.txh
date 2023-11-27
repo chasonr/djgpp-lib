@@ -1,0 +1,25 @@
+@node vswscanf, stdio
+@findex vswscanf
+@subheading Syntax
+
+@example
+#include <stdio.h>
+#include <wchar.h>
+
+int vswscanf(const wchar_t *string, const wchar_t *format, va_list arguments);
+@end example
+
+@subheading Description
+
+This function scans formatted text from the @var{string} and stores it
+in the variables pointed to by the @var{arguments}. @xref{wscanf}.
+@xref{vfwscanf}.
+
+@subheading Return Value
+
+The number of items successfully scanned.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001
+

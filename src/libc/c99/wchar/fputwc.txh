@@ -1,0 +1,29 @@
+@node fputwc, stdio
+@findex fputwc
+@subheading Syntax
+
+@example
+#include <stdio.h>
+#include <wchar.h>
+
+wint_t fputwc(wint_t character, FILE *file);
+@end example
+
+@subheading Description
+
+This function writes the given @var{character} to the given @code{file}.
+
+@subheading Return Value
+
+The given character [0..0xFFFF] or @code{WEOF}.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001
+
+@subheading Example
+
+@example
+fputwc(L'\n', stdout);
+@end example
+
