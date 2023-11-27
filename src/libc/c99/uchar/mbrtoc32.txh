@@ -1,0 +1,36 @@
+@c ----------------------------------------------------------------------
+@node mbrtoc32, locale
+@findex mbrtoc32
+@subheading Syntax
+
+@example
+#include <uchar.h>
+
+size_t mbrtoc32(char32_t *pc32, const char *s, size_t n, mbstate_t *ps);
+@end example
+
+@subheading Description
+
+Convert the first multibyte sequence in @var{s} to a wide character.
+At most @var{n} characters are checked.  If @var{pc32} is not
+@code{NULL}, the result is stored there.
+
+The shift state in @var{ps} is used; if @var{ps} is NULL, an internal
+shift state is used.
+
+If @var{s} is null, the shift state is reset.
+
+@subheading Return Value
+
+The number of characters used by the multibyte sequence.
+
+@subheading Portability
+
+@portability !ansi-c89, !ansi-c99, ansi-c11, !posix-1003.2-1992, posix-1003.1-2001
+
+@subheading Example
+
+@example
+mbstate_t ps;
+string += mbrtoc32(&c32, string, strlen(string), &ps);
+@end example

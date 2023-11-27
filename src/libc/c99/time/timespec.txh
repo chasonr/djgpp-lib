@@ -1,0 +1,43 @@
+@node timespec_get, time
+@findex timespec_get
+@tindex timespec@r{ structure}
+@tindex timezone@r{ structure}
+@subheading Syntax
+
+@example
+#include <time.h>
+
+int timespec_get(struct timespec *tp, int base);
+@end example
+
+@subheading Description
+
+Gets the current GMT time.  The return structure is as follows:
+
+@example
+struct timespec @{
+  long tv_sec;  /* seconds since 00:00:00 GMT 1/1/1970 */
+  long tv_nsec; /* nanoseconds */
+@};
+@end example
+
+Note that although this function returns nanoseconds for compatibility
+reasons, the values are precise to less than 1/20 of a second only.
+The underlying DOS function has 1/20 second granularity, as it is
+calculated from the 55 ms timer tick count, so you won't get better than
+that with timespec_get().
+
+@var{base} must be @code{TIME_UTC}. Other values are not supported.
+
+@xref{gettimeofday}.
+@xref{settimeofday}.
+
+@subheading Return Value
+
+Zero on success, nonzero on failure.
+
+
+@subheading Portability
+
+@portability !ansi-c89, !ansi-c99, ansi-c11, !posix-1003.2-1992, posix-1003.1-2001
+

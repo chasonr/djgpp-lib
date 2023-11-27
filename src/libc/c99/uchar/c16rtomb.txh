@@ -1,0 +1,35 @@
+@c ----------------------------------------------------------------------
+@node c16rtomb, locale
+@findex c16rtomb
+@subheading Syntax
+
+@example
+#include <uchar.h>
+
+size_t c16rtomb(char *s, char16_t c16, mbstate_t *ps);
+@end example
+
+@subheading Description
+
+Convert a UTF-16 character to a multibyte character.  The string @var{s}
+must be at least @code{MB_LEN_MAX} bytes long.
+
+The shift state in @var{ps} is used, or an internal shift state if
+@var{ps} is NULL.
+
+@subheading Return Value
+
+The number of characters stored.
+
+@subheading Portability
+
+@portability !ansi-c89, !ansi-c99, ansi-c11, !posix-1003.2-1992, posix-1003.1-2001
+
+@subheading Example
+
+@example
+char s[MB_LEN_MAX];
+mbstate_t ps;
+int mlen = c16rtomb(s, c16, &ps);
+@end example
+
