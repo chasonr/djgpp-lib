@@ -27,17 +27,17 @@ returned if @var{x} is negative and @var{y} is a negative zero,
 For non-finite arguments, @code{atan2f} returns the value specified in
 Annex F of the ISO C standard:
 
-* atan2f(+-0, −0) returns +-@code{Pi}.
-* atan2f(+-0, +0) returns +-0.
-* atan2f(+-0, x) returns +-@code{Pi} for x < 0.
-* atan2f(+-0, x) returns +-0 for x > 0.
-* atan2f(y, +-0) returns −@code{Pi}/2 for y < 0.
-* atan2f(y, +-0) returns @code{Pi}/2 for y > 0.
-* atan2f(+-y, −@code{inf}) returns +-@code{Pi} for finite y > 0.
-* atan2f(+-y, +@code{inf}) returns +-0 for finite y > 0.
-* atan2f(+-@code{inf}, x) returns +-@code{Pi}/2 for finite x.
-* atan2f(+-@code{inf}, −@code{inf}) returns +-3@code{Pi}/4.
-* atan2f(+-@code{inf}, +@code{inf}) returns +-@code{Pi}/4.
+* @code{atan2f}(+-0, −0) returns +-@code{Pi}.
+* @code{atan2f}(+-0, +0) returns +-0.
+* @code{atan2f}(+-0, x) returns +-@code{Pi} for x < 0.
+* @code{atan2f}(+-0, x) returns +-0 for x > 0.
+* @code{atan2f}(y, +-0) returns −@code{Pi}/2 for y < 0.
+* @code{atan2f}(y, +-0) returns @code{Pi}/2 for y > 0.
+* @code{atan2f}(+-y, −@code{inf}) returns +-@code{Pi} for finite y > 0.
+* @code{atan2f}(+-y, +@code{inf}) returns +-0 for finite y > 0.
+* @code{atan2f}(+-@code{inf}, x) returns +-@code{Pi}/2 for finite x.
+* @code{atan2f}(+-@code{inf}, −@code{inf}) returns +-3@code{Pi}/4.
+* @code{atan2f}(+-@code{inf}, +@code{inf}) returns +-@code{Pi}/4.
 
 @code{atan2f} never sets @code{errno}, nor does it raise the "invalid" or
 "divide-by-zero" exceptions.
