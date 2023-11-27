@@ -144,7 +144,7 @@ an exponent.
 
 @item c
 
-A single character.
+A single 8-bit character. For a wide character, use @code{lc}.
 
 @item d
 
@@ -199,7 +199,7 @@ A pointer.  This is printed with an @code{x} specifier.
 
 @item s
 
-A @code{NULL}-terminated string.
+A @code{NULL}-terminated 8-bit string. For a wide string, use @code{ls}.
 
 @item u
 

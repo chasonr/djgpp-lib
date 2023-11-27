@@ -102,6 +102,8 @@ This conversion suppresses skipping of the leading whitespace; use
 character.  If the @var{width} parameter is not specified, a @var{width}
 of one is implied.
 
+For wide characters, use @code{lc}.
+
 @item d
 
 Convert the input to a signed @code{int} using 10 as the base of the
@@ -305,6 +307,8 @@ Copy the input to the given string, skipping leading whitespace and
 copying non-whitespace characters up to the next whitespace.  The string
 stored is then terminated with a null character. 
 
+For a wide string, use @code{ls}.
+
 @item u
 
 Convert the input to an unsigned @code{int} using 10 as the base.
@@ -398,6 +402,8 @@ set is negated).  To specify that the set contains a close-bracket
 (@samp{]}), put it immediately after @samp{[} or @samp{[^}.  To specify
 a literal dash (@samp{-}), write it either immediately after @samp{[} or
 @samp{[^}, or immediately before the closing @samp{]}.
+
+For a wide string, use @code{l[@dots{}]}.
 
 @item %
 
