@@ -1,0 +1,24 @@
+@c ----------------------------------------------------------------------
+@node nearbyint, math
+@findex nearbyint
+@subheading Syntax
+
+@example
+#include <math.h>
+
+double nearbyint(double x);
+@end example
+
+@subheading Description
+
+@code{nearbyint} rounds @var{x} to the nearest integer according to the
+current rounding mode. It differs from @code{rint} in that it never raises
+the inexact exception.
+
+@subheading Return Value
+
+@code{nearbyint} returns the rounded value of @var{x}.
+
+@subheading Portability
+
+@portability ansi, posix

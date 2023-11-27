@@ -1,0 +1,23 @@
+@c ----------------------------------------------------------------------
+@node fminl, math
+@findex fminl
+@subheading Syntax
+
+@example
+#include <math.h>
+
+long double fminl(long double x, long double y);
+@end example
+
+@subheading Description
+
+@code{fminl} returns the lesser of @var{x} or @var{y}. It treats a @code{NaN}
+as missing data, and returns the other argument.
+
+@subheading Return Value
+
+@code{fminl} returns the lesser of @var{x} or @var{y}.
+
+@subheading Portability
+
+@portability ansi, posix

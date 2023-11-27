@@ -1,0 +1,25 @@
+@c ----------------------------------------------------------------------
+@node fdiml, math
+@findex fdiml
+@subheading Syntax
+
+@example
+#include <math.h>
+
+long double fdiml(long double x, long double y);
+@end example
+
+@subheading Description
+
+@code{fdiml} computes the "positive difference", that is:
+
+* @math{@var{x} - @var{y}} if @math{@var{x} > @var{y}}
+* else +0.0
+
+@subheading Return Value
+
+@code{fdiml} returns the greater of @math{@var{x} - @var{y}} or +0.0.
+
+@subheading Portability
+
+@portability ansi, posix

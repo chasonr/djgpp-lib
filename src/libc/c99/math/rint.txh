@@ -1,0 +1,23 @@
+@c ----------------------------------------------------------------------
+@node rint, math
+@findex rint
+@subheading Syntax
+
+@example
+#include <math.h>
+
+double rint(double x);
+@end example
+
+@subheading Description
+
+@code{rint} rounds @var{x} to the nearest integer according to the
+current rounding mode. It may possibly raise the inexact exception.
+
+@subheading Return Value
+
+@code{rint} returns the rounded value of @var{x}.
+
+@subheading Portability
+
+@portability ansi, posix

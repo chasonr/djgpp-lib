@@ -1,0 +1,23 @@
+@c ----------------------------------------------------------------------
+@node rintf, math
+@findex rintf
+@subheading Syntax
+
+@example
+#include <math.h>
+
+float rintf(float x);
+@end example
+
+@subheading Description
+
+@code{rintf} rounds @var{x} to the nearest integer according to the
+current rounding mode. It may possibly raise the inexact exception.
+
+@subheading Return Value
+
+@code{rintf} returns the rounded value of @var{x}.
+
+@subheading Portability
+
+@portability ansi, posix

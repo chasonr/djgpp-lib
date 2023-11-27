@@ -1,0 +1,24 @@
+@c ----------------------------------------------------------------------
+@node remainderf, math
+@findex remainderf
+@subheading Syntax
+
+@example
+#include <math.h>
+
+float remainderf(float x, float y);
+@end example
+
+@subheading Description
+
+@code{remainderf} computes the remainder of @math{@var{x}/@var{y}}, such that
+the absolute value of the remainder is minimized. It differs from @code{fmodf}
+in that @code{fmodf} returns a remainder that has the same sign as @var{x}.
+
+@subheading Return Value
+
+The remainderf of @math{@var{x}/@var{y}}.
+
+@subheading Portability
+
+@portability ansi, posix

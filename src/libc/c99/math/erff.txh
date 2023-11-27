@@ -1,0 +1,26 @@
+@c ----------------------------------------------------------------------
+@node erff, math
+@findex erff
+@subheading Syntax
+
+@example
+#include <math.h>
+
+float erff(float x);
+@end example
+
+@subheading Description
+
+@code{erff} computes the error function of @var{x}.
+
+@subheading Return Value
+
+@code{erff} returns the error function of @var{x}.
+
+@code{erff}(+-0) returns +-0.
+
+@code{erff}(+-@code{inf}) returns +-1.
+
+@subheading Portability
+
+@portability ansi, posix

@@ -1,0 +1,26 @@
+@c ----------------------------------------------------------------------
+@node logb, math
+@findex logb
+@subheading Syntax
+
+@example
+#include <math.h>
+
+double logb(double x);
+@end example
+
+@subheading Description
+
+@code{logb} extracts the exponent of @var{x} as a signed @code{int} value,
+such that @math{@var{s} * 2**(exponent) = @var{x}} for some @var{s} such that
+@math{1 <= @var{s} < 2}.
+
+@subheading Return Value
+
+@code{logb} returns the exponent of @var{x}.
+
+@code{logb}(0) returns -@code{inf}.
+
+@subheading Portability
+
+@portability ansi, posix

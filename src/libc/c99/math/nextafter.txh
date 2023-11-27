@@ -1,0 +1,23 @@
+@c ----------------------------------------------------------------------
+@node nextafter, math
+@findex nextafter
+@subheading Syntax
+
+@example
+#include <math.h>
+
+double nextafter(double x, double y);
+@end example
+
+@subheading Description
+
+@code{nextafter} determines the next representable value after @var{x} in
+the direction of @var{y}.
+
+@subheading Return Value
+
+@code{nextafter} returns @var{x} incremented in the direction of @var{y}.
+
+@subheading Portability
+
+@portability ansi, posix

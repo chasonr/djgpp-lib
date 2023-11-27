@@ -1,0 +1,24 @@
+@c ----------------------------------------------------------------------
+@node fma, math
+@findex fma
+@subheading Syntax
+
+@example
+#include <math.h>
+
+double fma(double x, double y, double z);
+@end example
+
+@subheading Description
+
+@code{fma} computes @math{@var{x} * @var{y} + @var{z}}, as if to infinite precision
+and rounds the result once to @code{double}.
+
+@subheading Return Value
+
+@code{fma} returns the correctly rounded @math{@var{x} * @var{y} + @var{z}}.
+It sets @code{errno} to @code{ERANGE} if an overflow occurs.
+
+@subheading Portability
+
+@portability ansi, posix

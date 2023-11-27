@@ -1,0 +1,23 @@
+@c ----------------------------------------------------------------------
+@node round, math
+@findex round
+@subheading Syntax
+
+@example
+#include <math.h>
+
+double round(double x);
+@end example
+
+@subheading Description
+
+@code{round} rounds @var{x} to the nearest integer value, rounding
+halfway cases away from zero, regardless of the current rounding direction.
+
+@subheading Return Value
+
+@code{round} returns the rounded value of @var{x}.
+
+@subheading Portability
+
+@portability ansi, posix

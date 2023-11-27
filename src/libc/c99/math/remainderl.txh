@@ -1,0 +1,24 @@
+@c ----------------------------------------------------------------------
+@node remainderl, math
+@findex remainderl
+@subheading Syntax
+
+@example
+#include <math.h>
+
+long double remainderl(long double x, long double y);
+@end example
+
+@subheading Description
+
+@code{remainderl} computes the remainder of @math{@var{x}/@var{y}}, such that
+the absolute value of the remainder is minimized. It differs from @code{fmodl}
+in that @code{fmodl} returns a remainder that has the same sign as @var{x}.
+
+@subheading Return Value
+
+The remainder of @math{@var{x}/@var{y}}.
+
+@subheading Portability
+
+@portability ansi, posix

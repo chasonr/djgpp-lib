@@ -1,0 +1,23 @@
+@c ----------------------------------------------------------------------
+@node remquof, math
+@findex remquof
+@subheading Syntax
+
+@example
+#include <math.h>
+
+float remquof(float x, float y, int *quo);
+@end example
+
+@subheading Description
+
+@code{remquof} returns the same remainder as @code{remainder}, and also places
+at least the three lower bits of the quotient in *@var{quo}.
+
+@subheading Return Value
+
+The remainder of @math{@var{x}/@var{y}}.
+
+@subheading Portability
+
+@portability ansi, posix

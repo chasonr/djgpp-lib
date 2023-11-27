@@ -1,0 +1,24 @@
+@c ----------------------------------------------------------------------
+@node nearbyintl, math
+@findex nearbyintl
+@subheading Syntax
+
+@example
+#include <math.h>
+
+long double nearbyintl(long double x);
+@end example
+
+@subheading Description
+
+@code{nearbyintl} rounds @var{x} to the nearest integer according to the
+current rounding mode. It differs from @code{rintl} in that it never raises
+the inexact exception.
+
+@subheading Return Value
+
+@code{nearbyintl} returns the rounded value of @var{x}.
+
+@subheading Portability
+
+@portability ansi, posix

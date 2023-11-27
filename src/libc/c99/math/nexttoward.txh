@@ -1,0 +1,24 @@
+@c ----------------------------------------------------------------------
+@node nexttoward, math
+@findex nexttoward
+@subheading Syntax
+
+@example
+#include <math.h>
+
+double nexttoward(double x, long double y);
+@end example
+
+@subheading Description
+
+@code{nexttoward} determines the next representable value after @var{x} in
+the direction of @var{y}. It differs from @code{nextafter} in that @var{y}
+has type @code{long double}.
+
+@subheading Return Value
+
+@code{nexttoward} returns @var{x} incremented in the direction of @var{y}.
+
+@subheading Portability
+
+@portability ansi, posix

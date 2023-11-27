@@ -1,0 +1,26 @@
+@c ----------------------------------------------------------------------
+@node logbf, math
+@findex logbf
+@subheading Syntax
+
+@example
+#include <math.h>
+
+float logbf(float x);
+@end example
+
+@subheading Description
+
+@code{logbf} extracts the exponent of @var{x} as a signed @code{int} value,
+such that @math{@var{s} * 2**(exponent) = @var{x}} for some @var{s} such that
+@math{1 <= @var{s} < 2}.
+
+@subheading Return Value
+
+@code{logbf} returns the exponent of @var{x}.
+
+@code{logbf}(0) returns -@code{inf}.
+
+@subheading Portability
+
+@portability ansi, posix

@@ -1,0 +1,26 @@
+@c ----------------------------------------------------------------------
+@node erfl, math
+@findex erfl
+@subheading Syntax
+
+@example
+#include <math.h>
+
+long double erfl(long double x);
+@end example
+
+@subheading Description
+
+@code{erfl} computes the error function of @var{x}.
+
+@subheading Return Value
+
+@code{erfl} returns the error function of @var{x}.
+
+@code{erfl}(+-0) returns +-0.
+
+@code{erfl}(+-@code{inf}) returns +-1.
+
+@subheading Portability
+
+@portability ansi, posix

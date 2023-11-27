@@ -1,0 +1,26 @@
+@c ----------------------------------------------------------------------
+@node erfc, math
+@findex erfc
+@subheading Syntax
+
+@example
+#include <math.h>
+
+double erfc(double x);
+@end example
+
+@subheading Description
+
+@code{erfc} computes the complementary error function of @var{x}.
+
+@subheading Return Value
+
+@code{erfc} returns the complementary error function of @var{x}.
+
+@code{erfc}(-@code{inf}) returns +2.
+
+@code{erfc}(+@code{inf}) returns +0.
+
+@subheading Portability
+
+@portability ansi, posix

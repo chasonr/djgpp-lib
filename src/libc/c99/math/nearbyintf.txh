@@ -1,0 +1,24 @@
+@c ----------------------------------------------------------------------
+@node nearbyintf, math
+@findex nearbyintf
+@subheading Syntax
+
+@example
+#include <math.h>
+
+float nearbyintf(float x);
+@end example
+
+@subheading Description
+
+@code{nearbyintf} rounds @var{x} to the nearest integer according to the
+current rounding mode. It differs from @code{rintf} in that it never raises
+the inexact exception.
+
+@subheading Return Value
+
+@code{nearbyintf} returns the rounded value of @var{x}.
+
+@subheading Portability
+
+@portability ansi, posix

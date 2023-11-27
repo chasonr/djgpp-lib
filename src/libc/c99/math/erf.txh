@@ -1,0 +1,26 @@
+@c ----------------------------------------------------------------------
+@node erf, math
+@findex erf
+@subheading Syntax
+
+@example
+#include <math.h>
+
+double erf(double x);
+@end example
+
+@subheading Description
+
+@code{erf} computes the error function of @var{x}.
+
+@subheading Return Value
+
+@code{erf} returns the error function of @var{x}.
+
+@code{erf}(+-0) returns +-0.
+
+@code{erf}(+-@code{inf}) returns +-1.
+
+@subheading Portability
+
+@portability ansi, posix

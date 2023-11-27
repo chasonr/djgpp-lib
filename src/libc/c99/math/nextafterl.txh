@@ -1,0 +1,23 @@
+@c ----------------------------------------------------------------------
+@node nextafterl, math
+@findex nextafterl
+@subheading Syntax
+
+@example
+#include <math.h>
+
+long double nextafterl(long double x, long double y);
+@end example
+
+@subheading Description
+
+@code{nextafterl} determines the next representable value after @var{x} in
+the direction of @var{y}.
+
+@subheading Return Value
+
+@code{nextafterl} returns @var{x} incremented in the direction of @var{y}.
+
+@subheading Portability
+
+@portability ansi, posix

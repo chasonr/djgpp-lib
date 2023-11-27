@@ -1,0 +1,23 @@
+@c ----------------------------------------------------------------------
+@node lroundf, math
+@findex lroundf
+@subheading Syntax
+
+@example
+#include <math.h>
+
+long lroundf(float x);
+@end example
+
+@subheading Description
+
+@code{lroundf} rounds @var{x} to the nearest integer value, rounding
+halfway cases away from zero, regardless of the current rounding direction.
+
+@subheading Return Value
+
+@code{lroundf} returns the rounded value of @var{x}.
+
+@subheading Portability
+
+@portability ansi, posix

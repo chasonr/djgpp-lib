@@ -1,0 +1,30 @@
+@c ----------------------------------------------------------------------
+@node scalbln, math
+@findex scalbln
+@subheading Syntax
+
+@example
+#include <math.h>
+
+double scalbln(double val, long exp);
+@end example
+
+@subheading Description
+
+This function computes @math{@var{val}*2^@var{exp}}. Because the floating point
+format is binary, it is the same as @code{ldexp} except that the exponent has
+type @code{long}.
+
+@subheading Return Value
+
+@math{@var{val}*2^@var{exp}}.  @code{scalbln(0., exp)} returns 0 for all
+values of @code{exp}, without setting @code{errno}.  For non-zero values
+of @var{val}, @code{errno} is set to @code{ERANGE} if the result cannot
+be accurately represented by a @code{float}, and the return value is
+then the nearest representable @code{float} (possibly, an @code{Inf}).
+If @var{val} is a @code{NaN} or @code{Inf}, the return value is
+@code{NaN} and @code{errno} is set to @code{EDOM}.
+
+@subheading Portability
+
+@portability ansi, posix

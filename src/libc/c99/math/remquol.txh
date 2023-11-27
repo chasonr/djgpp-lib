@@ -1,0 +1,23 @@
+@c ----------------------------------------------------------------------
+@node remquol, math
+@findex remquol
+@subheading Syntax
+
+@example
+#include <math.h>
+
+long double remquol(long double x, long double y, int *quo);
+@end example
+
+@subheading Description
+
+@code{remquol} returns the same remainder as @code{remainder}, and also places
+at least the three lower bits of the quotient in *@var{quo}.
+
+@subheading Return Value
+
+The remainder of @math{@var{x}/@var{y}}.
+
+@subheading Portability
+
+@portability ansi, posix

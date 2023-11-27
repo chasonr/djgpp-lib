@@ -1,0 +1,24 @@
+@c ----------------------------------------------------------------------
+@node remainder, math
+@findex remainder
+@subheading Syntax
+
+@example
+#include <math.h>
+
+double remainder(double x, double y);
+@end example
+
+@subheading Description
+
+@code{remainder} computes the remainder of @math{@var{x}/@var{y}}, such that
+the absolute value of the remainder is minimized. It differs from @code{fmod}
+in that @code{fmod} returns a remainder that has the same sign as @var{x}.
+
+@subheading Return Value
+
+The remainder of @math{@var{x}/@var{y}}.
+
+@subheading Portability
+
+@portability ansi, posix

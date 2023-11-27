@@ -1,0 +1,24 @@
+@c ----------------------------------------------------------------------
+@node tgammaf, math
+@findex tgammaf
+@subheading Syntax
+
+@example
+#include <math.h>
+
+float tgammaf(float x);
+@end example
+
+@subheading Description
+
+@code{tgammaf} computes the gamma function of @var{x}. It sets
+@code{errno} to @code{ERANGE} if @var{x} is too large, and to
+@code{EDOM} if @var{x} is a negative integer or zero.
+
+@subheading Return Value
+
+@code{tgammaf} computes the gamma function of @var{x}.
+
+@subheading Portability
+
+@portability ansi, posix

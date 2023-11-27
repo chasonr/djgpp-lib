@@ -1,0 +1,23 @@
+@c ----------------------------------------------------------------------
+@node truncf, math
+@findex truncf
+@subheading Syntax
+
+@example
+#include <math.h>
+
+float truncf(float x);
+@end example
+
+@subheading Description
+
+This function computes the integer with same sign as @var{x} and the greatest
+absolute value not greater than that of @var{x}.
+
+@subheading Return Value
+
+The rounded value of @var{x}.
+
+@subheading Portability
+
+@portability ansi, posix

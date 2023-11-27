@@ -1,0 +1,26 @@
+@c ----------------------------------------------------------------------
+@node erfcf, math
+@findex erfcf
+@subheading Syntax
+
+@example
+#include <math.h>
+
+float erfcf(float x);
+@end example
+
+@subheading Description
+
+@code{erfcf} computes the complementary error function of @var{x}.
+
+@subheading Return Value
+
+@code{erfcf} returns the complementary error function of @var{x}.
+
+@code{erfcf}(-@code{inf}) returns +2.
+
+@code{erfcf}(+@code{inf}) returns +0.
+
+@subheading Portability
+
+@portability ansi, posix

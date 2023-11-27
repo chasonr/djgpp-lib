@@ -1,0 +1,23 @@
+@c ----------------------------------------------------------------------
+@node fmaxf, math
+@findex fmaxf
+@subheading Syntax
+
+@example
+#include <math.h>
+
+float fmaxf(float x, float y);
+@end example
+
+@subheading Description
+
+@code{fmaxf} returns the greater of @var{x} or @var{y}. It treats a @code{NaN}
+as missing data, and returns the other argument.
+
+@subheading Return Value
+
+@code{fmaxf} returns the greater of @var{x} or @var{y}.
+
+@subheading Portability
+
+@portability ansi, posix

@@ -1,0 +1,26 @@
+@c ----------------------------------------------------------------------
+@node lgammaf, math
+@findex lgammaf
+@subheading Syntax
+
+@example
+#include <math.h>
+
+float lgammaf(float x);
+@end example
+
+@subheading Description
+
+@code{lgammaf} computes the natural logarithm of the absolute value of
+@code{gamma(x)}. If @var{x} is too large, it sets @code{errno} to @code{ERANGE} and raises the
+overflow exception. If @var{x} is a negative integer or zero, it sets
+@code{errno} to @code{EDOM} and raises the divide-by-zero exception.
+
+@subheading Return Value
+
+@code{lgammaf} returns the natural logarithm of the absolute value of
+@code{gamma(x)}.
+
+@subheading Portability
+
+@portability ansi, posix

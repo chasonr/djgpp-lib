@@ -1,0 +1,25 @@
+@c ----------------------------------------------------------------------
+@node fdimf, math
+@findex fdimf
+@subheading Syntax
+
+@example
+#include <math.h>
+
+float fdimf(float x, float y);
+@end example
+
+@subheading Description
+
+@code{fdimf} computes the "positive difference", that is:
+
+* @math{@var{x} - @var{y}} if @math{@var{x} > @var{y}}
+* else +0.0
+
+@subheading Return Value
+
+@code{fdimf} returns the greater of @math{@var{x} - @var{y}} or +0.0.
+
+@subheading Portability
+
+@portability ansi, posix

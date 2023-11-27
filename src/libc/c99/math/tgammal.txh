@@ -1,0 +1,24 @@
+@c ----------------------------------------------------------------------
+@node tgammal, math
+@findex tgammal
+@subheading Syntax
+
+@example
+#include <math.h>
+
+long double tgammal(long double x);
+@end example
+
+@subheading Description
+
+@code{tgammal} computes the gamma function of @var{x}. It sets
+@code{errno} to @code{ERANGE} if @var{x} is too large, and to
+@code{EDOM} if @var{x} is a negative integer or zero.
+
+@subheading Return Value
+
+@code{tgammal} computes the gamma function of @var{x}.
+
+@subheading Portability
+
+@portability ansi, posix
