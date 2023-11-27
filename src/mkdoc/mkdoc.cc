@@ -42,6 +42,7 @@ static char *make_sname(const char *name)
 /* ANSI/ISO C */
 #define PORT_TARGET_ANSI_C89          0x10
 #define PORT_TARGET_ANSI_C99          0x11
+#define PORT_TARGET_ANSI_C11          0x12
 /* POSIX */
 #define PORT_TARGET_POSIX_1003_2_1992 0x20
 #define PORT_TARGET_POSIX_1003_1_2001 0x21
@@ -78,10 +79,11 @@ struct PortInfo {
 
 static const PortInfo port_target[] = {
   /* ANSI/ISO C */
-  { "ansi",  "ANSI/ISO C", 2,
+  { "ansi",  "ANSI/ISO C", 3,
     {
       { "c89", "C89", PORT_TARGET_ANSI_C89, PORT_YES },
-      { "c99", "C99", PORT_TARGET_ANSI_C99, PORT_YES }
+      { "c99", "C99", PORT_TARGET_ANSI_C99, PORT_YES },
+      { "c11", "C11", PORT_TARGET_ANSI_C11, PORT_YES }
     }
   },
   /* POSIX */
