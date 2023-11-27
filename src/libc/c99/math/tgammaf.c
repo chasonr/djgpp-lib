@@ -29,7 +29,7 @@ tgammaf(float a)
 //          DAHLGREN, VIRGINIA
 //-----------------------------------------------------------------------
     double g, z, lnx;
-    float s, top, bot, x, t, w;
+    float s = 0.0F, top, bot, x, t, w;
     int n;
 //--------------------------
 //     D = 0.5*(LN(2*PI) - 1)

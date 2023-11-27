@@ -15,6 +15,8 @@ fgetwc(FILE *stream)
         if (stream->_ptr + sizeof(wchar_t) <= stream->_base + stream->_bufsiz) {
             wch = *(const wchar_t *)stream->_ptr;
             stream->_ptr += sizeof(wchar_t);
+        } else {
+            return WEOF;
         }
     } else {
         /* Input of a supplementary character may have left a surrogate in the
