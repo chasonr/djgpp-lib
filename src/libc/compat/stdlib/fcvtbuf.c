@@ -16,11 +16,12 @@ fcvtbuf (double value, int ndigits, int *decpt, int *sign, char *buf)
   static char INFINITY[] = "Infinity";
   char decimal = localeconv()->decimal_point[0];
   int digits = ndigits >= 0 ? ndigits : 0;
-  char *cvtbuf = (char *)alloca (2*DBL_MAX_10_EXP + 16);
+  size_t cvtbuf_size = 2*DBL_MAX_10_EXP + 16;
+  char *cvtbuf = (char *)alloca (cvtbuf_size);
   char *s = cvtbuf;
   char *dot;
 
-  sprintf (cvtbuf, "%-+#.*f", DBL_MAX_10_EXP + digits + 1, value);
+  snprintf (cvtbuf, cvtbuf_size, "%-+#.*f", DBL_MAX_10_EXP + digits + 1, value);
 
   /* The sign.  */
   if (*s++ == '-')

@@ -24,7 +24,7 @@ strerror_r(int errnum, char *strerrbuf, size_t buflen)
   }
   else
   {
-    length = sprintf(ebuf, "%s%d", UNKNOWN_ERROR_STR, errnum);
+    length = snprintf(ebuf, sizeof(ebuf), "%s%d", UNKNOWN_ERROR_STR, errnum);
     p = ebuf;
   }
 

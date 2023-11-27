@@ -134,8 +134,9 @@ make_proxy_var(const char *program, const char *cmdline,
   *tbuf <<= 4;
   *proxy_argc = argc;
 
-  sprintf(proxy, "%s=%04x %04lx %04lx", proxy_string, (unsigned int)argc,
-                                        *tbuf / 16, *tbuf & 0x0f);
+  snprintf(proxy, sizeof(proxy),
+           "%s=%04x %04lx %04lx", proxy_string, (unsigned int)argc,
+                                  *tbuf / 16, *tbuf & 0x0f);
   putenv(proxy);
 
   return 1;
@@ -310,7 +311,7 @@ int v2loadimage(const char *program, const char *cmdline, jmp_buf load_state)
   if (proxy_mode)
   {
     char proxy[32];
-    sprintf(proxy, "%s=", proxy_string);
+    snprintf(proxy, sizeof(proxy), "%s=", proxy_string);
     putenv(proxy);
   }
 

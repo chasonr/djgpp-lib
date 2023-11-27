@@ -56,6 +56,8 @@ static struct rerr {
 	-1,		"",		"*** unknown regexp error code ***",
 };
 
+static char * regatoi(const regex_t *preg, char *localbuf, size_t localsize);
+
 /*
  - regerror - the interface to error numbers
  = extern size_t regerror(int, const regex_t *, char *, size_t);
@@ -75,7 +77,7 @@ size_t errbuf_size;
 	char convbuf[50];
 
 	if (errcode == REG_ATOI)
-		s = regatoi(preg, convbuf);
+		s = regatoi(preg, convbuf, sizeof(convbuf));
 	else {
 		for (r = rerrs; r->code >= 0; r++)
 			if (r->code == target)
@@ -85,7 +87,7 @@ size_t errbuf_size;
 			if (r->code >= 0)
 				(void) strcpy(convbuf, r->name);
 			else
-				sprintf(convbuf, "REG_0x%x", target);
+				snprintf(convbuf, sizeof(convbuf), "REG_0x%x", target);
 			assert(strlen(convbuf) < sizeof(convbuf));
 			s = convbuf;
 		} else
@@ -110,9 +112,7 @@ size_t errbuf_size;
  == static char *regatoi(const regex_t *preg, char *localbuf);
  */
 static char *
-regatoi(preg, localbuf)
-const regex_t *preg;
-char *localbuf;
+regatoi(const regex_t *preg, char *localbuf, size_t localsize)
 {
 	register struct rerr *r;
 
@@ -122,6 +122,6 @@ char *localbuf;
 	if (r->code < 0)
 		return("0");
 
-	sprintf(localbuf, "%d", r->code);
+	snprintf(localbuf, localsize, "%d", r->code);
 	return(localbuf);
 }

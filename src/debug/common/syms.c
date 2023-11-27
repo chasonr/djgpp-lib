@@ -771,7 +771,7 @@ char *syms_val2name(unsigned long val, unsigned long *delta)
     *delta = val - syms[mid].address;
   return syms[mid].name;
 noname:
-  sprintf(noname_buf, "%#lx", val);
+  snprintf(noname_buf, sizeof(noname_buf), "%#lx", val);
   return noname_buf;
 }
 

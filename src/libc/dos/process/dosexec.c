@@ -406,7 +406,7 @@ direct_exec_tail_1 (const char *program, const char *args,
   if ((initial_tbuf_selector != tbuf_selector) && proxy_off)
   {
     char temp[65], *s, t2[5];
-    sprintf (t2, "%04lX", (tbuf_beg>>4) & 0xffff);
+    snprintf (t2, sizeof(t2), "%04lX", (tbuf_beg>>4) & 0xffff);
     dosmemget (tbuf_beg+proxy_off, 64, temp);
     temp[64] = 0;
     s = strchr(temp,'\r');
@@ -950,7 +950,7 @@ static int go32_exec(const char *program, char **argv, char **envp)
 
   int si_la = 0, si_off = 0, rm_off, argv_off;
   char cmdline[CMDLEN_LIMIT+2], *cmdp = cmdline;
-  char *pcmd = cmdline, *pproxy = 0, *proxy_cmdline = 0;
+  char *pcmd = cmdline, *pproxy = 0, proxy_cmdline[34];
   int lfn = 2;	/* means don't know yet */
 
   if (!__solve_symlinks(program, real_program))
@@ -1104,9 +1104,8 @@ static int go32_exec(const char *program, char **argv, char **envp)
   argv_off += sizeof(short);
 
   argv[0] = save_argv0;
-  proxy_cmdline = (char *)alloca (34);
   
-  sprintf(proxy_cmdline, "%s=%04x %04x %04x %04x %04x",
+  snprintf(proxy_cmdline, sizeof(proxy_cmdline), "%s=%04x %04x %04x %04x %04x",
     __PROXY, argc,
    (unsigned)(tbuf_beg >> 4) & 0xffff, rm_off & 0xffff,
    (unsigned)(tbuf_beg >> 4) & 0xffff, si_off & 0xffff);

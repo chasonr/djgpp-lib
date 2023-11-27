@@ -187,7 +187,7 @@ get_doublespace_info(int drive_num)
       int host = r.h.bl & 0x7f;
 
       /* Compressed drive, get the host and sequence number of the CVF.  */
-      sprintf(mnt_fsname, "%c:\\DBLSPACE.%03u", 'A' + host, r.h.bh);
+      snprintf(mnt_fsname, sizeof(mnt_fsname), "%c:\\DBLSPACE.%03u", 'A' + host, r.h.bh);
       mnt_type = NAME_dblsp;
       return 1;
     }
@@ -253,7 +253,7 @@ get_stacker_info(int drive_num)
      table beginning at offset 70h).  */
   seq  = _farpeekb(dos_mem_base, stac_driver_ptr + 0x58);
   host = _farpeekb(dos_mem_base, stac_driver_ptr + 0x70 + drive_num - 1);
-  sprintf(mnt_fsname, "%c:\\STACVOL.%03u", 'A' + host, seq);
+  snprintf(mnt_fsname, sizeof(mnt_fsname), "%c:\\STACVOL.%03u", 'A' + host, seq);
   mnt_type = NAME_stac;
   return 1;
 }
@@ -609,7 +609,7 @@ getmntent(FILE *filep)
 	    drive_number = drive_a_mapping;
         }
 
-      drvstr_len = sprintf(drive_string, "%c:\\", '@' + drive_number);
+      drvstr_len = snprintf(drive_string, sizeof(drive_string), "%c:\\", '@' + drive_number);
       mnt_type = NAME_unknown;
 
       /* For the ``File System Name'' we use one of the following:
@@ -847,7 +847,7 @@ getmntent(FILE *filep)
 
           /* Include "dev=XX" in the mnt_opts field, where XX should
              be consistent with what stat() returns in st_dev.  */
-          sprintf(xdrive, "%02x", mnt_type != NAME_subst
+          snprintf(xdrive, sizeof(xdrive), "%02x", mnt_type != NAME_subst
                                   ? drive_number - 1
                                   : mnt_fsname[0] - 'A');
           dev_opts[7] = xdrive[0];

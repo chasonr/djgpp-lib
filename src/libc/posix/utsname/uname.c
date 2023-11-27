@@ -30,8 +30,8 @@ int uname(struct utsname *u)
   dos_version = _get_dos_version(1);
   strncpy(u->sysname, _os_flavor, sizeof(u->sysname) - 1);
   u->sysname[sizeof(u->sysname) - 1] = '\0';
-  sprintf(u->release, "%d", dos_version >> 8);
-  sprintf(u->version, "%02d", dos_version & 0xff);
+  snprintf(u->release, sizeof(u->release), "%d", dos_version >> 8);
+  snprintf(u->version, sizeof(u->version), "%02d", dos_version & 0xff);
 
   /* CPU detection code by Laurynas Biveinis            */
   /* Uses Phil Frisbie, Jr 386 and CPUID detection code */

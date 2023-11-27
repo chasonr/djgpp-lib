@@ -90,6 +90,7 @@ static char sccsid[] = "@(#)ctime.c	5.23 (Berkeley) 6/22/90";
 /* Unlike <ctype.h>'s isdigit, this also works if c < 0 | c > UCHAR_MAX. */
 #define is_digit(c)          ((unsigned)(c) - '0' <= 9)
 
+#define ASCTIME_SIZE 26
 
 /*
 ** Someone might make incorrect use of a time zone abbreviation:
@@ -1547,19 +1548,19 @@ asctime_r(const struct tm * __restrict__ timeptr, char * __restrict__ result)
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
   };
 
-  (void) sprintf(result, "%.3s %.3s%3d %02d:%02d:%02d %d\n",
+  (void) snprintf(result, ASCTIME_SIZE, "%.3s %.3s%3d %02d:%02d:%02d %d\n",
                  wday_name[timeptr->tm_wday],
                  mon_name[timeptr->tm_mon],
-                 timeptr->tm_mday, timeptr->tm_hour,
-                 timeptr->tm_min, timeptr->tm_sec,
-                 TM_YEAR_BASE + timeptr->tm_year);
+                 abs(timeptr->tm_mday) % 100, abs(timeptr->tm_hour) % 100,
+                 abs(timeptr->tm_min) % 100, abs(timeptr->tm_sec) % 100,
+                 abs(TM_YEAR_BASE + timeptr->tm_year) % 10000);
   return result;
 }
 
 char *
 asctime(const struct tm *timeptr)
 {
-  static char result[26];
+  static char result[ASCTIME_SIZE];
 
   return asctime_r( timeptr, result);
 }

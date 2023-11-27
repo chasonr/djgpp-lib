@@ -42,13 +42,14 @@ ecvtbuf (double value, int ndigits, int *decpt, int *sign, char *buf)
 {
   static char INFINITY[] = "Infinity";
   char decimal = localeconv()->decimal_point[0];
-  char *cvtbuf = (char *)alloca (ndigits + 20); /* +3 for sign, dot, null; */
-					        /* two extra for rounding */
-						/* 15 extra for alignment */
+  size_t cvtbuf_size = ndigits + 20; /* +3 for sign, dot, null; */
+				     /* two extra for rounding */
+                                     /* 15 extra for alignment */
+  char *cvtbuf = (char *)alloca (cvtbuf_size);
   char *s = cvtbuf, *d = buf;
 
   /* Produce two extra digits, so we could round properly.  */
-  sprintf (cvtbuf, "%-+.*E", ndigits + 2, value);
+  snprintf (cvtbuf, cvtbuf_size, "%-+.*E", ndigits + 2, value);
   *decpt = 0;
 
   /* The sign.  */

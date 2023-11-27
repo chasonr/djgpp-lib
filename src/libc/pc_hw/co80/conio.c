@@ -649,14 +649,31 @@ int
 cprintf(const char *fmt, ...)
 {
   int     cnt;
-  char    buf[ 2048 ];		/* this is buggy, because buffer might be too small. */
+  char    buf[ 2048 ];
+  char   *buf2 = buf;
   va_list ap;
   
   va_start(ap, fmt);
-  cnt = vsprintf(buf, fmt, ap);
+  cnt = vsnprintf(buf, sizeof(buf), fmt, ap);
   va_end(ap);
+  if (cnt < 0) {
+    return cnt;
+  }
+
+  if ((unsigned)cnt >= sizeof(buf)) {
+    buf2 = malloc(cnt + 1);
+    if (buf2 == NULL) {
+      return -1;
+    }
+    va_start(ap, fmt);
+    cnt = vsnprintf(buf2, cnt + 1, fmt, ap);
+    va_end(ap);
+  }
   
-  cputs(buf);
+  cputs(buf2);
+  if (buf2 != buf) {
+    free(buf2);
+  }
   return cnt;
 }
 

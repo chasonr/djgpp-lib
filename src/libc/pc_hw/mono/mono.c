@@ -1,6 +1,7 @@
 /* Copyright (C) 1995 DJ Delorie, see COPYING.DJ for details */
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/mono.h>
 #include <libc/farptrgs.h>
 #include <go32.h>
@@ -56,10 +57,32 @@ void _mono_printf(const char *fmt, ...)
 {
   int i;
   char buf[1000];
+  char *buf2 = buf;
+  int count;
   va_list a = 0;
+
   va_start(a, fmt);
-  vsprintf(buf, fmt, a);
+  count = vsnprintf(buf, sizeof(buf), fmt, a);
+  va_end(a);
+  if (count < 0) {
+    return;
+  }
+
+  if ((unsigned)count >= sizeof(buf)) {
+    buf2 = malloc(count + 1);
+    if (buf2 == NULL) {
+      buf2 = buf;
+    } else {
+      va_start(a, fmt);
+      vsnprintf(buf2, count + 1, fmt, a);
+      va_end(a);
+    }
+  }
+
   for (i=0; buf[i]; i++)
     _mono_putc(buf[i]);
-  va_end(a);
+
+  if (buf2 != buf) {
+    free(buf2);
+  }
 }

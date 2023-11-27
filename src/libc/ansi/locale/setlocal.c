@@ -576,9 +576,9 @@ setlocale(int category, const char *locale)
                 break;
               }
             if (CCP == UTF8_CODEPAGE) {
-              sprintf(buf, "%s.UTF-8", locale);
+              snprintf(buf, sizeof(buf), "%s.UTF-8", locale);
             } else {
-              sprintf(buf, "%s.%u", locale, CCP);
+              snprintf(buf, sizeof(buf), "%s.%u", locale, CCP);
             }
             locale = buf;
           }
