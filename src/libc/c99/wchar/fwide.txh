@@ -1,0 +1,26 @@
+@node fwide, stdio
+@findex fwide
+@subheading Syntax
+
+@example
+#include <stdio.h>
+#include <wchar.h>
+
+int fwide(FILE *file, int orientation);
+@end example
+
+@subheading Description
+
+If @var{orientation} is greater than zero, marks @var{file} as byte-oriented.
+If @var{orientation} is less than zero, marks @var{file} as wide-oriented.
+
+Returns the orientation of the file.
+
+@subheading Return Value
+
+A negative value if @var{file} is wide-oriented, positive if byte-oriented,
+or zero if no orientation is set.
+
+@subheading Portability
+
+@portability !ansi-c89, ansi-c99, !posix-1003.2-1992, posix-1003.1-2001

@@ -1,0 +1,44 @@
+@node at_quick_exit, process
+@findex at_quick_exit
+@subheading Syntax
+
+@example
+#include <stdlib.h>
+
+int at_quick_exit(void (*func)(void));
+@end example
+
+@subheading Description
+
+This function places the specified function @var{func} on a list of
+functions to be called when @code{quick_exit} is called.  These functions are
+called as if a last-in-first-out queue is used, that is, the last
+function registered with @code{at_quick_exit} will be the first function called
+by @code{quick_exit}.
+
+@code{atexit} and @code{at_quick_exit} maintain separate lists. A function may
+need to be registered with both.
+
+At least 32 functions can be registered this way.
+
+@subheading Return Value
+
+Zero on success, non-zero on error.
+
+@subheading Portability
+
+@portability !ansi-c89, !ansi-c99, ansi-c11, !posix-1003.2-1992, !posix-1003.1-2001
+
+@subheading Example
+
+@example
+void exit_func()
+@{
+  remove("file.tmp");
+@}
+
+@dots{}
+at_quick_exit(exit_func);
+@dots{}
+@end example
+
