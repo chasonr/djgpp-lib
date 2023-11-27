@@ -1,0 +1,48 @@
+@c ----------------------------------------------------------------------
+@node atan2l, math
+@findex atan2l
+@subheading Syntax
+
+@example
+#include <math.h>
+
+long double atan2l(long double y, long double x);
+@end example
+
+@subheading Description
+
+This function computes the angle, in the range @code{[-Pi..Pi]} radians,
+whose tangent is @code{@var{y}/@var{x}}.  In other words, it computes
+the angle, in radians, of the vector (@var{x},@var{y}) with respect to
+the @code{+x} axis, reckoning the counterclockwise direction as
+positive, and returning the value in the range @code{[-Pi, Pi]}.
+
+@subheading Return Value
+
+The arc tangent, in radians, of @code{@var{y}/@var{x}}.  @code{Pi} is
+returned if @var{x} is negative and @var{y} is a negative zero,
+@code{-0.0}.  @code{-Pi} is returned, if @var{x} is negative, and
+@var{y} is a positive zero, @code{+0.0}.
+
+For non-finite arguments, @code{atan2l} returns the value specified in
+Annex F of the ISO C standard:
+
+* atan2l(+-0, −0) returns +-@code{Pi}.
+* atan2l(+-0, +0) returns +-0.
+* atan2l(+-0, x) returns +-@code{Pi} for x < 0.
+* atan2l(+-0, x) returns +-0 for x > 0.
+* atan2l(y, +-0) returns −@code{Pi}/2 for y < 0.
+* atan2l(y, +-0) returns @code{Pi}/2 for y > 0.
+* atan2l(+-y, −@code{inf}) returns +-@code{Pi} for finite y > 0.
+* atan2l(+-y, +@code{inf}) returns +-0 for finite y > 0.
+* atan2l(+-@code{inf}, x) returns +-@code{Pi}/2 for finite x.
+* atan2l(+-@code{inf}, −@code{inf}) returns +-3@code{Pi}/4.
+* atan2l(+-@code{inf}, +@code{inf}) returns +-@code{Pi}/4.
+
+@code{atan2l} never sets @code{errno}, nor does it raise the "invalid" or
+"divide-by-zero" exceptions.
+
+@subheading Portability
+
+@portability ansi, posix
+
