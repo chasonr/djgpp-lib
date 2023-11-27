@@ -14,6 +14,7 @@ extern "C" {
 #ifndef __dj_ENFORCE_ANSI_FREESTANDING
 
 #include <sys/djtypes.h>
+#include <sys/fortify.h>
     
 /* Some programs think they know better... */
 #undef NULL
@@ -32,7 +33,7 @@ __DJ_size_t
 
 void *	memchr(const void *_s, int _c, size_t _n);
 int	memcmp(const void *_s1, const void *_s2, size_t _n);
-void *	memcpy(void *  _dest, const void *  _src, size_t _n);
+void *	memcpy(void * __restrict__ _dest, const void * __restrict__ _src, size_t _n);
 void *	memmove(void *_s1, const void *_s2, size_t _n);
 void *	memset(void *_s, int _c, size_t _n);
 char *	strcat(char *  _s1, const char *  _s2);
@@ -52,6 +53,31 @@ size_t	strspn(const char *_s1, const char *_s2);
 char *	strstr(const char *_s1, const char *_s2);
 char *	strtok(char *  _s1, const char *  _s2);
 size_t	strxfrm(char *  _s1, const char *  _s2, size_t _n);
+
+#if __DJ_USE_FORTIFY_LEVEL > 0 || defined(__DJ_CHECKED_FUNCTION)
+extern void *__memcpy_chk(void * __restrict__ _s1, const void * __restrict__ _s2, size_t _n, size_t _s1size);
+#endif
+
+#if __DJ_USE_FORTIFY_LEVEL > 0
+
+__dj_fortify_function void *
+memcpy(void * __restrict__ _dest, const void * __restrict__  _src, size_t _n)
+{
+  return __builtin___memcpy_chk(_dest, _src, _n,
+                                __dj_bos(_dest, __DJ_USE_FORTIFY_LEVEL > 1));
+}
+
+/*
+>void *  memmove(void *_s1, const void *_s2, size_t _n);
+>void *  memset(void *_s, int _c, size_t _n);
+>char *  strcat(char *  _s1, const char *  _s2);
+>char *  strcpy(char *  _s1, const char *  _s2);
+>char *  strncat(char *  _s1, const char *  _s2, size_t _n);
+>char *  strncpy(char *  _s1, const char *  _s2, size_t _n);
+size_t  strxfrm(char *  _s1, const char *  _s2, size_t _n);
+*/
+
+#endif
 
 #if (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L) \
   || !defined(__STRICT_ANSI__) || defined(__cplusplus)
@@ -89,6 +115,20 @@ int	strnicmp(const char *_s1, const char *_s2, size_t _n);
 size_t	strnlen(const char *_s, size_t _n);
 char *	strsep(char **_stringp, const char *_delim);
 char *	strupr(char *_s);
+
+#if __DJ_USE_FORTIFY_LEVEL > 0
+
+/*
+>void    bcopy(const void *_a, void *_b, size_t _len);
+>void    bzero(void *ptr, size_t _len);
+>char *  stpcpy(char *_dest, const char *_src);
+>char *  stpncpy(char *_dest, const char *_src, size_t _n);
+void *  memccpy(void *_to, const void *_from, int _c, size_t _n);
+size_t  strlcat(char *_dest, const char *_src, size_t _size);
+size_t  strlcpy(char *_dest, const char *_src, size_t _size);
+*/
+
+#endif
 
 #endif /* !_POSIX_SOURCE */
 #endif /* !__STRICT_ANSI__ */
