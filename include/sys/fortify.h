@@ -55,4 +55,10 @@
         : __ ## function ## _chk_warn(__VA_ARGS__, (obj_size)/(elem_size)) ) \
     : __ ## function ## _chk(__VA_ARGS__, (obj_size)/(elem_size))
 
+/* Forward a function all to a different name */
+/* The two stringify macros are needed to make the prefix work properly */
+#define __dj_stringify2(a) #a
+#define __dj_stringify(a) __dj_stringify2(a)
+#define __dj_forward(name) __asm__(__dj_stringify(__USER_LABEL_PREFIX__) __dj_stringify(name))
+
 #endif /* __dj_include_sys_fortify_h_ */

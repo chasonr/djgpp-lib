@@ -114,10 +114,10 @@ strncpy(char * __restrict__ _s1, const char * __restrict__ _s2, size_t _n)
 }
 
 extern size_t __strxfrm_chk_warn(char * __restrict__ _s1, const char * __restrict__ _s2, size_t _n, size_t _s1size)
-        __asm__("___strxfrm_chk")
+        __dj_forward(__strxfrm_chk)
         __attribute__((__warning__("strxfrm called with length bigger than size of destination buffer")));
 extern size_t __strxfrm_alias(char * __restrict__ _s1, const char * __restrict__ _s2, size_t _n)
-        __asm__("_strxfrm");
+        __dj_forward(strxfrm);
 
 __dj_fortify_function size_t
 strxfrm(char * __restrict__ _s1, const char * __restrict__ _s2, size_t _n)
@@ -203,10 +203,10 @@ stpncpy(char * __restrict__ _s1, const char * __restrict__ _s2, size_t _n)
 }
 
 extern void *__memccpy_chk_warn(void * __restrict__ _to, const void * __restrict__ _from, int _c, size_t _n, size_t _tosize)
-        __asm__("___memccpy_chk")
+        __dj_forward(__memccpy_chk)
         __attribute__((__warning__("memccpy called with length bigger than size of destination buffer")));
 extern void *__memccpy_alias(void * __restrict__ _to, const void * __restrict__ _from, int _c, size_t _n)
-        __asm__("_memccpy");
+        __dj_forward(memccpy);
 
 __dj_fortify_function void *
 memccpy(void * __restrict__ _to, const void * __restrict__ _from, int _c, size_t _n)
@@ -217,10 +217,10 @@ memccpy(void * __restrict__ _to, const void * __restrict__ _from, int _c, size_t
 }
 
 extern size_t __strlcat_chk_warn(char * __restrict__ _dest, const char * __restrict__ _src, size_t _size, size_t _destsize)
-        __asm__("___strlcat_chk")
+        __dj_forward(__strlcat_chk)
         __attribute__((__warning__("strlcat called with length bigger than size of destination buffer")));
 extern size_t __strlcat_chk(char * __restrict__ _dest, const char * __restrict__ _src, size_t _size, size_t _destsize)
-        __asm__("_strlcat");
+        __dj_forward(strlcat);
 
 __dj_fortify_function size_t
 strlcat(char * __restrict__ _dest, const char * __restrict__ _src, size_t _size)
@@ -231,10 +231,10 @@ strlcat(char * __restrict__ _dest, const char * __restrict__ _src, size_t _size)
 }
 
 extern size_t __strlcpy_chk_warn(char * __restrict__ _dest, const char * __restrict__ _src, size_t _size, size_t _destsize)
-        __asm__("___strlcpy_chk")
+        __dj_forward(__strlcpy_chk)
         __attribute__((__warning__("strlcpy called with length bigger than size of destination buffer")));
 extern size_t __strlcpy_chk(char * __restrict__ _dest, const char * __restrict__ _src, size_t _size, size_t _destsize)
-        __asm__("_strlcpy");
+        __dj_forward(strlcpy);
 
 __dj_fortify_function size_t
 strlcpy(char * __restrict__ _dest, const char * __restrict__ _src, size_t _size)

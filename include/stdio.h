@@ -18,6 +18,7 @@ extern "C" {
 
 #include <sys/version.h>
 #include <sys/djtypes.h>
+#include <sys/fortify.h>
   
 #define _IOFBF    	00001  /*  File is full buffered.  */
 #define _IONBF    	00002  /*  File is not buffered.  */
@@ -99,12 +100,12 @@ int	ferror(FILE *_stream);
 int	fflush(FILE *_stream);
 int	fgetc(FILE *_stream);
 int	fgetpos(FILE *_stream, fpos_t *_pos);
-char *	fgets(char *_s, int _n, FILE *_stream);
+char *	fgets(char * __restrict__ _s, int _n, FILE * __restrict__ _stream);
 FILE *	fopen(const char *_filename, const char *_mode);
 int	fprintf(FILE *_stream, const char *_format, ...);
 int	fputc(int _c, FILE *_stream);
 int	fputs(const char *_s, FILE *_stream);
-size_t	fread(void *_ptr, size_t _size, size_t _nelem, FILE *_stream);
+size_t	fread(void * __restrict__ _ptr, size_t _size, size_t _nelem, FILE * __restrict__ _stream);
 FILE *	freopen(const char *_filename, const char *_mode, FILE *_stream);
 int	fscanf(FILE *_stream, const char *_format, ...);
 int	fseek(FILE *_stream, long _offset, int _mode);
@@ -113,7 +114,12 @@ long	ftell(FILE *_stream);
 size_t	fwrite(const void *_ptr, size_t _size, size_t _nelem, FILE *_stream);
 int	getc(FILE *_stream);
 int	getchar(void);
-char *	gets(char *_s);
+char *	gets(char *_s)
+#if __STDC_VERSION__ < 201112L
+        __attribute__((__deprecated__("the gets function is dangerous and should not be used")));
+#else
+        __attribute__((__unavailable__("the gets function was removed in C11")));
+#endif
 void	perror(const char *_s);
 int	printf(const char *_format, ...);
 int	putc(int _c, FILE *_stream);
@@ -125,23 +131,125 @@ void	rewind(FILE *_stream);
 int	scanf(const char *_format, ...);
 void	setbuf(FILE *_stream, char *_buf);
 int	setvbuf(FILE *_stream, char *_buf, int _mode, size_t _size);
-int	sprintf(char *_s, const char *_format, ...);
+int	sprintf(char * __restrict__ _s, const char * __restrict__ _format, ...);
 int	sscanf(const char *_s, const char *_format, ...);
 FILE *	tmpfile(void);
 char *	tmpnam(char *_s);
 int	ungetc(int _c, FILE *_stream);
 int	vfprintf(FILE *_stream, const char *_format, va_list _ap);
 int	vprintf(const char *_format, va_list _ap);
-int	vsprintf(char *_s, const char *_format, va_list _ap);
+int	vsprintf(char * __restrict__ _s, const char * __restrict__ _format, va_list _ap);
+
+#if __DJ_USE_FORTIFY_LEVEL > 0 || defined(__DJ_CHECKED_FUNCTION)
+extern char *__fgets_chk(char * __restrict__ _s, int _n, FILE * __restrict__ _stream, size_t _ssize);
+extern char *__gets_chk(char *_s, size_t _ssize);
+extern size_t __fread_chk(void * __restrict__ _ptr, size_t _size, size_t _nelem, FILE * __restrict__ _stream, size_t _ptrsize);
+extern int __sprintf_chk(char * __restrict__ _s, int _flag, size_t _ssize, const char * __restrict__ _format, ...);
+extern int __vsprintf_chk(char * __restrict__ _s, int _flag, size_t _ssize, const char * __restrict__ _format, va_list _ap);
+extern int __doprnt_chk(const char *_fmt0, va_list argp, FILE *_fp, int _flag);
+#endif
+
+#if __DJ_USE_FORTIFY_LEVEL > 0
+
+extern size_t __fgets_chk_warn(char * __restrict__ _s, int _n, FILE * __restrict__ _stream, size_t _ssize)
+        __dj_forward(__fgets_chk)
+        __attribute__((__warning__("fgets called with length bigger than size of destination buffer")));
+extern size_t __fgets_alias(char * __restrict__ _s, int _n, FILE * __restrict__ _stream)
+        __dj_forward(fgets);
+
+__dj_fortify_function char *
+fgets(char * __restrict__ _s, int _n, FILE * __restrict__ _stream)
+{
+  size_t _sz = __dj_bos(_s, __DJ_USE_FORTIFY_LEVEL > 1);
+  return __dj_fortify_n(fgets, _n, sizeof(_s[0]), _sz, _s, _n, _stream);
+}
+
+#if __STDC_VERSION__ < 201112L
+char *__gets_alias(char *_s) __dj_forward(gets);
+
+__dj_fortify_function char *
+gets(char *_s)
+{
+  size_t _sz = __dj_bos(_s, __DJ_USE_FORTIFY_LEVEL > 1);
+  if (_sz == (size_t)-1) {
+    return __gets_alias(_s);
+  } else {
+    return __gets_chk(_s, _sz);
+  }
+}
+#endif
+
+extern size_t __fread_chk_warn(void * __restrict__ _ptr, size_t _size, size_t _nelem, FILE * __restrict__ _stream, size_t _ptrsize)
+        __dj_forward(__fread_chk)
+        __attribute__((__warning__("fread called with length bigger than size of destination buffer")));
+extern size_t __fread_alias(void * __restrict__ _ptr, size_t _size, size_t _nelem, FILE * __restrict__ _stream)
+        __dj_forward(fread);
+
+__dj_fortify_function size_t
+fread(void * __restrict__ _ptr, size_t _size, size_t _nelem, FILE * __restrict__ _stream)
+{
+  /* Forming _rsize as a size_t may cause an overflow; but unsigned long long
+     can handle any product of two size_t operands */
+  unsigned long long _rsize = (unsigned long long)_size * _nelem;
+
+  size_t _sz = __dj_bos(_ptr, 0);
+  return __dj_fortify_n(fread, _rsize, 1, _sz,
+                        _ptr, _size, _nelem, _stream);
+}
+
+__dj_fortify_function int
+sprintf(char * __restrict__ _s, const char * __restrict__ _format, ...)
+{
+  int _flag = (__DJ_USE_FORTIFY_LEVEL > 1) && __builtin_constant_p(_format);
+  size_t _sz = __dj_bos(_s, __DJ_USE_FORTIFY_LEVEL > 1);
+
+  return __builtin___sprintf_chk(_s, _flag, _sz, _format, __builtin_va_arg_pack());
+}
+
+__dj_fortify_function int
+vsprintf(char * __restrict__ _s, const char * __restrict__ _format, va_list _ap)
+{
+  size_t _sz = __dj_bos(_s, __DJ_USE_FORTIFY_LEVEL > 1);
+
+  return __builtin___vsprintf_chk(_s, 0, _sz, _format, _ap);
+}
+
+#endif
 
 #if (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L) \
   || !defined(__STRICT_ANSI__) || defined(__cplusplus)
 
-int	snprintf(char *str, size_t n, const char *fmt, ...);
+int	snprintf(char * __restrict__ _str, size_t _n, const char * __restrict__ _fmt, ...);
 int	vfscanf(FILE *_stream, const char *_format, va_list _ap);
 int	vscanf(const char *_format, va_list _ap);
-int	vsnprintf(char *str, size_t n, const char *fmt, va_list ap);
+int	vsnprintf(char * __restrict__ _str, size_t _n, const char * __restrict__ _fmt, va_list _ap);
 int	vsscanf(const char *_s, const char *_format, va_list _ap);
+
+#if __DJ_USE_FORTIFY_LEVEL > 0 || defined(__DJ_CHECKED_FUNCTION)
+extern int __snprintf_chk(char * __restrict__ _str, size_t _n, int _flag, size_t _strsize, const char * __restrict__ _format, ...);
+extern int __vsnprintf_chk(char * __restrict__ _str, size_t _n, int _flag, size_t _strsize, const char * __restrict__ _format, va_list _ap);
+#endif
+
+#if __DJ_USE_FORTIFY_LEVEL > 0
+
+__dj_fortify_function int
+snprintf(char * __restrict__ _str, size_t _n, const char * __restrict__ _fmt, ...)
+{
+  int _flag = (__DJ_USE_FORTIFY_LEVEL > 1) && __builtin_constant_p(_fmt);
+  size_t _sz = __dj_bos(_str, __DJ_USE_FORTIFY_LEVEL > 1);
+
+  return __builtin___snprintf_chk(_str, _n, _flag, _sz, _fmt, __builtin_va_arg_pack());
+}
+
+__dj_fortify_function int
+vsnprintf(char * __restrict__ _str, size_t _n, const char * __restrict__ _fmt, va_list _ap)
+{
+  size_t _sz = __dj_bos(_str, __DJ_USE_FORTIFY_LEVEL > 1);
+
+  return __builtin___vsnprintf_chk(_str, _n, 0, _sz, _fmt, _ap);
+}
+
+#endif
 
 #endif /* (__STDC_VERSION__ >= 199901L) || !__STRICT_ANSI__ */
 

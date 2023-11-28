@@ -65,4 +65,13 @@ SRC += vsprintf.c
 SRC += snprintf.c
 SRC += vsnprntf.c
 
+# For _FORTIFY_SOURCE
+SRC += fgetsf.c
+SRC += getsf.c
+SRC += freadf.c
+SRC += sprintff.c
+SRC += vsprntff.c
+SRC += snprntff.c
+SRC += vsnprtff.c
+
 include $(TOP)/../makefile.inc

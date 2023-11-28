@@ -191,3 +191,12 @@ string.h
   * stpncpy
   * strlcat
   * strlcpy
+
+stdio.h
+  * fgets
+  * gets
+  * fread
+  * snprintf
+  * sprintf
+  * vsnprintf
+  * vsprintf
