@@ -21,4 +21,11 @@ SRC += strnicmp.c
 SRC += strsep.c
 SRC += strupr.c
 
+# For _FORTIFY_SOURCE
+SRC += memccpyf.c
+SRC += stpcpyf.c
+SRC += stpncpyf.c
+SRC += strlcatf.c
+SRC += strlcpyf.c
+
 include $(TOP)/../makefile.inc

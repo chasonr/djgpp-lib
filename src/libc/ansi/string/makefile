@@ -29,12 +29,12 @@ SRC += syserr3.c
 
 # For _FORTIFY_SOURCE
 SRC += memcpyf.c
-#SRC += memmovf.c
-#SRC += memsetf.c
-#SRC += strcatf.c
-#SRC += strcpyf.c
-#SRC += strnctf.c
-#SRC += strncpf.c
-#SRC += strxfrf.c
+SRC += memmovef.c
+SRC += memsetf.c
+SRC += strcatf.c
+SRC += strcpyf.c
+SRC += strncatf.c
+SRC += strncpyf.c
+SRC += strxfrmf.c
 
 include $(TOP)/../makefile.inc

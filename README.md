@@ -169,3 +169,25 @@ wchar.h
   * No locale support in:
     * `wcscoll` -- same as `wcscmp`, no locale-dependent behavior
     * `wcsxfrm` -- identity map, no locale-dependent behavior
+
+Status of `_FORTIFY_SOURCE` support
+===================================
+
+The following functions provide additional boundary checking if
+`_FORTIFY_SOURCE` is in effect.
+
+string.h
+
+  * memcpy
+  * memmove
+  * memset
+  * strcat
+  * strcpy
+  * strncat
+  * strncpy
+  * strxfrm
+  * memccpy
+  * stpcpy
+  * stpncpy
+  * strlcat
+  * strlcpy

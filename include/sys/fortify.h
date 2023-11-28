@@ -30,4 +30,29 @@
 #   define __dj_bos(ptr, type) __builtin_object_size(ptr, type)
 #endif
 
+/*
+ * Macros for defining fortified functions
+ * We call __foo_alias if we can verify, at compile time, that the length is
+ * in bounds.
+ * If the length is known not to be in bounds, we call __foo_chk_warn.
+ * Otherwise, we call __foo_chk.
+ */
+/* Pass the object size */
+#define __dj_fortify(function, length, elem_size, obj_size, ...) \
+    ((((__typeof(length))0 < (__typeof(length))-1) || (__builtin_constant_p(length) && (length) >= 0)) \
+    &&  __builtin_constant_p((length) <= (obj_size)/(elem_size))) \
+    ? ( ((length) <= (obj_size)/(elem_size)) \
+        ? __ ## function ## _alias(__VA_ARGS__) \
+        : __ ## function ## _chk_warn(__VA_ARGS__, (obj_size)) ) \
+    : __ ## function ## _chk(__VA_ARGS__, (obj_size))
+
+/* Pass the number of elements in the array */
+#define __dj_fortify_n(function, length, elem_size, obj_size, ...) \
+    ((((__typeof(length))0 < (__typeof(length))-1) || (__builtin_constant_p(length) && (length) >= 0)) \
+    &&  __builtin_constant_p((length) <= (obj_size)/(elem_size))) \
+    ? ( ((length) <= (obj_size)/(elem_size)) \
+        ? __ ## function ## _alias(__VA_ARGS__) \
+        : __ ## function ## _chk_warn(__VA_ARGS__, (obj_size)/(elem_size)) ) \
+    : __ ## function ## _chk(__VA_ARGS__, (obj_size)/(elem_size))
+
 #endif /* __dj_include_sys_fortify_h_ */
