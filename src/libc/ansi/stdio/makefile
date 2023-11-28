@@ -73,5 +73,9 @@ SRC += sprintff.c
 SRC += vsprntff.c
 SRC += snprntff.c
 SRC += vsnprtff.c
+SRC += fprintff.c
+SRC += vfprntff.c
+SRC += printff.c
+SRC += vprintff.c
 
 include $(TOP)/../makefile.inc

@@ -9,4 +9,8 @@ SRC += fileno.c
 SRC += popen.c
 SRC += vdprintf.c
 
+# For _FORTIFY_SOURCE
+SRC += dprintff.c
+SRC += vdprntff.c
+
 include $(TOP)/../makefile.inc

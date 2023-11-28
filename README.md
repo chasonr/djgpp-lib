@@ -174,7 +174,12 @@ Status of `_FORTIFY_SOURCE` support
 ===================================
 
 The following functions provide additional boundary checking if
-`_FORTIFY_SOURCE` is in effect.
+`_FORTIFY_SOURCE` is in effect:
+  * Buffer overruns trigger a message to stderr and an abort.
+  * if `_FORTIFY_SOURCE` is at least 2, printf-like functions may not use
+    the %n format specifier when the format string is not constant. This
+    does not apply to vprintf-like functions, because they are typically
+    used with wrappers to make new printf-like functions.
 
 string.h
 
@@ -193,6 +198,7 @@ string.h
   * strlcpy
 
 stdio.h
+
   * fgets
   * gets
   * fread
@@ -200,3 +206,12 @@ stdio.h
   * sprintf
   * vsnprintf
   * vsprintf
+  * fprintf
+  * printf
+  * dprintf
+  * asprintf
+  * asnprintf
+  * vasnprintf
+
+`gets` is furthermore marked as deprecated, and its use will trigger an error
+if C11 or higher is in effect.

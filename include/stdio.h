@@ -102,7 +102,7 @@ int	fgetc(FILE *_stream);
 int	fgetpos(FILE *_stream, fpos_t *_pos);
 char *	fgets(char * __restrict__ _s, int _n, FILE * __restrict__ _stream);
 FILE *	fopen(const char *_filename, const char *_mode);
-int	fprintf(FILE *_stream, const char *_format, ...);
+int	fprintf(FILE * __restrict__ _stream, const char * __restrict__ _format, ...);
 int	fputc(int _c, FILE *_stream);
 int	fputs(const char *_s, FILE *_stream);
 size_t	fread(void * __restrict__ _ptr, size_t _size, size_t _nelem, FILE * __restrict__ _stream);
@@ -121,7 +121,7 @@ char *	gets(char *_s)
         __attribute__((__unavailable__("the gets function was removed in C11")));
 #endif
 void	perror(const char *_s);
-int	printf(const char *_format, ...);
+int	printf(const char * __restrict__ _format, ...);
 int	putc(int _c, FILE *_stream);
 int	putchar(int _c);
 int	puts(const char *_s);
@@ -136,8 +136,8 @@ int	sscanf(const char *_s, const char *_format, ...);
 FILE *	tmpfile(void);
 char *	tmpnam(char *_s);
 int	ungetc(int _c, FILE *_stream);
-int	vfprintf(FILE *_stream, const char *_format, va_list _ap);
-int	vprintf(const char *_format, va_list _ap);
+int	vfprintf(FILE * __restrict__ _stream, const char * __restrict__ _format, va_list _ap);
+int	vprintf(const char * __restrict__ _format, va_list _ap);
 int	vsprintf(char * __restrict__ _s, const char * __restrict__ _format, va_list _ap);
 
 #if __DJ_USE_FORTIFY_LEVEL > 0 || defined(__DJ_CHECKED_FUNCTION)
@@ -146,6 +146,10 @@ extern char *__gets_chk(char *_s, size_t _ssize);
 extern size_t __fread_chk(void * __restrict__ _ptr, size_t _size, size_t _nelem, FILE * __restrict__ _stream, size_t _ptrsize);
 extern int __sprintf_chk(char * __restrict__ _s, int _flag, size_t _ssize, const char * __restrict__ _format, ...);
 extern int __vsprintf_chk(char * __restrict__ _s, int _flag, size_t _ssize, const char * __restrict__ _format, va_list _ap);
+extern int __fprintf_chk(FILE * __restrict__ _stream, int _flag, const char * __restrict__ _format, ...);
+extern int __printf_chk(int _flag, const char * __restrict__ _format, ...);
+extern int __vfprintf_chk(FILE * __restrict__ _stream, int _flag, const char * __restrict__ _format, va_list _ap);
+extern int __vprintf_chk(int _flag, const char * __restrict__ _format, va_list _ap);
 extern int __doprnt_chk(const char *_fmt0, va_list argp, FILE *_fp, int _flag);
 #endif
 
@@ -200,7 +204,7 @@ fread(void * __restrict__ _ptr, size_t _size, size_t _nelem, FILE * __restrict__
 __dj_fortify_function int
 sprintf(char * __restrict__ _s, const char * __restrict__ _format, ...)
 {
-  int _flag = (__DJ_USE_FORTIFY_LEVEL > 1) && __builtin_constant_p(_format);
+  int _flag = (__DJ_USE_FORTIFY_LEVEL > 1) && !__builtin_constant_p(_format);
   size_t _sz = __dj_bos(_s, __DJ_USE_FORTIFY_LEVEL > 1);
 
   return __builtin___sprintf_chk(_s, _flag, _sz, _format, __builtin_va_arg_pack());
@@ -213,6 +217,38 @@ vsprintf(char * __restrict__ _s, const char * __restrict__ _format, va_list _ap)
 
   return __builtin___vsprintf_chk(_s, 0, _sz, _format, _ap);
 }
+
+#if __DJ_USE_FORTIFY_LEVEL > 1
+
+__dj_fortify_function int
+fprintf(FILE * __restrict__ _stream, const char * __restrict__ _format, ...)
+{
+  int _flag = !__builtin_constant_p(_format);
+  return __builtin___fprintf_chk(_stream, _flag, _format, __builtin_va_arg_pack());
+}
+
+__dj_fortify_function int
+printf(const char * __restrict__ _format, ...)
+{
+  int _flag = !__builtin_constant_p(_format);
+  return __builtin___printf_chk(_flag, _format, __builtin_va_arg_pack());
+}
+
+__dj_fortify_function int
+vfprintf(FILE * __restrict__ _stream, const char * __restrict__ _format, va_list _ap)
+{
+  int _flag = 0;
+  return __builtin___vfprintf_chk(_stream, _flag, _format, _ap);
+}
+
+__dj_fortify_function int
+vprintf(const char * __restrict__ _format, va_list _ap)
+{
+  int _flag = 0;
+  return __builtin___vprintf_chk(_flag, _format, _ap);
+}
+
+#endif
 
 #endif
 
@@ -235,7 +271,7 @@ extern int __vsnprintf_chk(char * __restrict__ _str, size_t _n, int _flag, size_
 __dj_fortify_function int
 snprintf(char * __restrict__ _str, size_t _n, const char * __restrict__ _fmt, ...)
 {
-  int _flag = (__DJ_USE_FORTIFY_LEVEL > 1) && __builtin_constant_p(_fmt);
+  int _flag = (__DJ_USE_FORTIFY_LEVEL > 1) && !__builtin_constant_p(_fmt);
   size_t _sz = __dj_bos(_str, __DJ_USE_FORTIFY_LEVEL > 1);
 
   return __builtin___snprintf_chk(_str, _n, _flag, _sz, _fmt, __builtin_va_arg_pack());
@@ -259,14 +295,37 @@ vsnprintf(char * __restrict__ _str, size_t _n, const char * __restrict__ _fmt, v
 #define L_cusrid
 /* #define STREAM_MAX	20 - DOS can change this */
 
-int	dprintf(int _fd, const char *_format, ...) __attribute__ ((__format__ (__printf__, 2, 3)));
+int	dprintf(int _fd, const char * __restrict__ _format, ...) __attribute__ ((__format__ (__printf__, 2, 3)));
 int	fileno(FILE *_stream);
 FILE *	fdopen(int _fildes, const char *_type);
 int	mkstemp(char *_template);
 int	pclose(FILE *_pf);
 FILE *	popen(const char *_command, const char *_mode);
 char *	tempnam(const char *_dir, const char *_prefix);
-int	vdprintf(int _fd, const char *_format, va_list _ap) __attribute__ ((__format__ (__printf__, 2, 0)));
+int	vdprintf(int _fd, const char * __restrict__ _format, va_list _ap) __attribute__ ((__format__ (__printf__, 2, 0)));
+
+#if __DJ_USE_FORTIFY_LEVEL > 1 || defined(__DJ_CHECKED_FUNCTION)
+extern int __dprintf_chk(int _fd, int _flag, const char * __restrict__ _format, ...);
+extern int __vdprintf_chk(int _fd, int _flag, const char * __restrict__ _format, va_list _ap);
+#endif
+
+#if __DJ_USE_FORTIFY_LEVEL > 1
+
+__dj_fortify_function int
+dprintf(int _fd, const char * __restrict__ _format, ...)
+{
+  int _flag = !__builtin_constant_p(_format);
+  return __dprintf_chk(_fd, _flag, _format, __builtin_va_arg_pack());
+}
+
+__dj_fortify_function int
+vdprintf(int _fd, const char * __restrict__ _format, va_list _ap)
+{
+  int _flag = !__builtin_constant_p(_format);
+  return __vdprintf_chk(_fd, _flag, _format, _ap);
+}
+
+#endif
 
 #ifndef _POSIX_SOURCE
 
@@ -287,10 +346,51 @@ int	putw(int _v, FILE *_f);
 void	setbuffer(FILE *_f, void *_buf, int _size);
 void	setlinebuf(FILE *_f);
 int	_rename(const char *_old, const char *_new);	/* Simple (no directory) */
-int	asprintf(char **_sp, const char *_format, ...) __attribute__((format (__printf__, 2, 3)));
-char *	asnprintf(char *_s, size_t *_np, const char *_format, ...) __attribute__((format (__printf__, 3, 4)));
-int	vasprintf(char **_sp, const char *_format, va_list _ap) __attribute__((format (__printf__, 2, 0)));
-char *	vasnprintf(char *_s, size_t *_np, const char *_format, va_list _ap) __attribute__((format (__printf__, 3, 0)));
+int	asprintf(char ** __restrict__ _sp, const char * __restrict__ _format, ...) __attribute__((format (__printf__, 2, 3)));
+char *	asnprintf(char * __restrict__ _s, size_t * __restrict__ _np, const char * __restrict__ _format, ...) __attribute__((format (__printf__, 3, 4)));
+int	vasprintf(char ** __restrict__ _sp, const char * __restrict__ _format, va_list _ap) __attribute__((format (__printf__, 2, 0)));
+char *	vasnprintf(char * __restrict__ _s, size_t * __restrict__ _np, const char * __restrict__ _format, va_list _ap) __attribute__((format (__printf__, 3, 0)));
+
+#if __DJ_USE_FORTIFY_LEVEL > 1 || defined(__DJ_CHECKED_FUNCTION)
+extern int __asprintf_chk(char ** __restrict__ _sp, int _flag, const char * __restrict__ _format, ...);
+extern char *__asnprintf_chk(char * __restrict__ _s, size_t * __restrict__ _np, int _flag, size_t _ssize, const char * __restrict__ _format, ...);
+extern int __vasprintf_chk(char ** __restrict__ _sp, int _flag, const char * __restrict__ _format, va_list _ap);
+extern char *__vasnprintf_chk(char * __restrict__ _s, size_t * __restrict__ _np, int _flag, size_t _ssize, const char * __restrict__ _format, va_list _ap);
+#endif
+
+#if __DJ_USE_FORTIFY_LEVEL > 1
+
+__dj_fortify_function int
+asprintf(char ** __restrict__ _sp, const char * __restrict__ _format, ...)
+{
+  int _flag = !__builtin_constant_p(_format);
+  return __asprintf_chk(_sp, _flag, _format, __builtin_va_arg_pack());
+}
+
+__dj_fortify_function char *
+asnprintf(char * __restrict__ _s, size_t * __restrict__ _np, const char * __restrict__ _format, ...)
+{
+  int _flag = (__DJ_USE_FORTIFY_LEVEL > 1) && !__builtin_constant_p(_format);
+  size_t _sz = __dj_bos(_s, __DJ_USE_FORTIFY_LEVEL > 1);
+  return __asnprintf_chk(_s, _np, _flag, _format, __builtin_va_arg_pack());
+}
+
+__dj_fortify_function int
+vasprintf(char ** __restrict__ _sp, const char * __restrict__ _format, va_list _ap)
+{
+  int _flag = 0;
+  return __vasprintf_chk(_sp, _flag, _format, _ap);
+}
+
+__dj_fortify_function char *
+vasnprintf(char * __restrict__ _s, size_t * __restrict__ _np, const char * __restrict__ _format, va_list _ap)
+{
+  int _flag = 0;
+  size_t _sz = __dj_bos(_s, __DJ_USE_FORTIFY_LEVEL > 1);
+  return __vasnprintf_chk(_s, _np, _flag, _sz, _format, _ap);
+}
+
+#endif
 
 #ifndef _OFF_T
 __DJ_off_t

@@ -19,4 +19,10 @@ SRC += vscanf.c
 SRC += vfscanf.S
 SRC += vsscanf.c
 
+# For _FORTIFY_SOURCE
+SRC += asnprtff.c
+SRC += asprntff.c
+SRC += vasnptff.c
+SRC += vasprtff.c
+
 include $(TOP)/../makefile.inc
