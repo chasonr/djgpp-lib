@@ -15,6 +15,7 @@ __strxfrm_chk(char * restrict s1, const char * restrict s2, size_t n, size_t s1s
             fputs("strxfrm called with buffer size too small\n", stderr);
             abort();
         }
+        return n2;
     }
 
     return strxfrm(s1, s2, n);
