@@ -18,7 +18,8 @@ zip: default
 # Easier just to do a complete clean here.
 clean:
 	$(MAKE) -C src clean
-	rm -rf bin etc hostbin share
+	rm -f bin/*.exe bin/*.com bin/*.dxe
+	rm -rf etc hostbin share
 	rm -f include/stubinfo.h
 	rm -f lib/*.a lib/*.o
 	rm -f info/*.info

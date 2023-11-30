@@ -20,6 +20,7 @@ bin/go32-v2.exe
 bin/gxx.exe
 bin/redir.exe
 bin/rem.com
+bin/setdjgpp.bat
 bin/stubedit.exe
 bin/stubify.exe
 bin/symify.exe

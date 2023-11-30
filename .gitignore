@@ -1,9 +1,10 @@
 *.a
 *.o
 *.exe
+*.dxe
+*.com
 djdev206.zip
 djtzn206.zip
-bin
 etc
 hostbin
 share
