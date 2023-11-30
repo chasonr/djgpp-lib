@@ -69,7 +69,6 @@ time_t		mktime(struct tm *_tptr);
 size_t		strftime(char * __restrict__ _s, size_t _n, const char * __restrict__ _format, const struct tm * __restrict__ _tptr);
 time_t		time(time_t *_tod);
 
-//////////////////////////////////////////////////////////////////////////////
 #if defined(__DJ_CHECKED_FUNCTION) || __DJ_USE_FORTIFY_LEVEL > 0
 extern size_t __strftime_chk(char * __restrict__ _s, size_t _maxsize, const char * __restrict__ _format, const struct tm * __restrict__ _timeptr, size_t _ssize);
 #endif
@@ -89,7 +88,6 @@ strftime(char * __restrict__ _s, size_t _maxsize, const char * __restrict__ _for
   return __dj_fortify_n(strftime, _maxsize, sizeof(_s[0]), _sz, _s, _maxsize, _format, _timeptr);
 }
 #endif
-//////////////////////////////////////////////////////////////////////////////
 
 #if (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L) \
   || !defined(__STRICT_ANSI__) || defined(__cplusplus)
