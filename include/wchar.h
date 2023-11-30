@@ -179,7 +179,7 @@ swprintf(wchar_t * __restrict__ _s, size_t _n, const wchar_t * __restrict__ _for
       if (_flag) {
         return __swprintf_chk(_s, _n, _flag, _sz/sizeof(wchar_t), _format, __builtin_va_arg_pack());
       } else {
-        return __vswprintf_alias(_s, _n, _format, __builtin_va_arg_pack());
+        return __swprintf_alias(_s, _n, _format, __builtin_va_arg_pack());
       }
     } else {
       return __swprintf_chk_warn(_s, _n, _flag, _sz/sizeof(wchar_t), _format, __builtin_va_arg_pack());
