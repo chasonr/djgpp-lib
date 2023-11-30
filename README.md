@@ -215,3 +215,25 @@ stdio.h
 
 `gets` is furthermore marked as deprecated, and its use will trigger an error
 if C11 or higher is in effect.
+
+wchar.h
+
+  * wprintf
+  * fwprintf
+  * swprintf
+  * vwprintf
+  * vfwprintf
+  * vswprintf
+  * fgetws
+  * wcscpy
+  * wcsncpy
+  * wcscat
+  * wcsncat
+  * wcsxfrm
+  * wmemcpy
+  * wmemmove
+  * wmemset
+  * wcsftime
+  * wcrtomb
+  * mbsrtowcs
+  * wcsrtombs

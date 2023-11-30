@@ -1,4 +1,4 @@
-# Copyright (C) 2020 Ray Chason, see COPYING.DJ for details
+# Copyright (C) 2020, 2023 Ray Chason, see COPYING.DJ for details
 # Copyright (C) 1995 DJ Delorie, see COPYING.DJ for details
 TOP=../..
 
@@ -75,5 +75,26 @@ SRC += wcsrtombs.c
 
 # Other
 SRC += fwide.c
+
+# For _FORTIFY_SOURCE
+SRC += fwprntff.c
+SRC += swprntff.c
+SRC += vfwprtff.c
+SRC += vswprtff.c
+SRC += vwprntff.c
+SRC += wprintff.c
+SRC += fgetwsf.c
+SRC += wcscatf.c
+SRC += wcscpyf.c
+SRC += wcsncatf.c
+SRC += wcsncpyf.c
+SRC += wcsxfrmf.c
+SRC += wmemcpyf.c
+SRC += wmemmovf.c
+SRC += wmemsetf.c
+SRC += wcsftimf.c
+SRC += wcrtombf.c
+SRC += mbwc1f.c
+SRC += wcmb1f.c
 
 include $(TOP)/../makefile.inc

@@ -12,10 +12,12 @@
 /* Copyright (C) 1997 DJ Delorie, see COPYING.DJ for details */
 /* Copyright (C) 1996 DJ Delorie, see COPYING.DJ for details */
 /* Copyright (C) 1994 DJ Delorie, see COPYING.DJ for details */
+#define __DJ_CHECKED_FUNCTION
 #include <libc/stubs.h>
 #include <sys/types.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <locale.h>
 #include <stddef.h>
 #include <string.h>
@@ -119,6 +121,12 @@ static const wchar_t UPPER_DIGITS[] = L"0123456789ABCDEF";
 
 int
 _dowprnt(const wchar_t *fmt0, va_list argp, FILE *fp)
+{
+  return __dowprnt_chk(fmt0, argp, fp, 0);
+}
+
+int
+__dowprnt_chk(const wchar_t *fmt0, va_list argp, FILE *fp, int flag)
 {
   const wchar_t *fmt;                /* format string */
   int ch;                            /* character from fmt */
@@ -440,6 +448,10 @@ rflag:
       base = flags & HEXPREFIX ? 16 : 10;
       goto pforw;
     case L'n':
+      if (flag) {
+        fputs("insecure usage of %n\n", stderr);
+        abort();
+      }
       if (using_numeric_conv_spec)
         argp = to_be_printed;
       if (flags & LONGDBL)
