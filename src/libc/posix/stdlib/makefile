@@ -11,4 +11,7 @@ SRC += mkdtemp.c
 SRC += realpath.c
 SRC += unsetenv.c
 
+# For _FORTIFY_SOURCE
+SRC+= realpthf.c
+
 include $(TOP)/../makefile.inc

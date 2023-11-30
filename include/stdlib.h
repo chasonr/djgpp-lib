@@ -18,6 +18,7 @@ extern "C" {
 #ifndef __dj_ENFORCE_ANSI_FREESTANDING
 
 #include <sys/djtypes.h>
+#include <sys/fortify.h>
   
 /* Some programs think they know better... */
 #undef NULL
@@ -73,7 +74,7 @@ long	labs(long _i);
 ldiv_t	ldiv(long _numer, long _denom);
 void *	malloc(size_t _size);
 int	mblen(const char *_s, size_t _n);
-size_t	mbstowcs(wchar_t *_wcs, const char *_s, size_t _n);
+size_t	mbstowcs(wchar_t * __restrict__ _wcs, const char * __restrict__ _s, size_t _n);
 int	mbtowc(wchar_t *_pwc, const char *_s, size_t _n);
 void	qsort(void *_base, size_t _nelem, size_t _size,
 	      int (*_cmp)(const void *_e1, const void *_e2));
@@ -84,8 +85,64 @@ double	strtod(const char *_s, char **_endptr);
 long	strtol(const char *_s, char **_endptr, int _base);
 unsigned long	strtoul(const char *_s, char **_endptr, int _base);
 int	system(const char *_s);
-size_t	wcstombs(char *_s, const wchar_t *_wcs, size_t _n);
+size_t	wcstombs(char * __restrict__ _s, const wchar_t * __restrict__ _wcs, size_t _n);
 int	wctomb(char *_s, wchar_t _wchar);
+
+
+#if __DJ_USE_FORTIFY_LEVEL > 0 || defined(__DJ_CHECKED_FUNCTION)
+extern size_t __mbstowcs_chk(wchar_t * __restrict__ _wcs, const char * __restrict__ _s, size_t _n, size_t _wcssize);
+extern size_t __wcstombs_chk(char * __restrict__ _s, const wchar_t * __restrict__ _wcs, size_t _n, size_t _ssize);
+extern int    __wctomb_chk(char *_s, wchar_t _wchar, size_t _ssize);
+#endif
+
+
+#if __DJ_USE_FORTIFY_LEVEL > 0
+size_t __mbstowcs_chk_warn(wchar_t * __restrict__ _wcs, const char * __restrict__ _s, size_t _n, size_t _wcssize)
+                __dj_forward(__mbstowcs_chk)
+                __attribute__((__warning__("mbstowcs called with buffer size too small")));
+size_t __mbstowcs_alias(wchar_t * __restrict__ _wcs, const char * __restrict__ _s, size_t _n)
+                __dj_forward(mbstowcs);
+
+__dj_fortify_function size_t
+mbstowcs(wchar_t * __restrict__ _wcs, const char * __restrict__ _s, size_t _n)
+{
+  size_t _sz = __dj_bos(_wcs, __DJ_USE_FORTIFY_LEVEL > 1);
+  return __dj_fortify_n(mbstowcs, _n, sizeof(_wcs[0]), _sz,
+                        _wcs, _s, _n);
+}
+
+size_t __wcstombs_chk_warn(char * __restrict__ _s, const wchar_t * __restrict__ _wcs, size_t _n, size_t _ssize)
+                __dj_forward(__wcstombs_chk)
+                __attribute__((__warning__("wcstombs called with buffer size too small")));
+size_t __wcstombs_alias(char * __restrict__ _s, const wchar_t * __restrict__ _wcs, size_t _n)
+                __dj_forward(wcstombs);
+
+__dj_fortify_function size_t
+wcstombs(char * __restrict__ _s, const wchar_t * __restrict__ _wcs, size_t _n)
+{
+  size_t _sz = __dj_bos(_s, __DJ_USE_FORTIFY_LEVEL > 1);
+  return __dj_fortify_n(wcstombs, _n, sizeof(_s[0]), _sz,
+                        _s, _wcs, _n);
+}
+
+int __wctomb_chk_warn(char *_s, wchar_t _wchar, size_t _ssize)
+                __dj_forward(__wctomb_chk)
+                __attribute__((__warning__("wctomb called with buffer size too small")));
+int __wctomb_alias(char *_s, wchar_t _wchar)
+                __dj_forward(wctomb);
+
+__dj_fortify_function int
+wctomb(char *_s, wchar_t _wchar)
+{
+  /* This must be the same as MB_LEN_MAX in limits.h */
+  const int __DJ_MB_LEN_MAX = 5;
+
+  size_t _sz = __dj_bos(_s, __DJ_USE_FORTIFY_LEVEL > 1);
+  return __dj_fortify_n(wctomb, __DJ_MB_LEN_MAX, sizeof(_s[0]), _sz,
+                        _s, _wchar);
+}
+
+#endif
 
 #if (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L) \
   || !defined(__STRICT_ANSI__) || defined(__cplusplus)
@@ -122,6 +179,19 @@ int	putenv(char *_val);
 char *	realpath(const char *_path, char *_resolved);
 int	setenv(const char *_var, const char *_val, int _overwrite);
 int	unsetenv(const char *_var);
+
+#if __DJ_USE_FORTIFY_LEVEL > 0 || defined(__DJ_CHECKED_FUNCTION)
+extern char *__realpath_chk(const char *_path, char *_resolved, size_t _resolvedlen);
+#endif
+
+#if __DJ_USE_FORTIFY_LEVEL > 0
+__dj_fortify_function char *
+realpath(const char *_path, char *_resolved)
+{
+  size_t _sz = __dj_bos(_resolved, __DJ_USE_FORTIFY_LEVEL > 1);
+  return __realpath_chk(_path, _resolved, _sz);
+}
+#endif
 
 #ifndef _POSIX_SOURCE
 

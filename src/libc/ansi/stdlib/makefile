@@ -40,4 +40,9 @@ SRC += system.c
 #        here.
 nmalloc.o: EXTRA_CFLAGS := -fno-builtin-malloc
 
+# For _FORTIFY_SOURCE
+SRC += mbwc2.c
+SRC += wcmb2.c
+SRC += wcmb3.c
+
 include $(TOP)/../makefile.inc

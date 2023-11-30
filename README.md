@@ -216,6 +216,13 @@ stdio.h
 `gets` is furthermore marked as deprecated, and its use will trigger an error
 if C11 or higher is in effect.
 
+stdlib.h
+
+  * mbstowcs
+  * wcstombs
+  * wctomb
+  * realpath
+
 wchar.h
 
   * wprintf
