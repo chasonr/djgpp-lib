@@ -237,3 +237,13 @@ wchar.h
   * wcrtomb
   * mbsrtowcs
   * wcsrtombs
+
+unistd.h
+
+  * confstr
+  * getcwd
+  * getgroups
+  * read
+  * gethostname
+  * getwd
+  * readlink

@@ -27,4 +27,8 @@ SRC += usleep.c
 SRC += vfork.c
 SRC += xsymlink.c
 
+SRC += gethstnf.c
+SRC += getwdf.c
+SRC += readlnkf.c
+
 include $(TOP)/../makefile.inc

@@ -24,6 +24,8 @@ extern "C" {
 
 #include <sys/types.h> /* NOT POSIX but you can't include just unistd.h without it */
 #include <sys/djtypes.h>
+#include <sys/fortify.h>
+#include <sys/attrib.h>
 
 #define SEEK_SET	0
 #define SEEK_CUR	1
@@ -156,6 +158,69 @@ char *		ttyname(int _fildes);
 int		unlink(const char *_path);
 ssize_t		write(int _fildes, const void *_buf, size_t _nbyte);
 
+#if __DJ_USE_FORTIFY_LEVEL > 0 || defined(__DJ_CHECKED_FUNCTION)
+extern size_t  __confstr_chk(int _name, char *_buf, size_t _len, size_t _bufsize);
+extern char *  __getcwd_chk(char *_buf, size_t _size, size_t _bufsize);
+extern int     __getgroups_chk(int _gidsetsize, gid_t *_grouplist, size_t _grouplistsize);
+extern ssize_t __read_chk(int _fildes, void *_buf, size_t _nbyte, size_t _bufsize);
+#endif
+
+#if __DJ_USE_FORTIFY_LEVEL > 0
+
+size_t  __confstr_chk_warn(int _name, char *_buf, size_t _len, size_t _bufsize)
+                __dj_forward(__confstr_chk)
+                __attribute__((__warning__("confstr called with buffer size too small")));
+size_t  __confstr_alias(int _name, char *_buf, size_t _len);
+
+__dj_fortify_function size_t
+confstr(int _name, char *_buf, size_t _len)
+{
+  size_t _sz = __dj_bos(_buf, __DJ_USE_FORTIFY_LEVEL > 1);
+  return __dj_fortify_n(confstr, _len, sizeof(_buf[0]), _sz,
+                        _name, _buf, _len);
+}
+
+char *__getcwd_chk_warn(char *_buf, size_t _size, size_t _bufsize)
+                __dj_forward(__getcwd_chk)
+                __attribute__((__warning__("getcwd called with buffer size too small")));
+char *__getcwd_alias(char *_buf, size_t _size);
+
+__dj_fortify_function char *
+getcwd(char *_buf, size_t _size)
+{
+  size_t _sz = __dj_bos(_buf, __DJ_USE_FORTIFY_LEVEL > 1);
+  return __dj_fortify_n(getcwd, _size, sizeof(_buf[0]), _sz,
+                        _buf, _size);
+}
+
+int __getgroups_chk_warn(int _gidsetsize, gid_t *_grouplist, size_t _grouplistsize)
+                __dj_forward(__getgroups_chk)
+                __attribute__((__warning__("getgroups called with buffer size too small")));
+int __getgroups_alias(int _gidsetsize, gid_t *_grouplist);
+
+__dj_fortify_function int
+getgroups(int _gidsetsize, gid_t *_grouplist)
+{
+  size_t _sz = __dj_bos(_grouplist, 0);
+  return __dj_fortify_n(getgroups, _gidsetsize, sizeof(_grouplist[0]), _sz,
+                        _gidsetsize, _grouplist);
+}
+
+ssize_t __read_chk_warn(int _fildes, void *_buf, size_t _nbyte, size_t _bufsize)
+                __dj_forward(__read_chk)
+                __attribute__((__warning__("read called with buffer size too small")));
+ssize_t __read_alias(int _fildes, void *_buf, size_t _nbyte);
+
+__dj_fortify_function ssize_t
+read(int _fildes, void *_buf, size_t _nbyte)
+{
+  size_t _sz = __dj_bos(_buf, 0);
+  return __dj_fortify_n(read, _nbyte, 1, _sz,
+                        _fildes, _buf, _nbyte);
+}
+
+#endif
+
 #ifndef _POSIX_SOURCE
 
 /* additional access() checks */
@@ -169,8 +234,11 @@ int             fchown(int fd, uid_t owner, gid_t group);
 int		fsync(int _fd);
 int		ftruncate(int, off_t);
 int		getdtablesize(void);
-int		gethostname(char *buf, int size);
+int		gethostname(char *_buf, int _size);
 int		getpagesize(void);
+#ifndef __DJ_CHECKED_FUNCTION
+        __dj_attr_deprecated("the getwd function is dangerous and should not be used")
+#endif
 char *		getwd(char *__buffer);
 int             lchown(const char * file, int owner, int group);
 int		lockf(int _fildes, int _cmd, off_t _len);
@@ -185,6 +253,51 @@ int		truncate(const char*, off_t);
 unsigned int	usleep(unsigned int _useconds);
 #ifndef vfork
 pid_t		vfork(void);
+#endif
+
+#if __DJ_USE_FORTIFY_LEVEL > 0 || defined(__DJ_CHECKED_FUNCTION)
+extern int   __gethostname_chk(char *_buf, int _size, size_t _bufsize);
+extern char *__getwd_chk(char *__buffer, size_t __buffersize);
+extern int   __readlink_chk(const char * __file, char * __buffer, size_t __size, size_t __buffersize);
+#endif
+
+#if __DJ_USE_FORTIFY_LEVEL > 0
+
+int   __gethostname_chk_warn(char *_buf, int _size, size_t _bufsize)
+                __dj_forward(__gethostname_chk)
+                __attribute__((__warning__("gethostname called with buffer size too small")));
+int   __gethostname_alias(char *buf, int size)
+                __dj_forward(gethostname);
+
+__dj_fortify_function int
+gethostname(char *_buf, int _size)
+{
+  size_t _sz = __dj_bos(_buf, __DJ_USE_FORTIFY_LEVEL > 1);
+  return __dj_fortify_n(gethostname, _size, sizeof(_buf[0]), _sz,
+                        _buf, _size);
+}
+
+__dj_fortify_function char *
+getwd(char *__buffer)
+{
+  size_t _sz = __dj_bos(__buffer, __DJ_USE_FORTIFY_LEVEL > 1);
+  return __getwd_chk(__buffer, _sz);
+}
+
+int   __readlink_chk_warn(const char * __file, char * __buffer, size_t __size, size_t __buffersize)
+                __dj_forward(__readlink_chk)
+                __attribute__((__warning__("readlink called with buffer size too small")));
+int   __readlink_alias(const char * __file, char * __buffer, size_t __size)
+                __dj_forward(readlink);
+
+__dj_fortify_function int
+readlink(const char * __file, char * __buffer, size_t __size)
+{
+  size_t _sz = __dj_bos(__buffer, __DJ_USE_FORTIFY_LEVEL > 1);
+  return __dj_fortify_n(readlink, __size, sizeof(__buffer[0]), _sz,
+                        __file, __buffer, __size);
+}
+
 #endif
 
 #endif /* !_POSIX_SOURCE */

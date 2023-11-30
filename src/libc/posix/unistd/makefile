@@ -54,4 +54,10 @@ SRC += ttyname.c
 SRC += unlink.s
 SRC += write.c
 
+# For _FORTIFY_SOURCE
+SRC += confstrf.c
+SRC += getcwdf.c
+SRC += getgrpf.c
+SRC += readf.c
+
 include $(TOP)/../makefile.inc
