@@ -20,7 +20,6 @@ bin/go32-v2.exe
 bin/gxx.exe
 bin/redir.exe
 bin/rem.com
-bin/setdjgpp.bat
 bin/stubedit.exe
 bin/stubify.exe
 bin/symify.exe
@@ -35,6 +34,7 @@ include/ar.h
 include/assert.h
 include/bios.h
 include/coff.h
+include/complex.h
 include/conio.h
 include/crt0.h
 include/ctype.h
@@ -126,6 +126,7 @@ include/stdlib.h
 include/string.h
 include/strings.h
 include/stubinfo.h
+include/sys/attrib.h
 include/sys/cdefs.h
 include/sys/config.h
 include/sys/dir.h
@@ -136,6 +137,7 @@ include/sys/exceptn.h
 include/sys/farptr.h
 include/sys/fcntl.h
 include/sys/file.h
+include/sys/fortify.h
 include/sys/fsext.h
 include/sys/gmon.h
 include/sys/ioctl.h
@@ -163,6 +165,7 @@ include/sys/xdevices.h
 include/termios.h
 include/time.h
 include/tzfile.h
+include/uchar.h
 include/unistd.h
 include/utime.h
 include/values.h
