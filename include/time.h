@@ -66,8 +66,30 @@ double		difftime(time_t _t1, time_t _t0);
 struct tm *	gmtime(const time_t *_tod);
 struct tm *	localtime(const time_t *_tod);
 time_t		mktime(struct tm *_tptr);
-size_t		strftime(char *  _s, size_t _n, const char *  _format, const struct tm *  _tptr);
+size_t		strftime(char * __restrict__ _s, size_t _n, const char * __restrict__ _format, const struct tm * __restrict__ _tptr);
 time_t		time(time_t *_tod);
+
+//////////////////////////////////////////////////////////////////////////////
+#if defined(__DJ_CHECKED_FUNCTION) || __DJ_USE_FORTIFY_LEVEL > 0
+extern size_t __strftime_chk(char * __restrict__ _s, size_t _maxsize, const char * __restrict__ _format, const struct tm * __restrict__ _timeptr, size_t _ssize);
+#endif
+
+#if __DJ_USE_FORTIFY_LEVEL > 0
+
+size_t __strftime_chk_warn(char * __restrict__ _s, size_t _maxsize, const char * __restrict__ _format, const struct tm * __restrict__ _timeptr, size_t _ssize)
+        __dj_forward(__strftime_chk)
+        __attribute__((warning("strftime called with length bigger than size of buffer")));
+size_t __strftime_alias(char * __restrict__ _s, size_t _maxsize, const char * __restrict__ _format, const struct tm * __restrict__ _timeptr)
+        __dj_forward(strftime);
+
+__dj_fortify_function size_t
+strftime(char * __restrict__ _s, size_t _maxsize, const char * __restrict__ _format, const struct tm * __restrict__ _timeptr)
+{
+  size_t _sz = __dj_bos(_s, __DJ_USE_FORTIFY_LEVEL > 1);
+  return __dj_fortify_n(strftime, _maxsize, sizeof(_s[0]), _sz, _s, _maxsize, _format, _timeptr);
+}
+#endif
+//////////////////////////////////////////////////////////////////////////////
 
 #if (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L) \
   || !defined(__STRICT_ANSI__) || defined(__cplusplus)

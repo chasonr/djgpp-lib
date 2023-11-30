@@ -6,4 +6,7 @@ SRC += difftime.c
 SRC += strftime.c
 SRC += time.c
 
+# For _FORTIFY_SOURCE
+SRC += strftimf.c
+
 include $(TOP)/../makefile.inc

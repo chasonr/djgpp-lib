@@ -223,6 +223,10 @@ stdlib.h
   * wctomb
   * realpath
 
+time.h
+
+  * strftime
+
 wchar.h
 
   * wprintf
