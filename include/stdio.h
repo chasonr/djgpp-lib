@@ -19,6 +19,7 @@ extern "C" {
 #include <sys/version.h>
 #include <sys/djtypes.h>
 #include <sys/fortify.h>
+#include <sys/attrib.h>
   
 #define _IOFBF    	00001  /*  File is full buffered.  */
 #define _IONBF    	00002  /*  File is not buffered.  */
@@ -116,13 +117,9 @@ int	getc(FILE *_stream);
 int	getchar(void);
 char *	gets(char *_s)
 #if __STDC_VERSION__ < 201112L
-        __attribute__((__deprecated__("the gets function is dangerous and should not be used")));
+        __dj_attr_deprecated("the gets function is dangerous and should not be used");
 #else
-#   if __GCC_VERSION__ >= 12
-        __attribute__((__unavailable__("the gets function was removed in C11")));
-#   else
-        __attribute__((__error__("the gets function was removed in C11")));
-#   endif
+        __dj_attr_unavailable("the gets function was removed in C11");
 #endif
 void	perror(const char *_s);
 int	printf(const char * __restrict__ _format, ...);
