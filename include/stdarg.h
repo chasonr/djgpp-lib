@@ -66,6 +66,8 @@ __DJ_va_list
 #if (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L) \
   || !defined(__STRICT_ANSI__) || defined(__cplusplus)
 
+#define va_copy(d,s)	__builtin_va_copy(d,s)
+
 #endif /* (__STDC_VERSION__ >= 199901L) || !__STRICT_ANSI__ */
 
 #ifndef __STRICT_ANSI__
