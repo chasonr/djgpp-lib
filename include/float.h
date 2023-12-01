@@ -55,7 +55,25 @@ extern long double __dj_long_double_min;
 #if (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L) \
   || !defined(__STRICT_ANSI__) || defined(__cplusplus)
 
+#define FLT_EVAL_METHOD  __FLT_EVAL_METHOD__
+#define DECIMAL_DIG      __DECIMAL_DIG__
+
 #endif /* (__STDC_VERSION__ >= 199901L) || !__STRICT_ANSI__ */
+
+#if (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L) \
+  || !defined(__STRICT_ANSI__) || defined(__cplusplus)
+
+#define FLT_DECIMAL_DIG  __FLT_DECIMAL_DIG__
+#define DBL_DECIMAL_DIG  __DBL_DECIMAL_DIG__
+#define LDBL_DECIMAL_DIG __LDBL_DECIMAL_DIG__
+#define FLT_HAS_SUBNORM  __FLT_HAS_SUBNORM__
+#define DBL_HAS_SUBNORM  __DBL_HAS_SUBNORM__
+#define LDBL_HAS_SUBNORM __LDBL_HAS_SUBNORM__
+#define FLT_TRUE_MIN     __FLT_TRUE_MIN__
+#define DBL_TRUE_MIN     __DBL_TRUE_MIN__
+#define LDBL_TRUE_MIN    __LDBL_TRUE_MIN__
+
+#endif /* (__STDC_VERSION__ >= 201112L) || !__STRICT_ANSI__ */
 
 #ifndef __dj_ENFORCE_ANSI_FREESTANDING
 
