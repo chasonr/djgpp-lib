@@ -34,8 +34,8 @@ static const wchar_t *Bfmt[] = {
   L"August", L"September", L"October", L"November", L"December",
 };
 static const wchar_t __ISO8601_date_format[] = L"%Y-%m-%d";
-wchar_t __dj_date_format[10] = L"%m/%d/%y";
-wchar_t __dj_time_format[16] = L"%H:%M:%S";
+static wchar_t dj_date_format[10] = L"%m/%d/%y";
+static wchar_t dj_time_format[16] = L"%H:%M:%S";
 
 static size_t gsize;
 static wchar_t *pt;
@@ -351,11 +351,11 @@ _fmt(const wchar_t *format, const struct tm *t, int upcase)
           return 0;
         continue;
       case L'X':
-        if (!_fmt(__dj_time_format, t, upcase))
+        if (!_fmt(dj_time_format, t, upcase))
           return 0;
         continue;
       case L'x':
-        if (!_fmt(__dj_date_format, t, upcase))
+        if (!_fmt(dj_date_format, t, upcase))
           return 0;
         continue;
       case L'y':
