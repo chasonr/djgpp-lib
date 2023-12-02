@@ -115,11 +115,9 @@ long	ftell(FILE *_stream);
 size_t	fwrite(const void *_ptr, size_t _size, size_t _nelem, FILE *_stream);
 int	getc(FILE *_stream);
 int	getchar(void);
-char *	gets(char *_s)
 #if __STDC_VERSION__ < 201112L
+char *	gets(char *_s)
         __dj_attr_deprecated("the gets function is dangerous and should not be used");
-#else
-        __dj_attr_unavailable("the gets function was removed in C11");
 #endif
 void	perror(const char *_s);
 int	printf(const char * __restrict__ _format, ...);

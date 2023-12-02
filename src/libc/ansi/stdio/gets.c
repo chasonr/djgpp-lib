@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <libc/file.h>
 
+/* Avoid the warning about no prototype in scope; C11 doesn't have gets */
+char *gets(char *s);
+
 char *
 gets(char *s)
 {
