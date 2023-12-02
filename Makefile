@@ -6,8 +6,24 @@ default:
 	$(MAKE) -C src
 
 zip: default
+	@rm -f djcrx206.zip
 	@rm -f djdev206.zip
 	@rm -f djtzn206.zip
+	zip -9rD djcrx206.zip include lib info/libc.info \
+		copying copying.dj copying.lib readme.1st \
+		src/dxe/dxe3gen.c \
+		src/dxe/dxe3res.c \
+		src/dxe/dxegen.txi \
+		src/dxe/*.S \
+		src/dxe/makefile.dxe \
+		src/stub/stubedit.c \
+		src/stub/stub.h \
+		src/stub/stubify.c \
+		src/utils/bin2h.c \
+		cross/* \
+		manifest/djcrx206.mft \
+		manifest/djcrx206.ver \
+		-x include/.gitignore info/.gitignore info/dir.txi lib/libtz.a
 	zip -9rD djdev206.zip bin include lib info djgpp.env tmp/remove.me \
 		copying copying.dj copying.lib readme.1st manifest/djdev* \
 		-x include/.gitignore info/.gitignore info/dir.txi lib/libtz.a
