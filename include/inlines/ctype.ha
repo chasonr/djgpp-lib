@@ -2,6 +2,9 @@
 #ifndef __dj_include_inline_ctype_ha_
 #define __dj_include_inline_ctype_ha_
 
+/* C++ does not allow redefining C library functions as macros */
+#ifndef __cplusplus
+
 #define __dj_ISALNUM 	0x0001
 #define __dj_ISALPHA	0x0002
 #define __dj_ISCNTRL	0x0004
@@ -40,5 +43,7 @@ extern unsigned char __dj_ctype_tolower[];
 
 #define tolower(c) (__dj_ctype_tolower[(int)(c)+1])
 #define toupper(c) (__dj_ctype_toupper[(int)(c)+1])
+
+#endif /* __cplusplus */
 
 #endif /* __dj_include_inline_ctype_ha_ */

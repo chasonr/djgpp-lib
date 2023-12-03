@@ -2,6 +2,9 @@
 #ifndef __dj_include_inline_wctype_ha_
 #define __dj_include_inline_wctype_ha_
 
+/* C++ does not allow redefining C library functions as macros */
+#ifndef __cplusplus
+
 #if (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L) \
   || !defined(__STRICT_ANSI__) || defined(__cplusplus)
 
@@ -28,5 +31,7 @@ extern const unsigned char __dj_wctype_flags[];
 #define iswupper(c) (__dj_wctype_flags[(int)(c)+1] & __dj_ISWUPPER)
 
 #endif /* (__STDC_VERSION__ >= 199901L) || !__STRICT_ANSI__ */
+
+#endif /* __cplusplus */
 
 #endif /* __dj_include_inline_wctype_ha_ */
