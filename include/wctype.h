@@ -55,10 +55,6 @@ wint_t towupper(wint_t wc);
 wint_t towctrans(wint_t wc, wctrans_t desc);
 wctrans_t wctrans(const char *property);
 
-#ifndef __dj_ENFORCE_FUNCTION_CALLS
-#include <inlines/wctype.ha>
-#endif /* !__dj_ENFORCE_FUNCTION_CALLS */
-
 #ifndef __STRICT_ANSI__
 
 #ifndef _POSIX_SOURCE

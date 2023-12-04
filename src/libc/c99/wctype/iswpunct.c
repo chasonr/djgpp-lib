@@ -1,8 +1,14 @@
-/* Copyright (C) 1995 DJ Delorie, see COPYING.DJ for details */
+/* Copyright (C) 2023 Ray Chason, see COPYING.DJ for details */
 #include <wctype.h>
-#include <inlines/wctype.ha>
+#include "../wchar/codepage.h"
+#include "chrdata.h"
+#include "wpunct.h"
 
-int (iswpunct)(wint_t c)
+int
+iswpunct(wint_t c)
 {
-  return iswpunct(c);
+    if (__dj_c_locale && c > 0x7F) {
+        return 0;
+    }
+    return __dj_find_range(c, punct, sizeof(punct)/sizeof(punct[0]));
 }

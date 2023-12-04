@@ -58,6 +58,7 @@ static char decimal_point[2] = ".";
 static char thousands_sep[2] = "";
 
 unsigned __dj_current_codepage = 0;
+int __dj_c_locale = 1;
 extern unsigned char __dj_collate_table[];
 extern char __dj_date_format[];
 extern char __dj_time_format[];
@@ -601,6 +602,10 @@ setlocale(int category, const char *locale)
 
   if (honored)
   {
+    if (category == LC_ALL || category == LC_CTYPE)
+    {
+      __dj_c_locale = (stricmp(locale, "C") == 0 || stricmp(locale, "POSIX") == 0);
+    }
     if (category != LC_ALL)
     {
       for (i = 0; i < LC_CATEGORIES; i++)

@@ -1,8 +1,9 @@
-/* Copyright (C) 1995 DJ Delorie, see COPYING.DJ for details */
-#include <wctype.h>
-#include <inlines/wctype.ha>
+/* Copyright 2023 Ray Chason. See COPYING.DJ for details. */
 
-int (iswdigit)(wint_t c)
+#include <wctype.h>
+
+int
+iswdigit(wint_t c)
 {
-  return iswdigit(c);
+  return L'0' <= c && c <= '9';
 }

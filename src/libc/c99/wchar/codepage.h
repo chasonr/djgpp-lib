@@ -20,6 +20,7 @@ __DJ_wint_t
 
 /* in libc/ansi/locale/setlocal.c */
 extern unsigned __dj_current_codepage;
+extern int __dj_c_locale;
 
 struct char_conv {
     wchar_t const single_map[128];

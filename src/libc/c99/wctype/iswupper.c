@@ -1,8 +1,14 @@
-/* Copyright (C) 1995 DJ Delorie, see COPYING.DJ for details */
+/* Copyright (C) 2023 Ray Chason, see COPYING.DJ for details */
 #include <wctype.h>
-#include <inlines/wctype.ha>
+#include "../wchar/codepage.h"
+#include "chrdata.h"
+#include "wupper.h"
 
-int (iswupper)(wint_t c)
+int
+iswupper(wint_t c)
 {
-  return iswupper(c);
+    if (__dj_c_locale && c > 0x7F) {
+        return 0;
+    }
+    return __dj_find_range(c, upper, sizeof(upper)/sizeof(upper[0]));
 }

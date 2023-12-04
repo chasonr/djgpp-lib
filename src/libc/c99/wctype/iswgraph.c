@@ -1,8 +1,9 @@
-/* Copyright (C) 1995 DJ Delorie, see COPYING.DJ for details */
-#include <wctype.h>
-#include <inlines/wctype.ha>
+/* Copyright 2023 Ray Chason. See COPYING.DJ for details. */
 
-int (iswgraph)(wint_t c)
+#include <wctype.h>
+
+int
+iswgraph(wint_t c)
 {
-  return iswgraph(c);
+  return iswprint(c) && !iswspace(c);
 }

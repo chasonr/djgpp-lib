@@ -1,8 +1,14 @@
-/* Copyright (C) 1995 DJ Delorie, see COPYING.DJ for details */
+/* Copyright (C) 2023 Ray Chason, see COPYING.DJ for details */
 #include <wctype.h>
-#include <inlines/wctype.ha>
+#include "../wchar/codepage.h"
+#include "chrdata.h"
+#include "wprint.h"
 
-int (iswprint)(wint_t c)
+int
+iswprint(wint_t c)
 {
-  return iswprint(c);
+    if (__dj_c_locale && c > 0x7F) {
+        return 0;
+    }
+    return __dj_find_range(c, print, sizeof(print)/sizeof(print[0]));
 }

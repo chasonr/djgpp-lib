@@ -2,7 +2,7 @@
 # Copyright (C) 1994 DJ Delorie, see COPYING.DJ for details
 TOP=../..
 
-SRC += wc_flags.c
+SRC += chrdata.c
 SRC += iswalnum.c
 SRC += iswalpha.c
 SRC += iswblank.c
