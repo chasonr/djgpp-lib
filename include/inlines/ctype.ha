@@ -2,9 +2,6 @@
 #ifndef __dj_include_inline_ctype_ha_
 #define __dj_include_inline_ctype_ha_
 
-/* C++ does not allow redefining C library functions as macros */
-#ifndef __cplusplus
-
 #define __dj_ISALNUM 	0x0001
 #define __dj_ISALPHA	0x0002
 #define __dj_ISCNTRL	0x0004
@@ -21,6 +18,9 @@
 extern unsigned short __dj_ctype_flags[];
 extern unsigned char __dj_ctype_toupper[];
 extern unsigned char __dj_ctype_tolower[];
+
+/* C++ does not allow redefining C library functions as macros */
+#ifndef __cplusplus
 
 #define isalnum(c) (__dj_ctype_flags[(int)(c)+1] & __dj_ISALNUM)
 #define isalpha(c) (__dj_ctype_flags[(int)(c)+1] & __dj_ISALPHA)
