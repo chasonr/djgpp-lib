@@ -197,55 +197,70 @@ setlocalectype(const char *locale __attribute__((unused)), int selector,
   int temp_flags;
   int i;
   int codepage = regs->x.bx;
+  int rc;
+  struct char_conv const *conv = __dj_find_char_conv(codepage);
 
-  regs->h.ah = 0x65;
-  regs->h.al = 0x02;
-  regs->x.cx = 5;
-  __dpmi_int(0x21, regs);
-  if ((regs->x.flags & 1) || (regs->x.cx != 5))
-    return 0;
+  if (conv != NULL)
+  {
+    for (i = 0; i < 0x80; ++i) {
+      __dj_ctype_tolower[i+0x81] = conv->to_lower[i];
+      __dj_ctype_toupper[i+0x81] = conv->to_upper[i];
+      __dj_ctype_flags[i+0x81] = conv->flags[i];
+    }
+    rc = 1;
+  } 
   else
   {
-    unsigned int table = _farpeekw(selector, 3) * 16 + _farpeekw(selector, 1);
-    int size = _farpeekw(_dos_ds, table);
-
-    movedata(_dos_ds, table + 2, _my_ds(),
-             (unsigned int) &(__dj_ctype_toupper[128 + 1]), size);
-
-    /* let's build lowercase table from uppercase... */
-    for (i = 0; i < size; i++)
+    regs->h.ah = 0x65;
+    regs->h.al = 0x02;
+    regs->x.cx = 5;
+    __dpmi_int(0x21, regs);
+    if ((regs->x.flags & 1) || (regs->x.cx != 5))
+      rc = 0;
+    else
     {
-      int c = toupper(i + 128);
-      if ((c != i + 128) && (c > 127))
-        __dj_ctype_tolower[c + 1] = i + 128;
-    }
-    for (i = 128; i < 256; i++)
-    {
-      /*
-       * Actually isgraph(), ispunct() and isspace() will return wrong results
-       * for some letters like 0xff in CP866 but we can't detect them reliably
-       */
-      temp_flags = __dj_ISPRINT | __dj_ISGRAPH;
-      if (tolower(i) != toupper(i))
+      unsigned int table = _farpeekw(selector, 3) * 16 + _farpeekw(selector, 1);
+      int size = _farpeekw(_dos_ds, table);
+
+      movedata(_dos_ds, table + 2, _my_ds(),
+               (unsigned int) &(__dj_ctype_toupper[128 + 1]), size);
+
+      /* let's build lowercase table from uppercase... */
+      for (i = 0; i < size; i++)
       {
-        temp_flags |= __dj_ISALPHA | __dj_ISALNUM;
-        if (i == toupper(i))
-          temp_flags |= __dj_ISUPPER;
-        else
-          temp_flags |= __dj_ISLOWER;
+        int c = toupper(i + 128);
+        if ((c != i + 128) && (c > 127))
+          __dj_ctype_tolower[c + 1] = i + 128;
       }
-      else
-        temp_flags |= __dj_ISPUNCT;
-      __dj_ctype_flags[i + 1] = temp_flags;
+      for (i = 128; i < 256; i++)
+      {
+        /*
+         * Actually isgraph(), ispunct() and isspace() will return wrong results
+         * for some letters like 0xff in CP866 but we can't detect them reliably
+         */
+        temp_flags = __dj_ISPRINT | __dj_ISGRAPH;
+        if (tolower(i) != toupper(i))
+        {
+          temp_flags |= __dj_ISALPHA | __dj_ISALNUM;
+          if (i == toupper(i))
+            temp_flags |= __dj_ISUPPER;
+          else
+            temp_flags |= __dj_ISLOWER;
+        }
+        else
+          temp_flags |= __dj_ISPUNCT;
+        __dj_ctype_flags[i + 1] = temp_flags;
+      }
+      __dj_current_codepage = codepage;
+      rc = 1;
     }
-    __dj_current_codepage = codepage;
-    if (codepage == UTF8_CODEPAGE) {
-        __dj_mb_cur_max = 4;
-    } else {
-        __dj_mb_cur_max = 1;
-    }
-    return 1;
   }
+  if (codepage == UTF8_CODEPAGE) {
+      __dj_mb_cur_max = 4;
+  } else {
+      __dj_mb_cur_max = 1;
+  }
+  return rc;
 }
 
 /*

@@ -24,8 +24,12 @@ extern int __dj_c_locale;
 
 struct char_conv {
     wchar_t const single_map[128];
+    unsigned char to_lower[128];
+    unsigned char to_upper[128];
+    unsigned short flags[128];
 };
 
+struct char_conv const *__dj_find_char_conv(unsigned codepage);
 struct char_conv const *__dj_get_conversion(void);
 wint_t __dj_single_map(struct char_conv const *table, int ch);
 int __dj_single_unmap(struct char_conv const *table, wchar_t ch);
