@@ -176,13 +176,13 @@ extern size_t __strlcpy_chk(char * __restrict__ _dest, const char * __restrict__
 
 #if __DJ_USE_FORTIFY_LEVEL > 0
 
-void
+__dj_fortify_function void
 bcopy(const void *_a, void *_b, size_t _len)
 {
   __builtin___memmove_chk(_b, _a, _len, __dj_bos(_b, 0));
 }
 
-void
+__dj_fortify_function void
 bzero(void *_ptr, size_t _len)
 {
   __builtin___memset_chk(_ptr, '\0', _len, __dj_bos(_ptr, 0));

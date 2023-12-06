@@ -170,7 +170,8 @@ extern ssize_t __read_chk(int _fildes, void *_buf, size_t _nbyte, size_t _bufsiz
 size_t  __confstr_chk_warn(int _name, char *_buf, size_t _len, size_t _bufsize)
                 __dj_forward(__confstr_chk)
                 __attribute__((__warning__("confstr called with buffer size too small")));
-size_t  __confstr_alias(int _name, char *_buf, size_t _len);
+size_t  __confstr_alias(int _name, char *_buf, size_t _len)
+                __dj_forward(confstr);
 
 __dj_fortify_function size_t
 confstr(int _name, char *_buf, size_t _len)
@@ -183,7 +184,8 @@ confstr(int _name, char *_buf, size_t _len)
 char *__getcwd_chk_warn(char *_buf, size_t _size, size_t _bufsize)
                 __dj_forward(__getcwd_chk)
                 __attribute__((__warning__("getcwd called with buffer size too small")));
-char *__getcwd_alias(char *_buf, size_t _size);
+char *__getcwd_alias(char *_buf, size_t _size)
+                __dj_forward(getcwd);
 
 __dj_fortify_function char *
 getcwd(char *_buf, size_t _size)
@@ -196,7 +198,8 @@ getcwd(char *_buf, size_t _size)
 int __getgroups_chk_warn(int _gidsetsize, gid_t *_grouplist, size_t _grouplistsize)
                 __dj_forward(__getgroups_chk)
                 __attribute__((__warning__("getgroups called with buffer size too small")));
-int __getgroups_alias(int _gidsetsize, gid_t *_grouplist);
+int __getgroups_alias(int _gidsetsize, gid_t *_grouplist)
+                __dj_forward(getgroups);
 
 __dj_fortify_function int
 getgroups(int _gidsetsize, gid_t *_grouplist)
@@ -209,7 +212,8 @@ getgroups(int _gidsetsize, gid_t *_grouplist)
 ssize_t __read_chk_warn(int _fildes, void *_buf, size_t _nbyte, size_t _bufsize)
                 __dj_forward(__read_chk)
                 __attribute__((__warning__("read called with buffer size too small")));
-ssize_t __read_alias(int _fildes, void *_buf, size_t _nbyte);
+ssize_t __read_alias(int _fildes, void *_buf, size_t _nbyte)
+                __dj_forward(read);
 
 __dj_fortify_function ssize_t
 read(int _fildes, void *_buf, size_t _nbyte)
