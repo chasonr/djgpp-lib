@@ -34,11 +34,14 @@ static const wchar_t *Bfmt[] = {
   L"August", L"September", L"October", L"November", L"December",
 };
 static const wchar_t __ISO8601_date_format[] = L"%Y-%m-%d";
-static wchar_t dj_date_format[10] = L"%m/%d/%y";
-static wchar_t dj_time_format[16] = L"%H:%M:%S";
+extern char __dj_date_format[];
+extern char __dj_time_format[];
 
 static size_t gsize;
 static wchar_t *pt;
+
+static void cvt_format(const char *format, wchar_t *wbuf, size_t wbufsize,
+                       const wchar_t *fallback);
 
 static __inline__ int
 _compute_iso_wday_of_jan_01(const struct tm *t)
@@ -351,12 +354,22 @@ _fmt(const wchar_t *format, const struct tm *t, int upcase)
           return 0;
         continue;
       case L'X':
-        if (!_fmt(dj_time_format, t, upcase))
-          return 0;
+        {
+          wchar_t wbuf[40];
+          cvt_format(__dj_time_format, wbuf, sizeof(wbuf)/sizeof(wbuf[0]),
+                     L"%H:%M:%S");
+          if (!_fmt(wbuf, t, upcase))
+            return 0;
+        }
         continue;
       case L'x':
-        if (!_fmt(dj_date_format, t, upcase))
-          return 0;
+        {
+          wchar_t wbuf[40];
+          cvt_format(__dj_date_format, wbuf, sizeof(wbuf)/sizeof(wbuf[0]),
+                     L"%m/%d/%y");
+          if (!_fmt(wbuf, t, upcase))
+            return 0;
+        }
         continue;
       case L'y':
         if (!_conv((t->tm_year + TM_YEAR_BASE) % 100, 2, pad))
@@ -415,6 +428,19 @@ _fmt(const wchar_t *format, const struct tm *t, int upcase)
     *pt++ = *format;
   }
   return gsize;
+}
+
+static void
+cvt_format(const char *format, wchar_t *wbuf, size_t wbufsize,
+           const wchar_t *fallback)
+{
+  const char *p = format;
+  mbstate_t mbs;
+  mbrtowc(NULL, NULL, 0, &mbs);
+  if (mbsrtowcs(wbuf, &p, wbufsize, &mbs) == (size_t)(-1)) {
+    wcsncpy(wbuf, fallback, wbufsize-1);
+    wbuf[wbufsize-1] = L'\0';
+  }
 }
 
 size_t
