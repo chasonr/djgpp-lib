@@ -15,7 +15,7 @@ argok:
 	fldln2
 	fldt	4(%esp)
 	andl	$0x00007FFF, %eax
-	cmpw	$0x00003FFC, %eax
+	cmpl	$0x00003FFC, %eax
 	ja	bigarg
 
 	    fyl2xp1

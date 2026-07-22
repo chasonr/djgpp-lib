@@ -17,13 +17,14 @@ How to build
 ============
 
 I am cross-compiling from Linux Mint using a compiler built from the Github
-repository https://github.com/andrewwutw/build-djgpp.git . Building natively does
-not seem to work, at least on FreeDOS; the make utility crashes for no apparent
-reason. I have not yet tried it on real MS-DOS.
+repository https://github.com/andrewwutw/build-djgpp.git . The native build
+completes, but the zip program bundled with FreeDOS does not support long file
+names, and the resulting ZIP files have mangled names within them.  I have not
+yet tried to build on real MS-DOS.
 
-Use "make" to build. Use "make zip" to create djdev206.zip and djtzn206.zip;
-use these in your DJGPP installation, whether native or a cross-compiler, in
-place of the corresponding original archives.
+Use "make" to build. Use "make zip" to create djcrx206.zip, djdev206.zip and
+djtzn206.zip; use these in your DJGPP installation, whether native or a
+cross-compiler, in place of the corresponding original archives.
 
 Current status of C11 support
 =============================
